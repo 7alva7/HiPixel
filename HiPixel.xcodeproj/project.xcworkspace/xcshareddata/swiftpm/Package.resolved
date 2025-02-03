@@ -1,0 +1,33 @@
+{
+  "originHash" : "9d5b07024e3a42ceadf35b6cf7e67a094a066ba38bbde25539d7943fb2b65c34",
+  "pins" : [
+    {
+      "identity" : "generalnotification",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/okooo5km/GeneralNotification",
+      "state" : {
+        "branch" : "main",
+        "revision" : "17c1f90b2d80a2e33da11de8dc44af3df5415843"
+      }
+    },
+    {
+      "identity" : "notchnotification",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Lakr233/NotchNotification.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "05d81d6d82ce27da458af338fe0c6368a834143f"
+      }
+    },
+    {
+      "identity" : "sparkle",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sparkle-project/Sparkle",
+      "state" : {
+        "revision" : "0ef1ee0220239b3776f433314515fd849025673f",
+        "version" : "2.6.4"
+      }
+    }
+  ],
+  "version" : 3
+}

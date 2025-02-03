@@ -6,15 +6,88 @@
 //
 
 import SwiftUI
+import Sparkle
 
 @main
 struct HiPixelApp: App {
-    let persistenceController = PersistenceController.shared
+    
+    @AppStorage(HiPixelConfiguration.Keys.ColorScheme)
+    var colorScheme: HiPixelConfiguration.ColorScheme = .system
+    
+    @NSApplicationDelegateAdaptor(AppDelegate.self)
+    var appDelegate
+    
+    @State private var aboutWindow: NSWindow?
 
+    @StateObject var upscaylData = UpscaylData.shared
+    
+    private let updaterController: SPUStandardUpdaterController
+    
+    init() {
+        updaterController = SPUStandardUpdaterController(
+            startingUpdater: true,
+            updaterDelegate: nil,
+            userDriverDelegate: nil
+        )
+    }
+    
     var body: some Scene {
-        WindowGroup {
+        Window("HiPixel", id: "HiPixel") {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .frame(minWidth: 720, idealWidth: 960, minHeight: 640, idealHeight: 720)
+                .onAppear {
+                    HiPixelConfiguration.ColorScheme.change(to: colorScheme)
+                }
+                .onChange(of: colorScheme) { newValue in
+                    HiPixelConfiguration.ColorScheme.change(to: newValue)
+                }
+                .environmentObject(upscaylData)
+        }
+        .windowResizability(.contentSize)
+        .defaultSize(.init(width: 720, height: 480))
+        .commands {
+            CommandGroup(replacing: .appInfo) {
+                Button("About") {
+                    AboutWindowController.shared.showWindow(nil)
+                }
+            }
+            
+            CommandGroup(after: .appInfo) {
+                CheckForUpdatesView(updater: updaterController.updater)
+            }
+            
+            CommandGroup(after: .toolbar) {
+                Picker("Appearance", selection: $colorScheme) {
+                    ForEach(HiPixelConfiguration.ColorScheme.allCases, id: \.self) {
+                        Text($0.localized)
+                            .tag($0)
+                    }
+                }
+            }
+        }
+        
+        Settings {
+            SettingsView()
+        }
+    }
+}
+
+class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return false
+    }
+
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        do {
+            try ResourceManager.prepareModels()
+        } catch {
+            print("Failed to prepare models: \(error)")
+        }
+    }
+
+    func application(_ application: NSApplication, open urls: [URL]) {
+        urls.forEach { url in
+            URLSchemeHandler.shared.handle(url)
         }
     }
 }

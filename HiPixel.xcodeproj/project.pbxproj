@@ -3,34 +3,43 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6BE1BEEB2C1F14A6004C9187 /* HiPixelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1BEEA2C1F14A6004C9187 /* HiPixelApp.swift */; };
-		6BE1BEED2C1F14A6004C9187 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1BEEC2C1F14A6004C9187 /* Persistence.swift */; };
-		6BE1BEF02C1F14A6004C9187 /* HiPixel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1BEEE2C1F14A6004C9187 /* HiPixel.xcdatamodeld */; };
-		6BE1BEF22C1F14A6004C9187 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1BEF12C1F14A6004C9187 /* ContentView.swift */; };
-		6BE1BEF42C1F14A7004C9187 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BE1BEF32C1F14A7004C9187 /* Assets.xcassets */; };
-		6BE1BEF82C1F14A7004C9187 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BE1BEF72C1F14A7004C9187 /* Preview Assets.xcassets */; };
+		6B3439372D516974007636B5 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3439362D516974007636B5 /* Sparkle */; };
+		6B70EECB2CC67FC9001AF842 /* GeneralNotification in Frameworks */ = {isa = PBXBuildFile; productRef = 6B70EECA2CC67FC9001AF842 /* GeneralNotification */; };
+		6B70EECE2CC67FE3001AF842 /* NotchNotification in Frameworks */ = {isa = PBXBuildFile; productRef = 6B70EECD2CC67FE3001AF842 /* NotchNotification */; };
+		6B97B8392CC7D3710084F2F4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6B97B8382CC7D3710084F2F4 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B97B8382CC7D3710084F2F4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6BE1BEE72C1F14A6004C9187 /* HiPixel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HiPixel.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BE1BEEA2C1F14A6004C9187 /* HiPixelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiPixelApp.swift; sourceTree = "<group>"; };
-		6BE1BEEC2C1F14A6004C9187 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		6BE1BEEF2C1F14A6004C9187 /* HiPixel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HiPixel.xcdatamodel; sourceTree = "<group>"; };
-		6BE1BEF12C1F14A6004C9187 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		6BE1BEF32C1F14A7004C9187 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6BE1BEF52C1F14A7004C9187 /* HiPixel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HiPixel.entitlements; sourceTree = "<group>"; };
-		6BE1BEF72C1F14A7004C9187 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6B3439342D5161A6007636B5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6BE1BEE62C1F14A5004C9187 /* HiPixel */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6B3436A42D50ABC9007636B5 /* HiPixel */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (6B3439342D5161A6007636B5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = HiPixel; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6BE1BEE42C1F14A5004C9187 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B3439372D516974007636B5 /* Sparkle in Frameworks */,
+				6B70EECE2CC67FE3001AF842 /* NotchNotification in Frameworks */,
+				6B70EECB2CC67FC9001AF842 /* GeneralNotification in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +49,8 @@
 		6BE1BEDE2C1F14A5004C9187 = {
 			isa = PBXGroup;
 			children = (
-				6BE1BEE92C1F14A6004C9187 /* HiPixel */,
+				6B97B8382CC7D3710084F2F4 /* Localizable.xcstrings */,
+				6B3436A42D50ABC9007636B5 /* HiPixel */,
 				6BE1BEE82C1F14A6004C9187 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,28 +61,6 @@
 				6BE1BEE72C1F14A6004C9187 /* HiPixel.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		6BE1BEE92C1F14A6004C9187 /* HiPixel */ = {
-			isa = PBXGroup;
-			children = (
-				6BE1BEEA2C1F14A6004C9187 /* HiPixelApp.swift */,
-				6BE1BEEC2C1F14A6004C9187 /* Persistence.swift */,
-				6BE1BEF12C1F14A6004C9187 /* ContentView.swift */,
-				6BE1BEF32C1F14A7004C9187 /* Assets.xcassets */,
-				6BE1BEF52C1F14A7004C9187 /* HiPixel.entitlements */,
-				6BE1BEEE2C1F14A6004C9187 /* HiPixel.xcdatamodeld */,
-				6BE1BEF62C1F14A7004C9187 /* Preview Content */,
-			);
-			path = HiPixel;
-			sourceTree = "<group>";
-		};
-		6BE1BEF62C1F14A7004C9187 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				6BE1BEF72C1F14A7004C9187 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +78,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				6B3436A42D50ABC9007636B5 /* HiPixel */,
+			);
 			name = HiPixel;
 			productName = HiPixel;
 			productReference = 6BE1BEE72C1F14A6004C9187 /* HiPixel.app */;
@@ -103,7 +94,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					6BE1BEE62C1F14A5004C9187 = {
 						CreatedOnToolsVersion = 15.4;
@@ -116,9 +107,15 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = 6BE1BEDE2C1F14A5004C9187;
+			packageReferences = (
+				6B70EEC92CC67FC9001AF842 /* XCRemoteSwiftPackageReference "GeneralNotification" */,
+				6B70EECC2CC67FE3001AF842 /* XCRemoteSwiftPackageReference "NotchNotification" */,
+				6B3439352D516974007636B5 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			productRefGroup = 6BE1BEE82C1F14A6004C9187 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -133,8 +130,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BE1BEF82C1F14A7004C9187 /* Preview Assets.xcassets in Resources */,
-				6BE1BEF42C1F14A7004C9187 /* Assets.xcassets in Resources */,
+				6B97B8392CC7D3710084F2F4 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,10 +141,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BE1BEEB2C1F14A6004C9187 /* HiPixelApp.swift in Sources */,
-				6BE1BEF02C1F14A6004C9187 /* HiPixel.xcdatamodeld in Sources */,
-				6BE1BEF22C1F14A6004C9187 /* ContentView.swift in Sources */,
-				6BE1BEED2C1F14A6004C9187 /* Persistence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +152,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -189,6 +182,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -207,11 +201,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -221,6 +218,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -250,6 +248,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -262,10 +261,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -274,14 +276,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = HiPixel/HiPixel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"HiPixel/Preview Content\"";
 				DEVELOPMENT_TEAM = SS9NT29VA7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HiPixel/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HiPixel;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -292,18 +299,18 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = tech.5km.HiPixel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -312,14 +319,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = HiPixel/HiPixel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"HiPixel/Preview Content\"";
 				DEVELOPMENT_TEAM = SS9NT29VA7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HiPixel/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = HiPixel;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -330,18 +342,18 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = tech.5km.HiPixel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -368,18 +380,50 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCVersionGroup section */
-		6BE1BEEE2C1F14A6004C9187 /* HiPixel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6BE1BEEF2C1F14A6004C9187 /* HiPixel.xcdatamodel */,
-			);
-			currentVersion = 6BE1BEEF2C1F14A6004C9187 /* HiPixel.xcdatamodel */;
-			path = HiPixel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+/* Begin XCRemoteSwiftPackageReference section */
+		6B3439352D516974007636B5 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.4;
+			};
 		};
-/* End XCVersionGroup section */
+		6B70EEC92CC67FC9001AF842 /* XCRemoteSwiftPackageReference "GeneralNotification" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/okooo5km/GeneralNotification";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		6B70EECC2CC67FE3001AF842 /* XCRemoteSwiftPackageReference "NotchNotification" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Lakr233/NotchNotification.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6B3439362D516974007636B5 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B3439352D516974007636B5 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+		6B70EECA2CC67FC9001AF842 /* GeneralNotification */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B70EEC92CC67FC9001AF842 /* XCRemoteSwiftPackageReference "GeneralNotification" */;
+			productName = GeneralNotification;
+		};
+		6B70EECD2CC67FE3001AF842 /* NotchNotification */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B70EECC2CC67FE3001AF842 /* XCRemoteSwiftPackageReference "NotchNotification" */;
+			productName = NotchNotification;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6BE1BEDF2C1F14A5004C9187 /* Project object */;
 }
