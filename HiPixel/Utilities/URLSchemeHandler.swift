@@ -19,6 +19,9 @@ class URLSchemeHandler {
         
         let urls = paths.compactMap { path -> URL? in
             let url = URL(fileURLWithPath: path)
+            guard FileManager.default.fileExists(atPath: path) else {
+                return nil
+            }
             guard url.isImageFile || url.isFile(ofTypes: [.folder]) else {
                 return nil
             }
