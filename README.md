@@ -1,20 +1,20 @@
 # HiPixel
 
 <p align="center">
-  <img src="HiPixel/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" height="128" alt="HiPixel Logo" class="continuous-radius">
+  <img src="HiPixel/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" height="128" alt="HiPixel Logo" style="border-radius: 16px;">
 </p>
 
 <h1 align="center">HiPixel</h1>
 
 <p align="center">
   <a href="https://github.com/yourusername/hipixel/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="License: AGPL v3" class="continuous-radius">
+    <img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="License: AGPL v3" style="border-radius: 8px;">
   </a>
   <a href="https://developer.apple.com/swift">
-    <img src="https://img.shields.io/badge/Swift-5.9-orange.svg" alt="Swift 5.9" class="continuous-radius">
+    <img src="https://img.shields.io/badge/Swift-5.9-orange.svg" alt="Swift 5.9" style="border-radius: 8px;">
   </a>
   <a href="https://developer.apple.com/macos">
-    <img src="https://img.shields.io/badge/Platform-macOS-lightgrey.svg" alt="Platform: macOS" class="continuous-radius">
+    <img src="https://img.shields.io/badge/Platform-macOS-lightgrey.svg" alt="Platform: macOS" style="border-radius: 8px;">
   </a>
 </p>
 
@@ -29,7 +29,7 @@
 HiPixel is a native macOS application for AI-powered image super-resolution, built with SwiftUI and leveraging Upscayl's powerful AI models.
 
 <p align="center">
-  <img src="screenshot.jpeg" width="600" alt="HiPixel Screenshot" class="continuous-radius">
+  <img src="screenshot.jpeg" width="600" alt="HiPixel Screenshot" style="border-radius: 16px;">
 </p>
 
 ### ✨ Features
@@ -125,7 +125,7 @@ If you find HiPixel helpful, please consider supporting its development:
 
 <p align="center">
   <a href="https://buymeacoffee.com/okooo5km">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=okooo5km&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" class="continuous-radius" />
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=okooo5km&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" style="border-radius: 8px;" />
   </a>
 </p>
 
@@ -137,13 +137,13 @@ If you find HiPixel helpful, please consider supporting its development:
 - **WeChat Pay**
 
   <p>
-    <img src="https://storage.5km.host/wechatpay.png" width="200" alt="WeChat Pay QR Code" class="continuous-radius" />
+    <img src="https://storage.5km.host/wechatpay.png" width="200" alt="WeChat Pay QR Code" style="border-radius: 16px;" />
   </p>
 
 - **Alipay**
 
   <p>
-    <img src="https://storage.5km.host/alipay.png" width="200" alt="Alipay QR Code" class="continuous-radius" />
+    <img src="https://storage.5km.host/alipay.png" width="200" alt="Alipay QR Code" style="border-radius: 16px;" />
   </p>
 
 </details>
@@ -168,7 +168,7 @@ HiPixel also uses:
 HiPixel 是一款原生 macOS 应用程序，用于 AI 图像超分辨率处理，使用 SwiftUI 构建，并采用 Upscayl 的强大 AI 模型。
 
 <p align="center">
-  <img src="screenshot.jpeg" width="600" alt="HiPixel 截图" class="continuous-radius">
+  <img src="screenshot.jpeg" width="600" alt="HiPixel 截图" style="border-radius: 16px;">
 </p>
 
 ### ✨ 功能特点
@@ -262,7 +262,7 @@ HiPixel 采用 GNU Affero 通用公共许可证第3版 (AGPLv3) 授权。这意�
 
 <p align="center">
   <a href="https://buymeacoffee.com/okooo5km">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=okooo5km&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" class="continuous-radius" />
+    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=okooo5km&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" style="border-radius: 8px;" />
   </a>
 </p>
 
@@ -273,12 +273,12 @@ HiPixel 采用 GNU Affero 通用公共许可证第3版 (AGPLv3) 授权。这意�
 
 - **微信支付**
   <p>
-    <img src="https://storage.5km.host/wechatpay.png" width="200" alt="微信支付二维码" class="continuous-radius" />
+    <img src="https://storage.5km.host/wechatpay.png" width="200" alt="微信支付二维码" style="border-radius: 16px;" />
   </p>
 
 - **支付宝**
   <p>
-    <img src="https://storage.5km.host/alipay.png" width="200" alt="支付宝二维码" class="continuous-radius" />
+    <img src="https://storage.5km.host/alipay.png" width="200" alt="支付宝二维码" style="border-radius: 16px;" />
   </p>
 
 </details>
@@ -295,10 +295,3 @@ HiPixel 还使用了：
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - macOS 应用程序的软件更新框架 (MIT 许可证)
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - 适用于 macOS 的刘海屏样式通知横幅 (MIT 许可证)
 - [GeneralNotification](https://github.com/okooo5km/GeneralNotification) - 适用于 macOS 的自定义通知横幅 (MIT 许可证)
-
-<style>
-.continuous-radius {
-  border-radius: 16px / 16px;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-}
-</style>
