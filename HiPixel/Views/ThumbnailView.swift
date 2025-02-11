@@ -33,11 +33,11 @@ struct ThumbnailView: View {
         }
         .frame(width: 64, height: 64)
         .aspectRatio(contentMode: .fill)
-        .cornerRadius(16)
+        .cornerRadius(8)
         .background(
-            cornerRadius: 16,
-            strokeColor: .primary.opacity(item.id == upscaylData.selectedItem?.id ? 0.2: 0.06),
-            fill: .background.opacity(item.id == upscaylData.selectedItem?.id ? 0.8 : 0.3)
+            cornerRadius: 8,
+            strokeColor: .primary.opacity(item.id == upscaylData.selectedItem?.id ? 0.1: 0.02),
+            fill: .background.opacity(item.id == upscaylData.selectedItem?.id ? 0.8 : 0.5)
         )
         .overlay {
             if item.state == .processing {
@@ -45,7 +45,7 @@ struct ThumbnailView: View {
                     .progressViewStyle(.circular)
                     .tint(.primary)
                     .frame(width: 64, height: 64)
-                    .background(cornerRadius: 16, fill: .background.opacity(0.8))
+                    .background(cornerRadius: 8, fill: .background.opacity(0.8))
             }
         }
         .background(alignment: .bottom) {

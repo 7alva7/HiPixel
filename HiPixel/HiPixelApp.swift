@@ -34,7 +34,7 @@ struct HiPixelApp: App {
     var body: some Scene {
         Window("HiPixel", id: "HiPixel") {
             ContentView()
-                .frame(minWidth: 720, idealWidth: 960, minHeight: 640, idealHeight: 720)
+                .frame(minWidth: 640, idealWidth: 720, minHeight: 480, idealHeight: 640)
                 .onAppear {
                     HiPixelConfiguration.ColorScheme.change(to: colorScheme)
                 }
@@ -42,7 +42,9 @@ struct HiPixelApp: App {
                     HiPixelConfiguration.ColorScheme.change(to: newValue)
                 }
                 .environmentObject(upscaylData)
+                .ignoresSafeArea(.all)
         }
+        .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         .defaultSize(.init(width: 720, height: 480))
         .commands {
@@ -83,6 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } catch {
             print("Failed to prepare models: \(error)")
         }
+        SoundManager.shared.loadSound(named: "Blow", volume: 0.2)
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {

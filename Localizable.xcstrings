@@ -117,6 +117,16 @@
         }
       }
     },
+    "✨ Release to Process Images ✨" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✨ 松开文件开始放大图片 ✨"
+          }
+        }
+      }
+    },
     "0" : {
       "localizations" : {
         "zh-Hans" : {
@@ -143,6 +153,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关于"
+          }
+        }
+      }
+    },
+    "AI Image Upscaler Wrapping **[Upscayl](https://github.com/upscayl/upscayl)**" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基于 **[Upscayl](https://github.com/upscayl/upscayl)** 的 AI 图像放大工具"
           }
         }
       }
@@ -331,16 +351,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关注我"
-          }
-        }
-      }
-    },
-    "Gallery" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "图库"
           }
         }
       }
@@ -534,16 +544,6 @@
         }
       }
     },
-    "Options" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "选项"
-          }
-        }
-      }
-    },
     "Original" : {
       "localizations" : {
         "zh-Hans" : {
@@ -620,6 +620,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "处理中…"
+          }
+        }
+      }
+    },
+    "Remove History List" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清空历史"
+          }
+        }
+      }
+    },
+    "Remove The Image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除此历史"
           }
         }
       }
@@ -701,16 +721,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "支持 HiPixel"
-          }
-        }
-      }
-    },
-    "Supported Image Formats" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "支持的图像格式"
           }
         }
       }

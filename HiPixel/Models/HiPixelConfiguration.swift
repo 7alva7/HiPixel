@@ -26,6 +26,7 @@ struct HiPixelConfiguration {
         static let CustomTileSize = "HIPixel-CustomTileSize"
         static let CustomModelsFolder = "HIPixel-CustomModelsFolder"
         static let UpscaylModel = "HIPixel-UpscaylModel"
+        static let UpscaylModelVersion: String = "HIPixel-UpscaylModel-Version"
         static let DoubleUpscayl = "HIPixel-DoubleUpscayl"
     }
     
@@ -113,14 +114,11 @@ struct HiPixelConfiguration {
     enum UpscaylModel: String, Codable, CaseIterable {
         case Upscayl_Standard = "upscayl-standard-4x"
         case Upscayl_Lite = "upscayl-lite-4x"
+//        case High_Fidenlity = "high-fidelity-4x"
+//        case Digital_Art = "digital-art-4x"
         
         var id: String {
-            switch self {
-            case .Upscayl_Standard:
-                return "upscayl-standard-4x"
-            case .Upscayl_Lite:
-                return "upscayl-lite-4x"
-            }
+            self.rawValue
         }
         
         var text: String {
@@ -129,6 +127,10 @@ struct HiPixelConfiguration {
                 return "Standard".localized
             case .Upscayl_Lite:
                 return "Lite".localized
+//            case .High_Fidenlity:
+//                return "High Fidelity".localized
+//            case .Digital_Art:
+//                return "Digital Art".localized
             }
         }
         
@@ -184,6 +186,9 @@ struct HiPixelConfiguration {
     
     @AppStorage(Keys.UpscaylModel)
     var upscaleModel: UpscaylModel = .Upscayl_Standard
+    
+    @AppStorage(Keys.UpscaylModelVersion)
+    var upscaleModelVersion: String = "2.14.0"
     
     func reset() {
         saveImageAs = .png

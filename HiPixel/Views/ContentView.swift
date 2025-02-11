@@ -12,20 +12,55 @@ struct ContentView: View, DropDelegate {
     @AppStorage(HiPixelConfiguration.Keys.ColorScheme)
     var colorScheme: HiPixelConfiguration.ColorScheme = .system
     
-    @State var isGalleryPresented: Bool = false
-    
     @State var isOptionsPresented: Bool = false
     
     @State var isFilePanelPresented: Bool = false
     
     @State private var dropOver = false
+    @State private var hovering = false
+    
+    @State private var item: UpscaylDataItem? = nil
     
     @EnvironmentObject var upscaylData: UpscaylData
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 0) {
+            
+            HStack(spacing: 16) {
+                Spacer()
+                
+                Button {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        isOptionsPresented.toggle()
+                    }
+                } label: {
+                    Image(systemName: "gearshape")
+                        .font(.title3)
+                        .popover(isPresented: $isOptionsPresented) {
+                            UpscaleSettingsView()
+                                .padding(.top, 12)
+                                .overlay(alignment: .topLeading) {
+                                    Button(action: {
+                                        withAnimation {
+                                            isOptionsPresented = false
+                                        }
+                                    }, label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .padding(6)
+                                    })
+                                    .buttonStyle(.plain)
+                                }
+                                .font(.caption)
+                        }
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.top, 16)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
+            
             VStack {
-                if let item = upscaylData.selectedItem {
+                if let item = upscaylData.selectedItem, !dropOver {
                     switch item.state {
                     case .processing:
                         GeometryReader { geometry in
@@ -87,8 +122,8 @@ struct ContentView: View, DropDelegate {
                                         Label("\(item.size.width, specifier: "%.0f")×\(item.size.height, specifier: "%.0f") px", systemImage: "viewfinder.rectangular")
                                             .font(.caption)
                                     }
-                                    .padding(16)
-                                    .background(cornerRadius: 16, fill: .background.opacity(0.8))
+                                    .padding(12)
+                                    .background(cornerRadius: 6, strokeColor: .primary.opacity(0.05), fill: .background.opacity(0.8))
                                     Spacer()
                                     VStack(alignment: .trailing, spacing: 8) {
                                         Text("HiPixeled Image")
@@ -96,30 +131,105 @@ struct ContentView: View, DropDelegate {
                                         Label("\(item.newSize.width, specifier: "%.0f")×\(item.newSize.height, specifier: "%.0f") px", systemImage: "viewfinder.rectangular")
                                             .font(.caption)
                                     }
-                                    .padding(16)
-                                    .background(cornerRadius: 16, fill: .background.opacity(0.8))
+                                    .padding(12)
+                                    .background(cornerRadius: 6, strokeColor: .primary.opacity(0.05), fill: .background.opacity(0.8))
                                 }
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
-                                .padding(8)
+                                .padding(6)
+                            }
+                            .background {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.background.opacity(hovering ? 0.7 : 0.8))
+                                    
+                                    GeometryReader { geometry in
+                                        HStack(spacing: 40) {
+                                            ForEach(0..<59) { _ in
+                                                Rectangle()
+                                                    .fill(.background.opacity(hovering ? 0.5 : 0.4))
+                                                    .frame(width: 40)
+                                            }
+                                        }
+                                        .frame(width: geometry.size.width)
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    }
+                                }
                             }
                     }
                 } else {
-                    AppInfoView()
-                    
-                    Text("✨ Drag image files or folders here ✨")
-                        .padding(.top, 16)
-                        .padding(.bottom, 8)
-                        .font(.system(size: 15, weight: .heavy))
-                    
-                    VStack(spacing: 5) {
-                        Text("Supported Image Formats")
-                            .font(.system(size: 10, weight: .light))
-                        Text("**PNG** • **JPEG** • **WebP**")
-                            .font(.system(size: 10))
+                    VStack {
+                        ZStack {
+                            Image(hovering || dropOver ? .hipixelboard2 : .hipixelboard1)
+                                .animation(
+                                    .spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.6),
+                                    value: hovering
+                                )
+                                .animation(
+                                    .spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.6),
+                                    value: dropOver
+                                )
+
+                            Image(.magicbar)
+                                .scaleEffect(0.92)
+                                .rotationEffect(.init(degrees: hovering || dropOver ? 7 : -5))
+                                .offset(x: hovering || dropOver ? -48 : 24, y: hovering || dropOver ? -8 : -12)
+                                .animation(
+                                    .spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0.6),
+                                    value: hovering
+                                )
+                                .animation(
+                                    .spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0.6),
+                                    value: dropOver
+                                )
+                        }
+                        .padding(.bottom, -24)
                         
+                        if dropOver {
+                            Text("✨ Release to Process Images ✨")
+                                .padding(.top, 16)
+                                .padding(.bottom, 8)
+                                .font(.system(size: 15, weight: .heavy))
+                        } else {
+                            Text("✨ Drag image files or folders here ✨")
+                                .padding(.top, 16)
+                                .padding(.bottom, 8)
+                                .font(.system(size: 15, weight: .heavy))
+                        }
+                        
+                        Text("**PNG** • **JPEG** • **WebP**")
+                                .font(.system(size: 10))
                     }
-                    .frame(width: 180)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .foregroundStyle(dropOver || hovering ? .primary : .secondary)
+                    .overlay(alignment: .bottom) {
+                        Text("AI Image Upscaler Wrapping **[Upscayl](https://github.com/upscayl/upscayl)**")
+                            .font(.caption)
+                            .foregroundColor(.secondary.opacity(0.75))
+                            .padding(12)
+                    }
+                    .background {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(.background.opacity(hovering ? 0.7 : 0.8))
+                            
+                            GeometryReader { geometry in
+                                HStack(spacing: 40) {
+                                    ForEach(0..<59) { _ in
+                                        Rectangle()
+                                            .fill(.background.opacity(hovering ? 0.5 : 0.4))
+                                            .frame(width: 40)
+                                    }
+                                }
+                                .frame(width: geometry.size.width)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                            
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [4, 4]))
+                                .foregroundStyle(.primary.opacity(hovering ? 0.24 : 0.12))
+                        }
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -132,111 +242,42 @@ struct ContentView: View, DropDelegate {
             .padding(.init(
                 top: 8,
                 leading: 8,
-                bottom: isGalleryPresented ? 0 : 8,
+                bottom: upscaylData.items.isEmpty ? 8 : 0,
                 trailing: 8
             ))
             
-            if isGalleryPresented {
-                HStack(spacing: 0) {
-                    Button {
-                        withAnimation(.spring) {
-                            isFilePanelPresented.toggle()
-                        }
-                    } label: {
-                        Image(systemName: "plus")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .frame(width: 64, height: 64)
-                            .foregroundStyle(.white)
-                            .background(
-                                cornerRadius: 16,
-                                fill: LinearGradient(
-                                    colors: [
-                                        Color(hex: "#55AAEF")!,
-                                        .blue,
-                                    ],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            )
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .strokeBorder(
-                                        LinearGradient(
-                                            colors: [
-                                                .white.opacity(0.5),
-                                                .clear,
-                                            ],
-                                            startPoint: .top,
-                                            endPoint: .bottom
-                                        ),
-                                        lineWidth: 1
-                                    )
-                            }
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.leading, 8)
-                    
+            if !(upscaylData.items.isEmpty) {
+                HStack(spacing: 8) {
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: 8) {
                             ForEach(upscaylData.items, id: \.id) { item in
                                 ThumbnailView(item: item)
+                                    .contextMenu {
+                                        Button(action: {
+                                            upscaylData.selectedItem = nil
+                                            upscaylData.remove(item)
+                                        }) {
+                                            Label("Remove The Image", systemImage: "rectangle.badge.minus")
+                                        }
+                                        
+                                        Button(action: {
+                                            upscaylData.selectedItem = nil
+                                            upscaylData.removeAll()
+                                        }) {
+                                            Label("Remove History List", systemImage: "rectangle.stack.badge.minus")
+                                        }
+                                    }
                             }
                         }
-                        .padding(.horizontal, 8)
                         .frame(height: 80)
                     }
                 }
                 .frame(height: 80)
                 .transition(.asymmetric(insertion: .push(from: .bottom), removal: .push(from: .top)))
-                .animation(.easeInOut(duration: 0.5), value: isGalleryPresented)
-                .background(cornerRadius: 8, strokeColor: .primary.opacity(0.1), fill: .background.opacity(0.4))
-                .padding(.init(top: 0, leading: 8, bottom: 8, trailing: 8))
+                .padding(.horizontal, 8)
             }
         }
         .background(VibrantBackground().ignoresSafeArea(.all))
-        .toolbar {
-            ToolbarItem(placement: .navigation) {
-                Button {
-                    withAnimation(.spring) {
-                        isGalleryPresented.toggle()
-                    }
-                } label: {
-                    Label("Gallery", systemImage: "inset.filled.bottomhalf.rectangle")
-                        .font(.title2)
-                }
-            }
-            
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        isOptionsPresented.toggle()
-                    }
-                } label: {
-                    Label("Options", systemImage: "slider.horizontal.3")
-                        .font(.title2)
-                }
-                .popover(isPresented: $isOptionsPresented) {
-                    UpscaleSettingsView()
-                        .padding(.top, 12)
-                        .overlay(alignment: .topLeading) {
-                            Button(action: {
-                                withAnimation {
-                                    isOptionsPresented = false
-                                }
-                            }, label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .padding(6)
-                            })
-                            .buttonStyle(.plain)
-                        }
-                }
-            }
-        }
-        .overlay {
-            Rectangle()
-                .fill(.blue.opacity(dropOver ? 0.2 : 0))
-        }
         .fileImporter(
             isPresented: $isFilePanelPresented,
             allowedContentTypes: [.jpeg, .png, .webP, .folder],
@@ -250,15 +291,21 @@ struct ContentView: View, DropDelegate {
             }
         }
         .onDrop(of: [.png, .jpeg, .webP], delegate: self)
+        .onHover { inHover in
+            if inHover != hovering {
+                hovering = inHover
+            }
+        }
         .focusable(false)
-        .navigationTitle("HiPixel")
-        .navigationSubtitle(upscaylData.selectedItem?.fileName ?? "")
     }
     
     func dropEntered(info: DropInfo) {
         withAnimation {
             dropOver = true
         }
+//        DispatchQueue.main.async {
+//            SoundManager.shared.playSound()
+//        }
     }
     
     func dropExited(info: DropInfo) {
@@ -315,5 +362,5 @@ struct ContentView: View, DropDelegate {
 }
 
 #Preview {
-    ContentView()
+    ContentView().environmentObject(UpscaylData.shared)
 }

@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct RotatingProcessingView: View {
     @State private var rotationAngle: Double = 0
     
