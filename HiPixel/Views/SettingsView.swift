@@ -48,8 +48,74 @@ struct GeneralSettingsView: View {
     @AppStorage(HiPixelConfiguration.Keys.NotificationMode)
     var notification: HiPixelConfiguration.NotificationMode = .None
     
+    @AppStorage(HiPixelConfiguration.Keys.SelectedAppIcon)
+    private var selectedAppIcon: HiPixelConfiguration.AppIcon = .primary
+    
     var body: some View {
         VStack {
+            SettingItem(
+                title: "APP ICON",
+                icon: "app.badge",
+                bodyView: VStack(spacing: 0) {
+                    ForEach(HiPixelConfiguration.AppIcon.allCases, id: \.rawValue) { icon in
+                        HStack {
+                            if let image = icon.previewImage {
+                                Image(nsImage: image)
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
+                            }
+                            
+                            Text(icon.displayName)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.caption)
+                                .foregroundStyle(selectedAppIcon == icon ? .white : .secondary)
+                            
+                            if selectedAppIcon == icon {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .padding(6)
+                        .background {
+                            if selectedAppIcon == icon {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [
+                                                Color(hex: "#55AAEF")!,
+                                                .blue
+                                            ],
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
+                                    )
+                            } else {
+                                RoundedRectangle(cornerRadius: 8).fill(.background.opacity(0.01))
+                            }
+                        }
+                        .overlay {
+                            if selectedAppIcon == icon {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .strokeBorder(
+                                        LinearGradient(
+                                            colors: [
+                                                .white.opacity(0.4), .clear
+                                            ],
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            }
+                        }
+                        .onTapGesture {
+                            selectedAppIcon = icon
+                            AppIconManager.shared.setAppIcon(icon)
+                        }
+                    }
+                }.padding(.leading, 8)
+            )
+            
             SettingItem(
                 title: "Appearance",
                 icon: "sun.lefthalf.filled",

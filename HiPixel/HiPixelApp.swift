@@ -85,7 +85,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } catch {
             print("Failed to prepare models: \(error)")
         }
-        SoundManager.shared.loadSound(named: "Blow", volume: 0.2)
+        AppIconManager.shared.applyAppIcon()
+//        SoundManager.shared.loadSound(named: "Blow", volume: 0.2)
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {

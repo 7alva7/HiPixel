@@ -213,6 +213,16 @@
         }
       }
     },
+    "APP ICON" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用图标"
+          }
+        }
+      }
+    },
     "App Icon & UI Design (v0.2)" : {
       "localizations" : {
         "zh-Hans" : {
@@ -325,6 +335,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设计"
+          }
+        }
+      }
+    },
+    "Designed by @okooo5km" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Designed by **okooo5km**"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由 **okooo5km** 设计"
+          }
+        }
+      }
+    },
+    "Designed by zaotang.xyz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Designed by **zaotang**"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由 **zaotang** 设计 "
           }
         }
       }

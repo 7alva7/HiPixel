@@ -28,6 +28,7 @@ struct HiPixelConfiguration {
         static let UpscaylModel = "HIPixel-UpscaylModel"
         static let UpscaylModelVersion: String = "HIPixel-UpscaylModel-Version"
         static let DoubleUpscayl = "HIPixel-DoubleUpscayl"
+        static let SelectedAppIcon = "HIPixel-AppIconSelected"
     }
     
     enum ColorScheme: String, CaseIterable {
@@ -141,6 +142,24 @@ struct HiPixelConfiguration {
             let paramURL = directory.appendingPathComponent("\(self.id).param")
             let fileManager = FileManager.default
             return fileManager.fileExists(atPath: binURL.path) && fileManager.fileExists(atPath: paramURL.path)
+        }
+    }
+    
+    enum AppIcon: String, CaseIterable {
+        case primary = "AppIcon"
+        case secondary = "SecondaryAppIcon"
+        
+        var displayName: LocalizedStringKey {
+            switch self {
+            case .primary:
+                return "Designed by zaotang.xyz"
+            case .secondary:
+                return "Designed by @okooo5km"
+            }
+        }
+        
+        var previewImage: NSImage? {
+            NSImage(named: self.rawValue)
         }
     }
     
