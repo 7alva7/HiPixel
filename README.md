@@ -156,6 +156,8 @@ HiPixel uses the following components from [Upscayl](https://github.com/upscayl/
 - upscayl-bin - The binary tool for AI upscaling (AGPLv3)
 - AI Models - The AI models for image super-resolution (AGPLv3)
 
+Special thanks to [zaotang.xyz](https://zaotang.xyz) for designing the new application icon and main window interaction interface for HiPixel v0.2.
+
 HiPixel also uses:
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS applications (MIT License)
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - A custom notch-style notification banner for macOS (MIT License)
@@ -288,8 +290,10 @@ HiPixel 采用 GNU Affero 通用公共许可证第3版 (AGPLv3) 授权。这意�
 ### 🙏 致谢
 
 HiPixel 使用了以下来自 [Upscayl](https://github.com/upscayl/upscayl) 的组件：
-- upscayl-bin - AI 放大的二进制工具 (AGPLv3)
-- AI Models - 图像超分辨率 AI 模型 (AGPLv3)
+- upscayl-bin - AI 超分辨率处理工具
+- AI Models - 图像超分辨率模型
+
+特别感谢 [zaotang.xyz](https://zaotang.xyz) 为 HiPixel v0.2 版本设计了全新的应用图标和主窗口交互界面。
 
 HiPixel 还使用了：
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - macOS 应用程序的软件更新框架 (MIT 许可证)

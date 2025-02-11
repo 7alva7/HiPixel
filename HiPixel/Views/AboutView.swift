@@ -49,6 +49,24 @@ struct AboutView: View {
                 }
             )
             
+            // Design section
+            SettingItem(
+                title: "DESIGN",
+                icon: "paintpalette",
+                bodyView: VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Link("zaotang.xyz", destination: URL(string: "https://zaotang.xyz")!)
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.accentColor)
+                    }
+                    
+                    Text("App Icon & UI Design (v0.2)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            )
+            
             // Links section
             HStack(spacing: 16) {
                 Button(action: {

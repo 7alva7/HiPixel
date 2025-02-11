@@ -213,6 +213,16 @@
         }
       }
     },
+    "App Icon & UI Design (v0.2)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用图标和主窗口 UI 设计(v0.2)"
+          }
+        }
+      }
+    },
     "Appearance" : {
       "localizations" : {
         "zh-Hans" : {
@@ -305,6 +315,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "深色"
+          }
+        }
+      }
+    },
+    "DESIGN" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设计"
           }
         }
       }
@@ -937,6 +957,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "您的支持意义非凡"
+          }
+        }
+      }
+    },
+    "zaotang.xyz" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zaotang.xyz"
           }
         }
       }
