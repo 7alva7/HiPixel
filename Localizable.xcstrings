@@ -309,6 +309,17 @@
         }
       }
     },
+    "Digital Art" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数字艺术"
+          }
+        }
+      }
+    },
     "Disable Notification" : {
       "localizations" : {
         "en" : {
@@ -377,6 +388,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPU 编号"
+          }
+        }
+      }
+    },
+    "High Fidelity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高保真"
           }
         }
       }
@@ -813,6 +835,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "upscayl-bin"
+          }
+        }
+      }
+    },
+    "UpscaylModel description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. **Standard**\nGreat for most of your images.\n2. **Lite**\nQuickly enhance your images.\n3. **High Fidelity**\nFor all types of images, focusing on authentic details and smooth textures.\n4. **Digital Art**\nSpecifically designed for digital artwork and illustrations."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. **标准**\n适用于大多数图像场景。\n2. **轻量**\n快速提升图像画质。\n3. **高保真**\n适用于各种图像，注重还原真实细节和平滑的纹理。\n4. **数字艺术：**\n专为数字艺术作品和插图设计。 "
           }
         }
       }

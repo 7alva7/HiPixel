@@ -114,8 +114,10 @@ struct HiPixelConfiguration {
     enum UpscaylModel: String, Codable, CaseIterable {
         case Upscayl_Standard = "upscayl-standard-4x"
         case Upscayl_Lite = "upscayl-lite-4x"
-//        case High_Fidenlity = "high-fidelity-4x"
-//        case Digital_Art = "digital-art-4x"
+        case High_Fidenlity = "high-fidelity-4x"
+        case Digital_Art = "digital-art-4x"
+        
+        static let description: LocalizedStringKey = "UpscaylModel description"
         
         var id: String {
             self.rawValue
@@ -127,10 +129,10 @@ struct HiPixelConfiguration {
                 return "Standard".localized
             case .Upscayl_Lite:
                 return "Lite".localized
-//            case .High_Fidenlity:
-//                return "High Fidelity".localized
-//            case .Digital_Art:
-//                return "Digital Art".localized
+            case .High_Fidenlity:
+                return "High Fidelity".localized
+            case .Digital_Art:
+                return "Digital Art".localized
             }
         }
         

@@ -8,6 +8,9 @@
 import Foundation
 
 class ResourceManager {
+    
+    static let upscaylModelVersion: String = "2.15.0"
+    
     static func binaryPath() -> URL {
         guard let url = Bundle.main.url(
             forResource: "upscayl-bin",
@@ -27,7 +30,7 @@ class ResourceManager {
         let modelsZipURL = Bundle.main.url(forResource: "models", withExtension: "zip")!
         let destinationURL = Common.directory.appendingPathComponent("models")
         
-        if !fileManager.fileExists(atPath: destinationURL.path) {
+        if !fileManager.fileExists(atPath: destinationURL.path) || upscaylModelVersion != HiPixelConfiguration.shared.upscaleModelVersion {
             try fileManager.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
             
             let process = Process()
@@ -40,6 +43,8 @@ class ResourceManager {
             if process.terminationStatus != 0 {
                 throw NSError(domain: "ResourceManagerError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip models"])
             }
+            
+            HiPixelConfiguration.shared.upscaleModelVersion = upscaylModelVersion
         }
     }
 }

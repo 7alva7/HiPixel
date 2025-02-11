@@ -142,6 +142,7 @@ struct UpscaleSettingsView: View {
             SettingItem(
                 title: "Select Model",
                 icon: "wand.and.stars",
+                description: HiPixelConfiguration.UpscaylModel.description,
                 bodyView: Group {
                     Picker("", selection: $upscaleModel) {
                         ForEach(HiPixelConfiguration.UpscaylModel.allCases, id: \.self) {
