@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
+
     @State private var selectedTab = 0
-    
+
     var body: some View {
         TabView(selection: $selectedTab) {
             GeneralSettingsView()
@@ -19,14 +19,14 @@ struct SettingsView: View {
                     Text("General Settings")
                 }
                 .tag(0)
-            
+
             AboutView()
                 .tabItem {
                     Image(systemName: "info")
                     Text("About")
                 }
                 .tag(1)
-            
+
             DonationView()
                 .tabItem {
                     Image(systemName: "dollarsign")
@@ -41,16 +41,16 @@ struct SettingsView: View {
 }
 
 struct GeneralSettingsView: View {
-    
+
     @AppStorage(HiPixelConfiguration.Keys.ColorScheme)
     var colorScheme: HiPixelConfiguration.ColorScheme = .system
-    
+
     @AppStorage(HiPixelConfiguration.Keys.NotificationMode)
     var notification: HiPixelConfiguration.NotificationMode = .None
-    
+
     @AppStorage(HiPixelConfiguration.Keys.SelectedAppIcon)
     private var selectedAppIcon: HiPixelConfiguration.AppIcon = .primary
-    
+
     var body: some View {
         VStack {
             SettingItem(
@@ -64,12 +64,12 @@ struct GeneralSettingsView: View {
                                     .resizable()
                                     .frame(width: 32, height: 32)
                             }
-                            
+
                             Text(icon.displayName)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.caption)
                                 .foregroundStyle(selectedAppIcon == icon ? .white : .secondary)
-                            
+
                             if selectedAppIcon == icon {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.white)
@@ -83,7 +83,7 @@ struct GeneralSettingsView: View {
                                         LinearGradient(
                                             colors: [
                                                 Color(hex: "#55AAEF")!,
-                                                .blue
+                                                .blue,
                                             ],
                                             startPoint: .top,
                                             endPoint: .bottom
@@ -99,7 +99,7 @@ struct GeneralSettingsView: View {
                                     .strokeBorder(
                                         LinearGradient(
                                             colors: [
-                                                .white.opacity(0.4), .clear
+                                                .white.opacity(0.4), .clear,
                                             ],
                                             startPoint: .top,
                                             endPoint: .bottom
@@ -115,7 +115,7 @@ struct GeneralSettingsView: View {
                     }
                 }.padding(.leading, 8)
             )
-            
+
             SettingItem(
                 title: "Appearance",
                 icon: "sun.lefthalf.filled",
@@ -129,18 +129,21 @@ struct GeneralSettingsView: View {
                     .pickerStyle(.segmented)
                 }
             )
-            
+
             SettingItem(
                 title: "Notification",
                 icon: "bell",
                 trailingView: Group {
                     if notification == .HiPixel || notification == .Notch {
-                        Button(action: {
-                            NotificationX.push(message: "")
-                        }, label: {
-                            Image(systemName: "eye")
-                                .padding(.trailing, 4)
-                        })
+                        Button(
+                            action: {
+                                NotificationX.push(message: "")
+                            },
+                            label: {
+                                Image(systemName: "eye")
+                                    .padding(.trailing, 4)
+                            }
+                        )
                         .buttonStyle(.plain)
                     }
                 },
@@ -160,49 +163,49 @@ struct GeneralSettingsView: View {
 }
 
 struct UpscaleSettingsView: View {
-    
+
     @AppStorage(HiPixelConfiguration.Keys.UpscaylModel)
     var upscaleModel: HiPixelConfiguration.UpscaylModel = .Upscayl_Standard
-    
+
     @AppStorage(HiPixelConfiguration.Keys.SaveImageAs)
     var saveImageAs: HiPixelConfiguration.ImageFormat = .png
-    
+
     @AppStorage(HiPixelConfiguration.Keys.ImageScale)
     var imageScale: Double = 4.0
-    
+
     @AppStorage(HiPixelConfiguration.Keys.ImageCompression)
     var imageCompression: Int = 0
-    
+
     @AppStorage(HiPixelConfiguration.Keys.EnableZipicCompression)
     var enableZipicCompression: Bool = false
-    
+
     @AppStorage(HiPixelConfiguration.Keys.EnableSaveOutputFolder)
     var enableSaveOutputFolder: Bool = false
-    
+
     @AppStorage(HiPixelConfiguration.Keys.SaveOutputFolder)
     var saveOutputFolder: String?
-    
+
     @AppStorage(HiPixelConfiguration.Keys.OverwritePreviousUpscale)
     var overwritePreviousUpscale: Bool = false
-    
+
     @AppStorage(HiPixelConfiguration.Keys.GPUID)
     var gpuID: String = ""
-    
+
     @AppStorage(HiPixelConfiguration.Keys.CustomTileSize)
     var customTileSize: Int = 0
-    
+
     @AppStorage(HiPixelConfiguration.Keys.CustomModelsFolder)
     var customModelsFolder: String?
-    
+
     @State private var showZipicInstallAlert = false
-    
+
     private var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         return formatter
     }
-    
+
     var body: some View {
         VStack {
             SettingItem(
@@ -219,7 +222,7 @@ struct UpscaleSettingsView: View {
                     .pickerStyle(.menu)
                 }
             )
-            
+
             SettingItem(
                 title: "SAVE IMAGE AS",
                 icon: "photo",
@@ -234,11 +237,12 @@ struct UpscaleSettingsView: View {
                     .pickerStyle(.segmented)
                 }
             )
-            
+
             SettingItem(
                 title: "IMAGE SCALE",
                 icon: "slider.horizontal.below.rectangle",
-                description: "Anything above 4X (except 16X Double HiPixel) only resizes the image and does not use AI upscaling.",
+                description:
+                    "Anything above 4X (except 16X Double HiPixel) only resizes the image and does not use AI upscaling.",
                 trailingView: Group {
                     Text("X\(imageScale, specifier: "%.0f")")
                         .font(.caption)
@@ -246,13 +250,13 @@ struct UpscaleSettingsView: View {
                         .foregroundStyle(.secondary)
                 },
                 bodyView: VStack(spacing: 6) {
-                    
+
                     Slider(
                         value: $imageScale,
                         in: 2...16,
                         step: 1.0
                     )
-                    
+
                     HStack {
                         Text("X2")
                         Spacer()
@@ -260,7 +264,7 @@ struct UpscaleSettingsView: View {
                     }
                     .font(.system(size: 8, weight: .bold))
                     .foregroundStyle(.tertiary)
-                    
+
                     if imageScale >= 6 {
                         Text("This may cause performance issues on some devices.")
                             .fontWeight(.semibold)
@@ -269,37 +273,43 @@ struct UpscaleSettingsView: View {
                     }
                 }
             )
-            
+
             SettingItem(
                 title: "IMAGE COMPRESSION",
                 icon: "rectangle.compress.vertical",
-                description: "PNG compression is lossless, so it might not reduce the file size significantly and higher compression values might affect the performance. JPG and WebP compression is lossy",
+                description:
+                    "PNG compression is lossless, so it might not reduce the file size significantly and higher compression values might affect the performance. JPG and WebP compression is lossy",
                 bodyView: VStack(spacing: 6) {
                     HStack {
                         Text("\(imageCompression)%")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundStyle(.secondary)
-                        
+
                         Spacer()
-                        
-                        Toggle("Compress with Zipic", isOn: Binding(
-                            get: { enableZipicCompression },
-                            set: { newValue in
-                                if newValue && !AppInstallationChecker.isAppInstalled(bundleIdentifier: "studio.5km.zipic") {
-                                    showZipicInstallAlert = true
-                                    enableZipicCompression = false
-                                } else {
-                                    enableZipicCompression = newValue
+
+                        Toggle(
+                            "Compress with Zipic",
+                            isOn: Binding(
+                                get: { enableZipicCompression },
+                                set: { newValue in
+                                    if newValue
+                                        && !AppInstallationChecker.isAppInstalled(bundleIdentifier: "studio.5km.zipic")
+                                    {
+                                        showZipicInstallAlert = true
+                                        enableZipicCompression = false
+                                    } else {
+                                        enableZipicCompression = newValue
+                                    }
                                 }
-                            }
-                        ))
+                            )
+                        )
                         .toggleStyle(.switch)
                         .controlSize(.small)
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     }
-                    
+
                     Slider(
                         value: Binding(
                             get: { Double(imageCompression) },
@@ -312,7 +322,7 @@ struct UpscaleSettingsView: View {
                         // 确保值在 0-90 范围内
                         imageCompression = min(90, max(0, newValue))
                     }
-                    
+
                     HStack {
                         Text("0")
                         Spacer()
@@ -330,7 +340,7 @@ struct UpscaleSettingsView: View {
             } message: {
                 Text("Zipic is not installed. Would you like to install it now?")
             }
-            
+
             SettingItem(
                 title: "OUTPUT FOLDER",
                 icon: "folder",
@@ -346,29 +356,32 @@ struct UpscaleSettingsView: View {
                             .fontWeight(.semibold)
                             .foregroundStyle(.secondary)
                             .truncationMode(.middle)
-                        
+
                         Spacer()
-                        
-                        Button(action: {
-                            let panel = NSOpenPanel()
-                            panel.canChooseFiles = false
-                            panel.canChooseDirectories = true
-                            panel.allowsMultipleSelection = false
-                            panel.allowedContentTypes = [.folder]
-                            panel.canCreateDirectories = true
-                            panel.begin { result in
-                                if result == NSApplication.ModalResponse.OK, let url = panel.url {
-                                    saveOutputFolder = url.path
+
+                        Button(
+                            action: {
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = false
+                                panel.canChooseDirectories = true
+                                panel.allowsMultipleSelection = false
+                                panel.allowedContentTypes = [.folder]
+                                panel.canCreateDirectories = true
+                                panel.begin { result in
+                                    if result == NSApplication.ModalResponse.OK, let url = panel.url {
+                                        saveOutputFolder = url.path
+                                    }
                                 }
+                            },
+                            label: {
+                                Image(systemName: "folder.badge.gear")
                             }
-                        }, label: {
-                            Image(systemName: "folder.badge.gear")
-                        })
+                        )
                         .buttonStyle(.plain)
                     }
                 }
             )
-            
+
             SettingItem(
                 title: "OVERWRITE PREVIOUS UPSCALE",
                 icon: "photo.stack",
@@ -379,11 +392,12 @@ struct UpscaleSettingsView: View {
                         .controlSize(.small)
                 }
             )
-            
+
             SettingItem(
                 title: "GPU ID",
                 icon: "cpu",
-                description: "Please read the **[Upscayl Documentation](https://github.com/upscayl/upscayl/wiki/Guide#gpu-id)** for more information.",
+                description:
+                    "Please read the **[Upscayl Documentation](https://github.com/upscayl/upscayl/wiki/Guide#gpu-id)** for more information.",
                 bodyView: Group {
                     TextField("Set the GPU ID", text: $gpuID)
                         .font(.caption)
@@ -394,11 +408,12 @@ struct UpscaleSettingsView: View {
                         .background(cornerRadius: 6)
                 }
             )
-            
+
             SettingItem(
                 title: "CUSTOM TILE SIZE",
                 icon: "square.grid.3x3.square",
-                description: "Use a custom tile size for segmenting the image. This can help process images faster by reducing the number of tiles generated.",
+                description:
+                    "Use a custom tile size for segmenting the image. This can help process images faster by reducing the number of tiles generated.",
                 trailingView: HStack(spacing: 6) {
                     if customTileSize == 0 {
                         Text("Auto")
@@ -419,17 +434,20 @@ struct UpscaleSettingsView: View {
                     .background(cornerRadius: 6)
                 }
             )
-            
-            Button(action: {
-                HiPixelConfiguration.shared.reset()
-            }, label: {
-                HStack {
-                    Spacer()
-                    Label("RESET OPTIONS", systemImage: "arrow.counterclockwise")
-                    Spacer()
+
+            Button(
+                action: {
+                    HiPixelConfiguration.shared.reset()
+                },
+                label: {
+                    HStack {
+                        Spacer()
+                        Label("RESET OPTIONS", systemImage: "arrow.counterclockwise")
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
                 }
-                .frame(maxWidth: .infinity)
-            })
+            )
             .buttonStyle(.gradient(configuration: .danger))
         }
         .padding(12)
@@ -440,7 +458,7 @@ struct DonationView: View {
     @State private var showAlipayQR = false
     @State private var showWeChatQR = false
     @State private var heartScale: CGFloat = 1.0
-    
+
     var body: some View {
         VStack(spacing: 16) {
             VStack(spacing: 8) {
@@ -454,18 +472,18 @@ struct DonationView: View {
                             heartScale = 1.2
                         }
                     }
-                
+
                 Text("Support HiPixel")
                     .font(.title2)
                     .fontWeight(.bold)
-                
+
                 Text("Your support means a lot")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
                     .padding(.bottom, 8)
             }
             .padding(.horizontal)
-            
+
             VStack(spacing: 12) {
                 Button {
                     if let url = URL(string: "https://www.buymeacoffee.com/okooo5km") {
@@ -483,7 +501,7 @@ struct DonationView: View {
                     .frame(width: 200)
                 }
                 .buttonStyle(.gradient(configuration: .buyMeACoffee))
-                
+
                 Button {
                     showAlipayQR.toggle()
                 } label: {
@@ -500,11 +518,11 @@ struct DonationView: View {
                 .buttonStyle(.gradient(configuration: .alipay))
                 .popover(isPresented: $showAlipayQR) {
                     Image(.alipayQr)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 280)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 280)
                 }
-                
+
                 Button {
                     showWeChatQR.toggle()
                 } label: {
@@ -521,12 +539,12 @@ struct DonationView: View {
                 .buttonStyle(.gradient(configuration: .wechatPay))
                 .popover(isPresented: $showWeChatQR) {
                     Image(.wechatpayQr)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 280)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 280)
                 }
             }
-            
+
             Text("Thank you for your support! ")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
