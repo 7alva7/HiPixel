@@ -1,8 +1,8 @@
 //
-//  Ext+URL.swift
+//  URL+Extensions.swift
 //  HiPixel
 //
-//  Created by 十里 on 2024/10/31.
+//  Created by 十里 on 2025/3/11.
 //
 
 import SwiftUI
@@ -17,23 +17,23 @@ extension URL {
             return 0
         }
     }
-    
+
     var isImageFile: Bool {
         isFile(ofTypes: [.png, .jpeg, .webP])
     }
-    
+
     var uti: UTType? {
         hasDirectoryPath ? nil : UTType(filenameExtension: pathExtension)
     }
-    
+
     func isFile(ofTypes types: [UTType]) -> Bool {
         guard let uti = self.uti else {
             return false
         }
-        
+
         return types.contains(where: { uti.conforms(to: $0) })
     }
-    
+
     var imageRepType: NSBitmapImageRep.FileType? {
         if !isImageFile {
             return nil
@@ -47,7 +47,7 @@ extension URL {
             return nil
         }
     }
-    
+
     var imageIdentifier: String? {
         if !isImageFile {
             return nil
@@ -63,14 +63,15 @@ extension URL {
             return self.lastPathComponent.components(separatedBy: ".").last
         }
     }
-    
+
     func changingPathExtension(to newExtension: String) -> URL {
         return self.deletingPathExtension().appendingPathExtension(newExtension)
     }
-    
+
     func appendingPostfix(_ postfix: String) -> URL {
         let filename = self.deletingPathExtension().lastPathComponent
         let newFilename = "\(filename)\(postfix)"
-        return self.deletingLastPathComponent().appendingPathComponent(newFilename).appendingPathExtension(pathExtension)
+        return self.deletingLastPathComponent().appendingPathComponent(newFilename).appendingPathExtension(
+            pathExtension)
     }
 }

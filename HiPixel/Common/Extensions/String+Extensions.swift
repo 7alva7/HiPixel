@@ -1,8 +1,8 @@
 //
-//  Ext+String.swift
+//  String+Extensions.swift
 //  HiPixel
 //
-//  Created by 十里 on 2024/10/31.
+//  Created by 十里 on 2025/3/11.
 //
 
 import Foundation
