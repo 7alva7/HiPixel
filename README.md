@@ -16,6 +16,9 @@
   <a href="https://developer.apple.com/macos">
     <img src="https://img.shields.io/badge/Platform-macOS-lightgrey.svg" alt="Platform: macOS" style="border-radius: 8px;">
   </a>
+  <a href="https://developer.apple.com/macos">
+    <img src="https://img.shields.io/badge/macOS-13.0%2B-brightgreen.svg" alt="macOS 13.0+" style="border-radius: 8px;">
+  </a>
 </p>
 
 <p align="center">
@@ -100,6 +103,8 @@ end tell
 1. Download the latest release from [GitHub Releases](https://github.com/okooo5km/HiPixel/releases)
 2. Move HiPixel.app to your Applications folder
 3. Launch HiPixel
+
+> **Note**: HiPixel requires macOS 13.0 (Ventura) or later.
 
 ### 🛠️ Building from Source
 
@@ -253,6 +258,8 @@ end tell
 1. 从 [GitHub Releases](https://github.com/okooo5km/HiPixel/releases) 下载最新版本
 2. 将 HiPixel.app 移动到应用程序文件夹
 3. 启动 HiPixel
+
+> **注意**：HiPixel 需要 macOS 13.0 (Ventura) 或更高版本。
 
 ### 🛠️ 从源代码构建
 
