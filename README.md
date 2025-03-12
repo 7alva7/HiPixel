@@ -246,7 +246,7 @@ end tell
 
 <p align="center">
   <a href="https://github.com/okooo5km/HiPixel/releases">
-    <img src="https://img.shields.io/github/v/release/okooo5km/HiPixel?style=for-the-badge&logo=github&logoColor=white&labelColor=2C3E50&color=3498DB&label=下载" alt="下载 HiPixel" style="border-radius: 8px;">
+    <img src="https://img.shields.io/github/v/release/okooo5km/HiPixel?style=for-the-badge&logo=github&logoColor=white&labelColor=2C3E50&color=3498DB" alt="下载 HiPixel" style="border-radius: 8px;">
   </a>
 </p>
 
