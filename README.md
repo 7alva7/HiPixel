@@ -38,6 +38,7 @@ HiPixel is a native macOS application for AI-powered image super-resolution, bui
 - 🎨 High-quality image upscaling using AI models
 - 🚀 Fast processing with GPU acceleration
 - 🖼️ Supports various image formats
+- 📁 Folder monitoring for automatic processing of newly added images
 - 💻 Modern, intuitive user interface
 
 ### 💡 Why HiPixel?
@@ -52,6 +53,7 @@ While [Upscayl](https://github.com/upscayl/upscayl) already offers an excellent 
    - Streamlined interaction with drag-and-drop processing - images are processed automatically upon dropping
    - Batch processing support for handling multiple images simultaneously
    - URL Scheme support for third-party integration, enabling automation and workflow extensions
+   - Folder monitoring capability that automatically processes new images added to designated folders
    - Simplified interface focusing on the most commonly used features, making the upscaling process more straightforward
 
 HiPixel aims to complement Upscayl by offering an alternative approach focused on workflow efficiency and native macOS integration, while building upon Upscayl's excellent AI upscaling foundation.
@@ -65,6 +67,7 @@ hipixel://?path=/path/to/image1&path=/path/to/image2
 ```
 
 Example usage in Terminal:
+
 ```bash
 # Process a single image
 open "hipixel://?path=/Users/username/Pictures/image.jpg"
@@ -74,6 +77,7 @@ open "hipixel://?path=/Users/username/Pictures/image1.jpg&path=/Users/username/P
 ```
 
 Example usage in AppleScript:
+
 ```applescript
 tell application "Finder"
     set selectedFiles to selection as alias list
@@ -87,7 +91,13 @@ end tell
 
 ### 🚀 Installation
 
-1. Download the latest release from GitHub
+<p align="center">
+  <a href="https://github.com/okooo5km/HiPixel/releases">
+    <img src="https://img.shields.io/github/v/release/okooo5km/HiPixel?style=for-the-badge&logo=github&logoColor=white&labelColor=2C3E50&color=3498DB" alt="Download HiPixel" style="border-radius: 8px;">
+  </a>
+</p>
+
+1. Download the latest release from [GitHub Releases](https://github.com/okooo5km/HiPixel/releases)
 2. Move HiPixel.app to your Applications folder
 3. Launch HiPixel
 
@@ -153,12 +163,14 @@ Your support helps maintain and improve HiPixel!
 ### 🙏 Attribution
 
 HiPixel uses the following components from [Upscayl](https://github.com/upscayl/upscayl):
+
 - upscayl-bin - The binary tool for AI upscaling (AGPLv3)
 - AI Models - The AI models for image super-resolution (AGPLv3)
 
 Special thanks to [zaotang.xyz](https://zaotang.xyz) for designing the new application icon and main window interaction interface for HiPixel v0.2.
 
 HiPixel also uses:
+
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS applications (MIT License)
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - A custom notch-style notification banner for macOS (MIT License)
 - [GeneralNotification](https://github.com/okooo5km/GeneralNotification) - A custom notification banner for macOS (MIT License)
@@ -179,6 +191,7 @@ HiPixel 是一款原生 macOS 应用程序，用于 AI 图像超分辨率处理�
 - 🎨 使用 AI 模型进行高质量图像放大
 - 🚀 GPU 加速，处理速度快
 - 🖼️ 支持多种图像格式
+- 📁 文件夹监控功能，自动处理新增图像
 - 💻 现代化直观的用户界面
 
 ### 💡 为什么选择 HiPixel？
@@ -193,6 +206,7 @@ HiPixel 是一款原生 macOS 应用程序，用于 AI 图像超分辨率处理�
    - 简化交互，支持拖放处理 - 图像在放下时会自动处理
    - 支持批量处理，能够同时处理多张图像
    - 支持 URL Scheme，能够与第三方应用程序集成，实现自动化和工作流扩展
+   - 文件夹监控功能，自动处理添加到指定文件夹中的新图像
    - 简化界面，专注于最常用的功能，使得图像放大过程更加直接
 
 HiPixel 旨在通过提供一种专注于工作流效率和原生 macOS 集成的替代方法来补充 Upscayl，同时建立在 Upscayl 优秀的 AI 图像放大基础之上。
@@ -206,6 +220,7 @@ hipixel://?path=/path/to/image1&path=/path/to/image2
 ```
 
 在终端中的示例用法：
+
 ```bash
 # 处理单张图像
 open "hipixel://?path=/Users/username/Pictures/image.jpg"
@@ -215,6 +230,7 @@ open "hipixel://?path=/Users/username/Pictures/image1.jpg&path=/Users/username/P
 ```
 
 在 AppleScript 中的示例用法：
+
 ```applescript
 tell application "Finder"
     set selectedFiles to selection as alias list
@@ -228,17 +244,25 @@ end tell
 
 ### 🚀 安装方法
 
-1. 从 GitHub 下载最新版本
+<p align="center">
+  <a href="https://github.com/okooo5km/HiPixel/releases">
+    <img src="https://img.shields.io/github/v/release/okooo5km/HiPixel?style=for-the-badge&logo=github&logoColor=white&labelColor=2C3E50&color=3498DB&label=下载" alt="下载 HiPixel" style="border-radius: 8px;">
+  </a>
+</p>
+
+1. 从 [GitHub Releases](https://github.com/okooo5km/HiPixel/releases) 下载最新版本
 2. 将 HiPixel.app 移动到应用程序文件夹
 3. 启动 HiPixel
 
 ### 🛠️ 从源代码构建
 
 1. 克隆仓库
+
 ```bash
 git clone https://github.com/okooo5km/hipixel
 cd hipixel
 ```
+
 2. 在 Xcode 中打开 HiPixel.xcodeproj
 3. 构建并运行项目
 
@@ -290,12 +314,14 @@ HiPixel 采用 GNU Affero 通用公共许可证第3版 (AGPLv3) 授权。这意�
 ### 🙏 致谢
 
 HiPixel 使用了以下来自 [Upscayl](https://github.com/upscayl/upscayl) 的组件：
+
 - upscayl-bin - AI 超分辨率处理工具
 - AI Models - 图像超分辨率模型
 
 特别感谢 [zaotang.xyz](https://zaotang.xyz) 为 HiPixel v0.2 版本设计了全新的应用图标和主窗口交互界面。
 
 HiPixel 还使用了：
+
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - macOS 应用程序的软件更新框架 (MIT 许可证)
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - 适用于 macOS 的刘海屏样式通知横幅 (MIT 许可证)
 - [GeneralNotification](https://github.com/okooo5km/GeneralNotification) - 适用于 macOS 的自定义通知横幅 (MIT 许可证)
