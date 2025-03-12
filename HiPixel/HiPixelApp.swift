@@ -5,24 +5,24 @@
 //  Created by 十里 on 2024/6/16.
 //
 
-import SwiftUI
 import Sparkle
+import SwiftUI
 
 @main
 struct HiPixelApp: App {
-    
+
     @AppStorage(HiPixelConfiguration.Keys.ColorScheme)
     var colorScheme: HiPixelConfiguration.ColorScheme = .system
-    
+
     @NSApplicationDelegateAdaptor(AppDelegate.self)
     var appDelegate
-    
+
     @State private var aboutWindow: NSWindow?
 
     @StateObject var upscaylData = UpscaylData.shared
-    
+
     private let updaterController: SPUStandardUpdaterController
-    
+
     init() {
         updaterController = SPUStandardUpdaterController(
             startingUpdater: true,
@@ -30,7 +30,7 @@ struct HiPixelApp: App {
             userDriverDelegate: nil
         )
     }
-    
+
     var body: some Scene {
         Window("HiPixel", id: "HiPixel") {
             ContentView()
@@ -53,11 +53,11 @@ struct HiPixelApp: App {
                     AboutWindowController.shared.showWindow(nil)
                 }
             }
-            
+
             CommandGroup(after: .appInfo) {
                 CheckForUpdatesView(updater: updaterController.updater)
             }
-            
+
             CommandGroup(after: .toolbar) {
                 Picker("Appearance", selection: $colorScheme) {
                     ForEach(HiPixelConfiguration.ColorScheme.allCases, id: \.self) {
@@ -67,7 +67,7 @@ struct HiPixelApp: App {
                 }
             }
         }
-        
+
         Settings {
             SettingsView()
         }
@@ -86,7 +86,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print("Failed to prepare models: \(error)")
         }
         AppIconManager.shared.applyAppIcon()
-//        SoundManager.shared.loadSound(named: "Blow", volume: 0.2)
+
+        MonitorService.shared.load()
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {

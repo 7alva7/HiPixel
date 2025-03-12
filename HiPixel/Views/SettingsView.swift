@@ -15,26 +15,33 @@ struct SettingsView: View {
         TabView(selection: $selectedTab) {
             GeneralSettingsView()
                 .tabItem {
-                    Image(systemName: "gearshape")
+                    Image(systemName: "gearshape.fill")
                     Text("General Settings")
                 }
                 .tag(0)
 
-            AboutView()
+            AdvancedSettingsView()
                 .tabItem {
-                    Image(systemName: "info")
-                    Text("About")
+                    Image(systemName: "bolt.square.fill")
+                    Text("Advanced")
                 }
                 .tag(1)
 
-            DonationView()
+            AboutView()
                 .tabItem {
-                    Image(systemName: "dollarsign")
-                    Text("Donate")
+                    Image(systemName: "info.square.fill")
+                    Text("About")
                 }
                 .tag(2)
+
+            DonationView()
+                .tabItem {
+                    Image(systemName: "heart.square.fill")
+                    Text("Support")
+                }
+                .tag(3)
         }
-        .frame(width: 320)
+        .frame(width: 360)
         .navigationTitle("Settings")
         .focusable(false)
     }
@@ -155,6 +162,44 @@ struct GeneralSettingsView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                }
+            )
+        }
+        .padding(12)
+    }
+}
+
+struct AdvancedSettingsView: View {
+
+    @ObservedObject var monitorService = MonitorService.shared
+
+    var body: some View {
+        VStack {
+            SettingItem(
+                title: "HiPixel Automatically",
+                icon: "square.stack.3d.up.badge.automatic",
+                description: "HiPixel will automatically process new images monitored in the selected folder.",
+                trailingView: Group {
+                    Button(
+                        action: {
+                            Common.openPanel(
+                                message: String(localized: "Select a folder to auto-hipixel new images"),
+                                windowTitle: "HiPixel"
+                            ) { url in
+                                let item = MonitorItem(url: url)
+                                monitorService.add(item)
+                            }
+                        },
+                        label: {
+                            Image(systemName: "plus")
+                        }
+                    )
+                    .buttonStyle(.plain)
+                },
+                bodyView: VStack(spacing: 4) {
+                    ForEach(monitorService.items) { item in
+                        MonitiorItemView(monitorService: monitorService, item: item)
+                    }
                 }
             )
         }

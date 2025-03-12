@@ -157,6 +157,16 @@
         }
       }
     },
+    "Advanced" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高级"
+          }
+        }
+      }
+    },
     "AI Image Upscaler Wrapping **[Upscayl](https://github.com/upscayl/upscayl)**" : {
       "localizations" : {
         "zh-Hans" : {
@@ -283,6 +293,17 @@
         }
       }
     },
+    "choose" : {
+      "comment" : "Please select a directory",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择"
+          }
+        }
+      }
+    },
     "Components used:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -401,6 +422,7 @@
       }
     },
     "Donate" : {
+      "extractionState" : "manual",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
@@ -477,6 +499,16 @@
         }
       }
     },
+    "HiPixel Automatically" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动处理"
+          }
+        }
+      }
+    },
     "HiPixel Notification" : {
       "localizations" : {
         "en" : {
@@ -489,6 +521,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HiPixel"
+          }
+        }
+      }
+    },
+    "HiPixel will automatically process new images monitored in the selected folder." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HiPixel 会自动处理所选文件夹中监控到的新增图像！"
           }
         }
       }
@@ -594,6 +636,17 @@
         }
       }
     },
+    "Monitor" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监听"
+          }
+        }
+      }
+    },
     "Notch Notification" : {
       "localizations" : {
         "en" : {
@@ -680,6 +733,17 @@
         }
       }
     },
+    "Please select a directory" : {
+      "comment" : "Please select a directory",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择一个文件夹"
+          }
+        }
+      }
+    },
     "PNG" : {
       "localizations" : {
         "zh-Hans" : {
@@ -750,6 +814,16 @@
         }
       }
     },
+    "Select a folder to auto-hipixel new images" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请选择一个文件夹监听，对新增图像以自动处理"
+          }
+        }
+      }
+    },
     "Select Model" : {
       "localizations" : {
         "zh-Hans" : {
@@ -797,6 +871,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标准版"
+          }
+        }
+      }
+    },
+    "Support" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持"
           }
         }
       }

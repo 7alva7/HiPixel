@@ -10,5 +10,5 @@ import Foundation
 // Empty enum as namespace
 // All actual functionality is implemented through extensions
 enum Common {
-
+    
 }

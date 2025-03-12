@@ -10,7 +10,7 @@ import os
 
 extension Common {
     static let logger = Logger(
-        subsystem: Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "tech.5km.hipixel",
+        subsystem: Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "tech.5km.HiPixel",
         category: "main"
     )
 }
