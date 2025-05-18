@@ -165,6 +165,15 @@ If you find HiPixel helpful, please consider supporting its development:
 
 Your support helps maintain and improve HiPixel!
 
+### 👉 Recommended Tool
+
+- **[Zipic](https://zipic.app)** - Smart image compression tool with AI optimization
+  - 🔄 **Perfect Pairing**: After upscaling images with HiPixel, use Zipic for intelligent compression to reduce file size while maintaining clarity
+  - 🎯 **Workflow Suggestion**: HiPixel upscaling → Zipic compression → Optimized output image
+  - ✨ **Enhanced Results**: Compared to using either tool alone, combined use provides the optimal balance of quality and file size
+
+Explore more [5KM Tech](https://5km.tech) products that bring simplicity to complex tasks.
+
 ### 🙏 Attribution
 
 HiPixel uses the following components from [Upscayl](https://github.com/upscayl/upscayl):
@@ -317,6 +326,15 @@ HiPixel 采用 GNU Affero 通用公共许可证第3版 (AGPLv3) 授权。这意�
 </details>
 
 您的支持将帮助我们持续改进 HiPixel！
+
+### 👉 推荐工具
+
+- **[Zipic](https://zipic.app)** - 智能图像压缩工具，搭配 AI 优化技术
+  - 🔄 **完美搭配**: 使用 HiPixel 放大图像后，用 Zipic 进行智能压缩，在保持清晰度的同时减小文件体积
+  - 🎯 **工作流建议**: HiPixel 放大 → Zipic 压缩 → 输出优化图像
+  - ✨ **效果提升**: 相比单独使用任一工具，联合使用可获得质量与体积的最佳平衡
+
+探索更多 [5KM Tech](https://5km.tech) 为复杂任务带来简单解决方案的产品。
 
 ### 🙏 致谢
 
