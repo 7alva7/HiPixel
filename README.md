@@ -189,6 +189,12 @@ HiPixel also uses:
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - A custom notch-style notification banner for macOS (MIT License)
 - [GeneralNotification](https://github.com/okooo5km/GeneralNotification) - A custom notification banner for macOS (MIT License)
 
+### 🌐 Infrastructure Support
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Supporting Open Source Projects")
+
+We are grateful to [DartNode](https://dartnode.com) for supporting open source projects like HiPixel with their infrastructure services.
+
 ---
 
 <h2 id="中文">macOS 原生的 AI 图像超分辨率工具</h2>
@@ -350,3 +356,9 @@ HiPixel 还使用了：
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - macOS 应用程序的软件更新框架 (MIT 许可证)
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - 适用于 macOS 的刘海屏样式通知横幅 (MIT 许可证)
 - [GeneralNotification](https://github.com/okooo5km/GeneralNotification) - 适用于 macOS 的自定义通知横幅 (MIT 许可证)
+
+### 🌐 基础设施支持
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - 支持开源项目")
+
+感谢 [DartNode](https://dartnode.com) 为 HiPixel 等开源项目提供基础设施服务支持。
