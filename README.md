@@ -191,7 +191,7 @@ HiPixel also uses:
 
 ### 🌐 Infrastructure Support
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Supporting Open Source Projects")
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
 We are grateful to [DartNode](https://dartnode.com) for supporting open source projects like HiPixel with their infrastructure services.
 
@@ -359,6 +359,6 @@ HiPixel 还使用了：
 
 ### 🌐 基础设施支持
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - 支持开源项目")
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
 感谢 [DartNode](https://dartnode.com) 为 HiPixel 等开源项目提供基础设施服务支持。
