@@ -13,6 +13,14 @@ struct ThumbnailView: View {
     
     @EnvironmentObject var upscaylData: UpscaylData
     
+    private var cornerRadius: CGFloat {
+        if #available(macOS 26.0, *) {
+            return 12
+        } else {
+            return 8
+        }
+    }
+    
     var body: some View {
         AsyncImage(url: item.thumbnail) { phase in
             switch phase {
@@ -33,9 +41,9 @@ struct ThumbnailView: View {
         }
         .frame(width: 64, height: 64)
         .aspectRatio(contentMode: .fill)
-        .cornerRadius(8)
+        .cornerRadius(cornerRadius)
         .background(
-            cornerRadius: 8,
+            cornerRadius: cornerRadius,
             strokeColor: .primary.opacity(item.id == upscaylData.selectedItem?.id ? 0.1: 0.02),
             fill: .background.opacity(item.id == upscaylData.selectedItem?.id ? 0.8 : 0.5)
         )
@@ -45,11 +53,11 @@ struct ThumbnailView: View {
                     .progressViewStyle(.circular)
                     .tint(.primary)
                     .frame(width: 64, height: 64)
-                    .background(cornerRadius: 8, fill: .background.opacity(0.8))
+                    .background(cornerRadius: cornerRadius, fill: .background.opacity(0.8))
             }
         }
         .background(alignment: .bottom) {
-            RoundedRectangle(cornerRadius: 1)
+            RoundedRectangle(cornerRadius: cornerRadius)
                 .fill(Color.primary.opacity(item.id == upscaylData.selectedItem?.id ? 1 : 0))
                 .frame(width: 24, height: 3)
                 .offset(y: 5)

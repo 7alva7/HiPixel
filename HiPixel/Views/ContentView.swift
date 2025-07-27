@@ -23,6 +23,14 @@ struct ContentView: View, DropDelegate {
     
     @EnvironmentObject var upscaylData: UpscaylData
     
+    private var cornerRadius: CGFloat {
+        if #available(macOS 26.0, *) {
+            return 12
+        } else {
+            return 8
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             
@@ -38,18 +46,6 @@ struct ContentView: View, DropDelegate {
                         .font(.title3)
                         .popover(isPresented: $isOptionsPresented) {
                             UpscaleSettingsView()
-                                .padding(.top, 12)
-                                .overlay(alignment: .topLeading) {
-                                    Button(action: {
-                                        withAnimation {
-                                            isOptionsPresented = false
-                                        }
-                                    }, label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .padding(6)
-                                    })
-                                    .buttonStyle(.plain)
-                                }
                                 .font(.caption)
                         }
                 }
@@ -140,7 +136,7 @@ struct ContentView: View, DropDelegate {
                             }
                             .background {
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 8)
+                                    RoundedRectangle(cornerRadius: cornerRadius)
                                         .fill(.background.opacity(hovering ? 0.7 : 0.8))
                                     
                                     GeometryReader { geometry in
@@ -152,7 +148,7 @@ struct ContentView: View, DropDelegate {
                                             }
                                         }
                                         .frame(width: geometry.size.width)
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
                                     }
                                 }
                             }
@@ -210,7 +206,7 @@ struct ContentView: View, DropDelegate {
                     }
                     .background {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: cornerRadius)
                                 .fill(.background.opacity(hovering ? 0.7 : 0.8))
                             
                             GeometryReader { geometry in
@@ -222,10 +218,10 @@ struct ContentView: View, DropDelegate {
                                     }
                                 }
                                 .frame(width: geometry.size.width)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
                             }
                             
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: cornerRadius)
                                 .stroke(style: StrokeStyle(lineWidth: 2, dash: [4, 4]))
                                 .foregroundStyle(.primary.opacity(hovering ? 0.24 : 0.12))
                         }
@@ -233,9 +229,9 @@ struct ContentView: View, DropDelegate {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .background(
-                cornerRadius: 8,
+                cornerRadius: cornerRadius,
                 strokeColor: .primary.opacity(upscaylData.selectedItem == nil ? 0 : 0.1),
                 fill: .background.opacity(upscaylData.selectedItem == nil ? 0 : 0.4)
             )
@@ -327,6 +323,10 @@ struct ContentView: View, DropDelegate {
         let group = DispatchGroup()
         
         var urls = [URL]()
+        
+        withAnimation {
+            dropOver = false
+        }
         
         DispatchQueue.main.async {
             NSApplication.shared.activate(ignoringOtherApps: true)

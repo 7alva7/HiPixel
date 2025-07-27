@@ -43,6 +43,7 @@ struct SettingsView: View {
         }
         .frame(width: 360)
         .navigationTitle("Settings")
+        .background(VibrantBackground())
         .focusable(false)
     }
 }
@@ -126,14 +127,14 @@ struct GeneralSettingsView: View {
             SettingItem(
                 title: "Appearance",
                 icon: "sun.lefthalf.filled",
-                bodyView: Group {
+                trailingView: Group {
                     Picker("", selection: $colorScheme) {
                         ForEach(HiPixelConfiguration.ColorScheme.allCases, id: \.self) {
                             Text($0.localized)
                                 .tag($0)
                         }
                     }
-                    .pickerStyle(.segmented)
+                    .pickerStyle(.menu)
                 }
             )
 
@@ -141,27 +142,27 @@ struct GeneralSettingsView: View {
                 title: "Notification",
                 icon: "bell",
                 trailingView: Group {
-                    if notification == .HiPixel || notification == .Notch {
-                        Button(
-                            action: {
-                                NotificationX.push(message: "")
-                            },
-                            label: {
-                                Image(systemName: "eye")
-                                    .padding(.trailing, 4)
-                            }
-                        )
-                        .buttonStyle(.plain)
-                    }
-                },
-                bodyView: Group {
-                    Picker("", selection: $notification) {
-                        ForEach(HiPixelConfiguration.NotificationMode.allCases, id: \.self) {
-                            Text($0.localized)
-                                .tag($0)
+                    HStack {
+                        if notification == .HiPixel || notification == .Notch {
+                            Button(
+                                action: {
+                                    NotificationX.push(message: "")
+                                },
+                                label: {
+                                    Image(systemName: "eye")
+                                        .padding(.trailing, 4)
+                                }
+                            )
+                            .buttonStyle(.plain)
                         }
+                        Picker("", selection: $notification) {
+                            ForEach(HiPixelConfiguration.NotificationMode.allCases, id: \.self) {
+                                Text($0.localized)
+                                    .tag($0)
+                            }
+                        }
+                        .pickerStyle(.menu)
                     }
-                    .pickerStyle(.segmented)
                 }
             )
         }
@@ -257,7 +258,7 @@ struct UpscaleSettingsView: View {
                 title: "Select Model",
                 icon: "wand.and.stars",
                 description: HiPixelConfiguration.UpscaylModel.description,
-                bodyView: Group {
+                trailingView: Group {
                     Picker("", selection: $upscaleModel) {
                         ForEach(HiPixelConfiguration.UpscaylModel.allCases, id: \.self) {
                             Text($0.text)

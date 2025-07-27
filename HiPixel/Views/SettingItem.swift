@@ -19,6 +19,14 @@ struct SettingItem: View {
     @State private var bodyHeight: CGFloat = 0
     @State private var isHovered: Bool = false
     
+    private var cornerRadius: CGFloat {
+        if #available(macOS 26.0, *) {
+            return 12
+        } else {
+            return 8
+        }
+    }
+    
     init(
         title: LocalizedStringKey,
         icon: String,
@@ -74,7 +82,7 @@ struct SettingItem: View {
                             }
                             .font(.caption)
                             .frame(width: 180)
-                            .padding(8)
+                            .padding(12)
                         })
                         .onHover { hovering in
                             withAnimation {
@@ -105,9 +113,8 @@ struct SettingItem: View {
                     }
                 }
         }
-        .padding(.vertical, 10)
-        .padding(.horizontal, 10)
-        .background(cornerRadius: 8, strokeColor: .primary.opacity(0.06), fill: .background.opacity(0.4))
+        .padding(8)
+        .background(cornerRadius: cornerRadius, strokeColor: .primary.opacity(0.06), fill: .background.opacity(0.6))
     }
 }
 
