@@ -80,13 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        do {
-            try ResourceManager.prepareModels()
-        } catch {
-            print("Failed to prepare models: \(error)")
-        }
         AppIconManager.shared.applyAppIcon()
-
         MonitorService.shared.load()
     }
 

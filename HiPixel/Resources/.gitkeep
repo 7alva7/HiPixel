@@ -1,0 +1,2 @@
+# This file keeps the Resources directory in git
+# Large files (bin and models) are now downloaded at runtime

@@ -135,6 +135,7 @@ struct GeneralSettingsView: View {
                         }
                     }
                     .pickerStyle(.menu)
+                    .font(.caption)
                 }
             )
 
@@ -142,7 +143,7 @@ struct GeneralSettingsView: View {
                 title: "Notification",
                 icon: "bell",
                 trailingView: Group {
-                    HStack {
+                    HStack(spacing: 4) {
                         if notification == .HiPixel || notification == .Notch {
                             Button(
                                 action: {
@@ -150,7 +151,6 @@ struct GeneralSettingsView: View {
                                 },
                                 label: {
                                     Image(systemName: "eye")
-                                        .padding(.trailing, 4)
                                 }
                             )
                             .buttonStyle(.plain)
@@ -163,6 +163,7 @@ struct GeneralSettingsView: View {
                         }
                         .pickerStyle(.menu)
                     }
+                    .font(.caption)
                 }
             )
         }
@@ -173,6 +174,7 @@ struct GeneralSettingsView: View {
 struct AdvancedSettingsView: View {
 
     @ObservedObject var monitorService = MonitorService.shared
+    @StateObject private var downloadManager = ResourceDownloadManager.shared
 
     var body: some View {
         VStack {
@@ -203,8 +205,117 @@ struct AdvancedSettingsView: View {
                     }
                 }
             )
+            
+            SettingItem(
+                title: "Dependencies",
+                icon: "cube.box",
+                description: "AI models and processing tools version.",
+                trailingView: Group {
+                    Button(action: {
+                        Task {
+                            await downloadManager.checkForUpdates()
+                        }
+                    }, label: {
+                        Image(systemName: "arrow.trianglehead.2.counterclockwise")
+                            
+                    })
+                    .buttonStyle(.plain)
+                    .disabled(downloadManager.downloadState == .checking ||
+                              downloadManager.downloadState == .installing ||
+                              isDownloading(downloadManager.downloadState))
+                },
+                bodyView: VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 4) {
+                        Text("Version:")
+                            .foregroundColor(.secondary)
+                        
+                        Text(downloadManager.currentVersion.isEmpty ? "Unknown" : downloadManager.currentVersion)
+                            .fontWeight(.medium)
+                            .foregroundColor(downloadManager.currentVersion == "Not installed" ? .secondary : .primary)
+                        Spacer()
+                        // Status indicator on the right
+                        switch downloadManager.downloadState {
+                        case .checking:
+                            ProgressView()
+                                .scaleEffect(0.34)
+                        case .downloading(let resource):
+                            HStack(spacing: 4) {
+                                ProgressView()
+                                    .scaleEffect(0.34)
+                                Text("Downloading \(resource)...")
+                                    .font(.caption)
+                                    .foregroundColor(.blue)
+                            }
+                        case .installing:
+                            HStack(spacing: 4) {
+                                ProgressView()
+                                    .scaleEffect(0.34)
+                                Text("Installing...")
+                                    .font(.caption)
+                                    .foregroundColor(.blue)
+                            }
+                        case .completed:
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(LinearGradient(
+                                    colors: [
+                                        Color(hex: "#55AAEF") ?? Color.blue.opacity(0.8),
+                                        .blue
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                ))
+                                .font(.caption)
+                        case .error(_):
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundStyle(LinearGradient(
+                                    colors: [
+                                        .pink.opacity(0.8),
+                                        .pink
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                ))
+                                .font(.caption)
+                        default:
+                            EmptyView()
+                        }
+                    }
+                    .font(.caption)
+                    
+                    // Progress bar only during download
+                    if case .downloading(_) = downloadManager.downloadState {
+                        VStack(alignment: .leading, spacing: 2) {
+                            ProgressView(value: downloadManager.downloadProgress)
+                                .progressViewStyle(LinearProgressViewStyle())
+                            HStack {
+                                Text("\(Int(downloadManager.downloadProgress * 100))%")
+                                    .font(.caption)
+                                Spacer()
+                                if !downloadManager.downloadSpeed.isEmpty {
+                                    Text(downloadManager.downloadSpeed)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                    }
+                }
+            )
         }
         .padding(12)
+        .onAppear {
+            // Check resource status when view appears
+            Task {
+                await downloadManager.downloadResourcesIfNeeded()
+            }
+        }
+    }
+    
+    private func isDownloading(_ state: ResourceDownloadManager.DownloadState) -> Bool {
+        if case .downloading(_) = state {
+            return true
+        }
+        return false
     }
 }
 
@@ -273,14 +384,14 @@ struct UpscaleSettingsView: View {
                 title: "SAVE IMAGE AS",
                 icon: "photo",
                 description: "The format in which the image will be saved.",
-                bodyView: Group {
+                trailingView: Group {
                     Picker("", selection: $saveImageAs) {
                         ForEach(HiPixelConfiguration.ImageFormat.allCases, id: \.self) {
                             Text($0.localized)
                                 .tag($0)
                         }
                     }
-                    .pickerStyle(.segmented)
+                    .pickerStyle(.menu)
                 }
             )
 

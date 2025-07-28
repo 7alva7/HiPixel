@@ -20,7 +20,9 @@ struct ContentView: View, DropDelegate {
     @State private var hovering = false
     
     @State private var item: UpscaylDataItem? = nil
+    @State private var showResourceDownloadSheet = false
     
+    @StateObject private var resourceDownloadManager = ResourceDownloadManager.shared
     @EnvironmentObject var upscaylData: UpscaylData
     
     private var cornerRadius: CGFloat {
@@ -290,6 +292,36 @@ struct ContentView: View, DropDelegate {
         .onHover { inHover in
             if inHover != hovering {
                 hovering = inHover
+            }
+        }
+        .onAppear {
+            // Check if resources are missing and show download sheet if needed
+            let binPath = Common.directory.appendingPathComponent("bin")
+            let modelsPath = Common.directory.appendingPathComponent("models")
+            let fileManager = FileManager.default
+            
+            let binExists = fileManager.fileExists(atPath: binPath.path)
+            let modelsExists = fileManager.fileExists(atPath: modelsPath.path)
+            
+            Common.logger.info("Resource check on startup - bin exists: \(binExists), models exists: \(modelsExists)")
+            
+            if !binExists || !modelsExists {
+                Common.logger.info("Resources missing - showing download sheet")
+                showResourceDownloadSheet = true
+            } else {
+                Common.logger.info("Resources exist - checking for updates in background")
+                Task {
+                    await resourceDownloadManager.downloadResourcesIfNeeded()
+                }
+            }
+        }
+        .sheet(isPresented: $showResourceDownloadSheet) {
+            ResourceDownloadSheet()
+        }
+        .onChange(of: resourceDownloadManager.downloadState) { state in
+            // Auto-dismiss sheet when download is completed
+            if case .completed = state {
+                showResourceDownloadSheet = false
             }
         }
         .focusable(false)

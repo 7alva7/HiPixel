@@ -197,6 +197,16 @@
         }
       }
     },
+    "AI models and processing tools version." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI 模型和处理工具版本。"
+          }
+        }
+      }
+    },
     "Alipay" : {
       "localizations" : {
         "zh-Hans" : {
@@ -293,6 +303,16 @@
         }
       }
     },
+    "Checking for latest version..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查最新版本 …"
+          }
+        }
+      }
+    },
     "choose" : {
       "comment" : "Please select a directory",
       "localizations" : {
@@ -330,6 +350,16 @@
         }
       }
     },
+    "Continue" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续"
+          }
+        }
+      }
+    },
     "CUSTOM TILE SIZE" : {
       "localizations" : {
         "zh-Hans" : {
@@ -346,6 +376,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "深色"
+          }
+        }
+      }
+    },
+    "Dependencies" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "依赖项"
           }
         }
       }
@@ -432,6 +472,46 @@
         }
       }
     },
+    "Download Complete!" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载完成！"
+          }
+        }
+      }
+    },
+    "Download Dependencies" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载依赖"
+          }
+        }
+      }
+    },
+    "Download Failed" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载失败"
+          }
+        }
+      }
+    },
+    "Downloading %@..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在下载 %@..."
+          }
+        }
+      }
+    },
     "Failed to process" : {
       "localizations" : {
         "zh-Hans" : {
@@ -505,6 +585,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "自动处理"
+          }
+        }
+      }
+    },
+    "HiPixel needs to download AI models and processing tools to function properly." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HiPixel 需要下载AI模型和相应的推理工具。"
           }
         }
       }
@@ -591,6 +681,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安装 Zipic"
+          }
+        }
+      }
+    },
+    "Installing..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在安装..."
           }
         }
       }
@@ -804,6 +904,16 @@
         }
       }
     },
+    "Retry" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
+        }
+      }
+    },
     "SAVE IMAGE AS" : {
       "localizations" : {
         "zh-Hans" : {
@@ -850,6 +960,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置"
+          }
+        }
+      }
+    },
+    "Skip for Now" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "现在跳过"
           }
         }
       }
@@ -1025,6 +1145,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "版本 %1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "Version:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本："
           }
         }
       }

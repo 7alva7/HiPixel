@@ -9,42 +9,25 @@ import Foundation
 
 class ResourceManager {
     
-    static let upscaylModelVersion: String = "2.15.0"
-    
     static func binaryPath() -> URL {
-        guard let url = Bundle.main.url(
-            forResource: "upscayl-bin",
-            withExtension: nil
-        ) else {
-            fatalError("Missing upscayl-bin in bundle")
-        }
-        return url
+        Common.directory.appendingPathComponent("bin").appendingPathComponent("upscayl-bin")
     }
     
     static var modelsURL: URL {
         Common.directory.appendingPathComponent("models")
     }
 
-    static func prepareModels() throws {
-        let fileManager = FileManager.default
-        let modelsZipURL = Bundle.main.url(forResource: "models", withExtension: "zip")!
-        let destinationURL = Common.directory.appendingPathComponent("models")
+    static func prepareModels() async throws {
+        await ResourceDownloadManager.shared.downloadResourcesIfNeeded()
         
-        if !fileManager.fileExists(atPath: destinationURL.path) || upscaylModelVersion != HiPixelConfiguration.shared.upscaleModelVersion {
-            try fileManager.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
-            
-            let process = Process()
-            process.launchPath = "/usr/bin/unzip"
-            process.arguments = ["-o", modelsZipURL.path, "-d", Common.directory.path]
-            
-            try process.run()
-            process.waitUntilExit()
-            
-            if process.terminationStatus != 0 {
-                throw NSError(domain: "ResourceManagerError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip models"])
-            }
-            
-            HiPixelConfiguration.shared.upscaleModelVersion = upscaylModelVersion
+        // Verify resources are available
+        let fileManager = FileManager.default
+        guard fileManager.fileExists(atPath: binaryPath().path) else {
+            throw NSError(domain: "ResourceManagerError", code: 1, userInfo: [NSLocalizedDescriptionKey: "upscayl-bin not found"])
+        }
+        
+        guard fileManager.fileExists(atPath: modelsURL.path) else {
+            throw NSError(domain: "ResourceManagerError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Models directory not found"])
         }
     }
 }
