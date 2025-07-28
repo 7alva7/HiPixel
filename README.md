@@ -139,9 +139,7 @@ If you find HiPixel helpful, please consider supporting its development:
 - 💝 Support via:
 
 <p align="center">
-  <a href="https://buymeacoffee.com/okooo5km">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=okooo5km&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" style="border-radius: 8px;" />
-  </a>
+  <a href="https://www.buymeacoffee.com/okooo5km" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 </p>
 
 <details>
@@ -309,9 +307,7 @@ HiPixel 采用 GNU Affero 通用公共许可证第3版 (AGPLv3) 授权。这意�
 - 💝 赞助支持：
 
 <p align="center">
-  <a href="https://buymeacoffee.com/okooo5km">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=okooo5km&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" style="border-radius: 8px;" />
-  </a>
+  <a href="https://www.buymeacoffee.com/okooo5km" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 </p>
 
 <details>
