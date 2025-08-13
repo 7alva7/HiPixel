@@ -183,6 +183,7 @@ Special thanks to [zaotang.xyz](https://zaotang.xyz) for designing the new appli
 
 HiPixel also uses:
 
+- [FSWatcher](https://github.com/okooo5km/FSWatcher) - A high-performance, Swift-native file system watcher for macOS and iOS with intelligent monitoring (MIT License)
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS applications (MIT License)
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - A custom notch-style notification banner for macOS (MIT License)
 - [GeneralNotification](https://github.com/okooo5km/GeneralNotification) - A custom notification banner for macOS (MIT License)
@@ -349,6 +350,7 @@ HiPixel 使用了以下来自 [Upscayl](https://github.com/upscayl/upscayl) 的�
 
 HiPixel 还使用了：
 
+- [FSWatcher](https://github.com/okooo5km/FSWatcher) - 高性能的 Swift 原生文件系统监控库，支持 macOS 和 iOS 智能监听 (MIT 许可证)
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - macOS 应用程序的软件更新框架 (MIT 许可证)
 - [NotchNotification](https://github.com/Lakr233/NotchNotification) - 适用于 macOS 的刘海屏样式通知横幅 (MIT 许可证)
 - [GeneralNotification](https://github.com/okooo5km/GeneralNotification) - 适用于 macOS 的自定义通知横幅 (MIT 许可证)

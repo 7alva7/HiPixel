@@ -11,6 +11,7 @@
 		6B70EECB2CC67FC9001AF842 /* GeneralNotification in Frameworks */ = {isa = PBXBuildFile; productRef = 6B70EECA2CC67FC9001AF842 /* GeneralNotification */; };
 		6B70EECE2CC67FE3001AF842 /* NotchNotification in Frameworks */ = {isa = PBXBuildFile; productRef = 6B70EECD2CC67FE3001AF842 /* NotchNotification */; };
 		6B97B8392CC7D3710084F2F4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6B97B8382CC7D3710084F2F4 /* Localizable.xcstrings */; };
+		6BCCC2F02E4CCE52008CA4E6 /* FSWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = 6BCCC2EF2E4CCE52008CA4E6 /* FSWatcher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BCCC2F02E4CCE52008CA4E6 /* FSWatcher in Frameworks */,
 				6B3439372D516974007636B5 /* Sparkle in Frameworks */,
 				6B70EECE2CC67FE3001AF842 /* NotchNotification in Frameworks */,
 				6B70EECB2CC67FC9001AF842 /* GeneralNotification in Frameworks */,
@@ -115,6 +117,7 @@
 				6B70EEC92CC67FC9001AF842 /* XCRemoteSwiftPackageReference "GeneralNotification" */,
 				6B70EECC2CC67FE3001AF842 /* XCRemoteSwiftPackageReference "NotchNotification" */,
 				6B3439352D516974007636B5 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				6BCCC2EE2E4CCE52008CA4E6 /* XCRemoteSwiftPackageReference "FSWatcher" */,
 			);
 			productRefGroup = 6BE1BEE82C1F14A6004C9187 /* Products */;
 			projectDirPath = "";
@@ -283,7 +286,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = HiPixel/HiPixel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"HiPixel/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -306,7 +309,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.3.1;
+				MARKETING_VERSION = 0.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = tech.5km.HiPixel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -325,7 +328,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = HiPixel/HiPixel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"HiPixel/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -348,7 +351,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 0.3.1;
+				MARKETING_VERSION = 0.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = tech.5km.HiPixel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -407,6 +410,14 @@
 				kind = branch;
 			};
 		};
+		6BCCC2EE2E4CCE52008CA4E6 /* XCRemoteSwiftPackageReference "FSWatcher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/okooo5km/FSWatcher.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -424,6 +435,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B70EECC2CC67FE3001AF842 /* XCRemoteSwiftPackageReference "NotchNotification" */;
 			productName = NotchNotification;
+		};
+		6BCCC2EF2E4CCE52008CA4E6 /* FSWatcher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BCCC2EE2E4CCE52008CA4E6 /* XCRemoteSwiftPackageReference "FSWatcher" */;
+			productName = FSWatcher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

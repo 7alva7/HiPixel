@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import FSWatcher
 
 class MonitorService: ObservableObject {
     static let shared = MonitorService()
+    
+    private init() {
+        directoryWatcher.delegate = self
+    }
 
     static let monitorItemsKey = "monitorItems"
 
     @Published var items: [MonitorItem] = []
 
-    private var timer: Timer?
-
+    private let directoryWatcher = FSWatcher.MultiDirectoryWatcher()
     private var whiteList = [URL: Set<URL>]()
 
     func load() {
@@ -27,7 +31,7 @@ class MonitorService: ObservableObject {
                     whiteList[item.url] = Set(images)
                 }
                 if !items.isEmpty {
-                    startMonitor()
+                    updateMonitoring()
                 }
             }
         }
@@ -43,37 +47,34 @@ class MonitorService: ObservableObject {
         if contains(item) {
             return
         }
-        stopMonitor()
         items.append(item)
         whiteList[item.url] = Set(item.url.imageContents)
         save()
-        startMonitor()
+        updateMonitoring()
     }
 
     func remove(_ item: MonitorItem) {
-        stopMonitor()
         whiteList.removeValue(forKey: item.url)
         items.removeAll(where: { $0.id == item.id })
         save()
-        if !items.isEmpty {
-            startMonitor()
-        }
+        updateMonitoring()
     }
 
     func removeAll() {
+        directoryWatcher.stopAllWatching()
         items.removeAll()
+        whiteList.removeAll()
         save()
     }
 
     func update(_ item: MonitorItem) {
         if let index = items.firstIndex(where: { $0.id == item.id }) {
             let origin = items[index]
-            stopMonitor()
             items[index] = item
             whiteList.removeValue(forKey: origin.url)
             whiteList[item.url] = Set(item.url.imageContents)
             save()
-            startMonitor()
+            updateMonitoring()
         }
     }
 
@@ -81,38 +82,52 @@ class MonitorService: ObservableObject {
         return items.contains(where: { $0.url == item.url })
     }
 
-    func startMonitor() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            if self?.items.isEmpty == true {
-                self?.stopMonitor()
-                return
-            }
-            let items = (self?.items ?? []).filter {
-                $0.enabled
-            }
-            for item in items {
-                let images = item.url.imageContents
-                let whiteList = self?.whiteList[item.url] ?? []
-                let targetImages = images.filter { !whiteList.contains($0) }
-                if targetImages.isEmpty {
-                    if UpscaylData.shared.items.filter({ $0.state == .processing }).isEmpty {
-                        self?.whiteList[item.url] = Set(images)
-                    }
-                    continue
-                }
-                self?.whiteList[item.url]?.formUnion(targetImages)
-                let compressedImages = targetImages.map {
-                    return Self.makeOutputURL(for: $0)
-                }
-                self?.whiteList[item.url]?.formUnion(Set(compressedImages))
-                Upscayl.process(targetImages, by: UpscaylData.shared)
-            }
-        }
+    private func startMonitor() {
+        let enabledDirectories = items.filter { $0.enabled }.map { $0.url }
+        directoryWatcher.startWatching(directories: enabledDirectories)
     }
 
-    func stopMonitor() {
-        timer?.invalidate()
-        timer = nil
+    private func stopMonitor() {
+        directoryWatcher.stopAllWatching()
+    }
+    
+    private func updateMonitoring() {
+        let enabledDirectories = items.filter { $0.enabled }.map { $0.url }
+        if enabledDirectories.isEmpty {
+            directoryWatcher.stopAllWatching()
+        } else {
+            directoryWatcher.startWatching(directories: enabledDirectories)
+        }
+    }
+    
+    private func processDirectoryChange(at changedPath: URL) {
+        guard let item = items.first(where: { $0.url == changedPath && $0.enabled }) else {
+            return
+        }
+        
+        let images = Set(changedPath.imageContents)
+        let whiteList = self.whiteList[item.url] ?? []
+        let targetImages = Array(images.subtracting(whiteList))
+        
+        guard !targetImages.isEmpty else {
+            // Update whitelist when no processing tasks are running
+            if UpscaylData.shared.items.filter({ $0.state == .processing }).isEmpty {
+                self.whiteList[item.url] = images
+            }
+            return
+        }
+        
+        // Update whitelist with new images
+        self.whiteList[item.url]?.formUnion(targetImages)
+        
+        // Add predicted output image names to whitelist
+        let compressedImages = targetImages.map {
+            return Self.makeOutputURL(for: $0)
+        }
+        self.whiteList[item.url]?.formUnion(Set(compressedImages))
+        
+        // Trigger upscaling
+        Upscayl.process(targetImages, by: UpscaylData.shared)
     }
 
     private static func makeOutputURL(for url: URL) -> URL {
@@ -137,5 +152,14 @@ class MonitorService: ObservableObject {
         let postfix =
             "_hipixel_\(Int(HiPixelConfiguration.shared.imageScale))x_\(HiPixelConfiguration.shared.upscaleModel.id)"
         return newURL.appendingPostfix(postfix).changingPathExtension(to: ext)
+    }
+}
+
+// MARK: - DirectoryWatcherDelegate
+extension MonitorService: FSWatcher.DirectoryWatcherDelegate {
+    func directoryDidChange(at url: URL) {
+        DispatchQueue.main.async { [weak self] in
+            self?.processDirectoryChange(at: url)
+        }
     }
 }
