@@ -472,6 +472,38 @@
         }
       }
     },
+    "DOUBLE PROCESSING" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DOUBLE PROCESSING"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双重处理"
+          }
+        }
+      }
+    },
+    "DOUBLE PROCESSING: Runs the upscaler twice (effective scale ≈ chosen scale squared, e.g., 2×→4×, 4×→16×); can add detail/smoothness but greatly increases time/memory and may cause softness/artifacts at very high scales (>4×)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runs the upscaler twice (effective scale ≈ chosen scale squared, e.g., 2×→4×, 4×→16×); can add detail/smoothness but greatly increases time/memory and may cause softness/artifacts at very high scales (>4×)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连续放大两次（有效倍率≈所选倍率平方，如 2×→4×，4×→16×），可能带来更多细节/更平滑，但耗时与显存占用大增，倍率过高易变软或出伪影（>4×需谨慎）"
+          }
+        }
+      }
+    },
     "Download Complete!" : {
       "localizations" : {
         "zh-Hans" : {
@@ -874,6 +906,16 @@
         }
       }
     },
+    "Processing... (%lld/2)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "处理中…（%lld/2）"
+          }
+        }
+      }
+    },
     "Remove History List" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1041,38 +1083,6 @@
         }
       }
     },
-    "TTA (Test-Time Augmentation)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TTA (Test-Time Augmentation)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TTA（测试时增强）"
-          }
-        }
-      }
-    },
-    "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TTA（测试时增强）：对图像做多次翻转/旋转推理并融合，减少噪点和伪影、边缘更干净；但速度约慢 8×，画面可能略微变软。"
-          }
-        }
-      }
-    },
     "Thank you for your support! " : {
       "localizations" : {
         "zh-Hans" : {
@@ -1105,6 +1115,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可能会导致某些设备的性能问题。"
+          }
+        }
+      }
+    },
+    "TTA (Test-Time Augmentation)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TTA (Test-Time Augmentation)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TTA（测试时增强）"
+          }
+        }
+      }
+    },
+    "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对图像做多次翻转/旋转推理并融合，减少噪点和伪影、边缘更干净；但速度约慢 8×，画面可能略微变软。"
           }
         }
       }

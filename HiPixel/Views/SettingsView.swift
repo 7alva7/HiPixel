@@ -356,6 +356,9 @@ struct UpscaleSettingsView: View {
 
     @AppStorage(HiPixelConfiguration.Keys.EnableTTA)
     var enableTTA: Bool = false
+    
+    @AppStorage(HiPixelConfiguration.Keys.DoubleUpscayl)
+    var doubleUpscayl: Bool = false
 
     @State private var showZipicInstallAlert = false
 
@@ -507,6 +510,17 @@ struct UpscaleSettingsView: View {
                 description: "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer.",
                 trailingView: Group {
                     Toggle("", isOn: $enableTTA)
+                        .toggleStyle(.switch)
+                        .controlSize(.small)
+                }
+            )
+            
+            SettingItem(
+                title: "DOUBLE PROCESSING",
+                icon: "repeat.circle",
+                description: "DOUBLE PROCESSING: Runs the upscaler twice (effective scale ≈ chosen scale squared, e.g., 2×→4×, 4×→16×); can add detail/smoothness but greatly increases time/memory and may cause softness/artifacts at very high scales (>4×)",
+                trailingView: Group {
+                    Toggle("", isOn: $doubleUpscayl)
                         .toggleStyle(.switch)
                         .controlSize(.small)
                 }

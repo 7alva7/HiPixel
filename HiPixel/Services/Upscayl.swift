@@ -42,6 +42,34 @@ enum Upscayl {
         progressHandler: @escaping (_ progress: Double) -> Void,
         completedHandler: @escaping (_ url: URL?) -> Void
     ) {
+        if HiPixelConfiguration.shared.doubleUpscayl {
+            processDouble(item, stageProgressHandler: { progress, _ in
+                progressHandler(progress)
+            }, completedHandler: completedHandler)
+        } else {
+            processSingle(item, stageProgressHandler: { progress, _ in
+                progressHandler(progress)
+            }, completedHandler: completedHandler)
+        }
+    }
+    
+    static func process(
+        _ item: UpscaylDataItem,
+        progressHandler: @escaping (_ progress: Double, _ stage: Int) -> Void,
+        completedHandler: @escaping (_ url: URL?) -> Void
+    ) {
+        if HiPixelConfiguration.shared.doubleUpscayl {
+            processDouble(item, stageProgressHandler: progressHandler, completedHandler: completedHandler)
+        } else {
+            processSingle(item, stageProgressHandler: progressHandler, completedHandler: completedHandler)
+        }
+    }
+    
+    private static func processSingle(
+        _ item: UpscaylDataItem,
+        progressHandler: @escaping (_ progress: Double) -> Void,
+        completedHandler: @escaping (_ url: URL?) -> Void
+    ) {
         let arguments = makeArguments(for: item)
         let formatStr = determineFormatString(for: item)
         let newURL = makeOutputURL(for: item, ext: formatStr)
@@ -78,6 +106,131 @@ enum Upscayl {
         }
 
         completedHandler(result.status == 0 ? newURL : nil)
+    }
+    
+    private static func processSingle(
+        _ item: UpscaylDataItem,
+        stageProgressHandler: @escaping (_ progress: Double, _ stage: Int) -> Void,
+        completedHandler: @escaping (_ url: URL?) -> Void
+    ) {
+        let arguments = makeArguments(for: item)
+        let formatStr = determineFormatString(for: item)
+        let newURL = makeOutputURL(for: item, ext: formatStr)
+        Common.logger.debug("\(arguments)")
+        if FileManager.default.fileExists(atPath: newURL.path)
+            && !(HiPixelConfiguration.shared.overwritePreviousUpscale)
+        {
+            completedHandler(newURL)
+            return
+        }
+        let result = run(arguments: arguments) { progress in
+            stageProgressHandler(progress, 1)
+        }
+
+        // Handle compression if needed
+        if result.status == 0 && HiPixelConfiguration.shared.imageCompression > 0 {
+            if HiPixelConfiguration.shared.enableZipicCompression
+                && AppInstallationChecker.isAppInstalled(bundleIdentifier: "studio.5km.zipic")
+            {
+                // Use Zipic for compression
+                let saveDir =
+                    HiPixelConfiguration.shared.enableSaveOutputFolder
+                    ? URL(string: HiPixelConfiguration.shared.saveOutputFolder ?? "")?.standardizedFileURL : nil
+                ZipicCompressor.compress(
+                    url: newURL,
+                    saveDirectory: saveDir,
+                    format: formatStr,
+                    level: Double(HiPixelConfiguration.shared.imageCompression) / 16.5  // Convert 0-99 to 1-6 range
+                )
+            }
+        }
+
+        // Preserve metadata from original image to processed image if processing succeeded
+        if result.status == 0 {
+            EXIFMetadataManager.compareAndCopyMetadata(from: item.url, to: newURL)
+        }
+
+        completedHandler(result.status == 0 ? newURL : nil)
+    }
+    
+    private static func processDouble(
+        _ item: UpscaylDataItem,
+        stageProgressHandler: @escaping (_ progress: Double, _ stage: Int) -> Void,
+        completedHandler: @escaping (_ url: URL?) -> Void
+    ) {
+        let formatStr = determineFormatString(for: item)
+        let finalURL = makeOutputURL(for: item, ext: formatStr)
+        
+        // Check if final result already exists
+        if FileManager.default.fileExists(atPath: finalURL.path)
+            && !(HiPixelConfiguration.shared.overwritePreviousUpscale)
+        {
+            completedHandler(finalURL)
+            return
+        }
+        
+        // Create temporary file for first processing stage
+        let tempDir = FileManager.default.temporaryDirectory
+        let tempFileName = "temp_\(UUID().uuidString).\(formatStr)"
+        let tempURL = tempDir.appendingPathComponent(tempFileName)
+        
+        // First processing stage
+        let firstArguments = makeArguments(for: item, outputURL: tempURL)
+        Common.logger.debug("First stage: \(firstArguments)")
+        
+        let firstResult = run(arguments: firstArguments) { progress in
+            // Show raw progress for first stage
+            stageProgressHandler(progress, 1)
+        }
+        
+        guard firstResult.status == 0 else {
+            // First stage failed, clean up and return failure
+            try? FileManager.default.removeItem(at: tempURL)
+            completedHandler(nil)
+            return
+        }
+        
+        // Second processing stage using the temporary file as input
+        var secondItem = item
+        secondItem.url = tempURL
+        let secondArguments = makeArguments(for: secondItem, outputURL: finalURL)
+        Common.logger.debug("Second stage: \(secondArguments)")
+        
+        let secondResult = run(arguments: secondArguments) { progress in
+            // Show raw progress for second stage
+            stageProgressHandler(progress, 2)
+        }
+        
+        // Clean up temporary file
+        try? FileManager.default.removeItem(at: tempURL)
+        
+        guard secondResult.status == 0 else {
+            completedHandler(nil)
+            return
+        }
+        
+        // Handle compression if needed
+        if HiPixelConfiguration.shared.imageCompression > 0 {
+            if HiPixelConfiguration.shared.enableZipicCompression
+                && AppInstallationChecker.isAppInstalled(bundleIdentifier: "studio.5km.zipic")
+            {
+                // Use Zipic for compression
+                let saveDir =
+                    HiPixelConfiguration.shared.enableSaveOutputFolder
+                    ? URL(string: HiPixelConfiguration.shared.saveOutputFolder ?? "")?.standardizedFileURL : nil
+                ZipicCompressor.compress(
+                    url: finalURL,
+                    saveDirectory: saveDir,
+                    format: formatStr,
+                    level: Double(HiPixelConfiguration.shared.imageCompression) / 16.5  // Convert 0-99 to 1-6 range
+                )
+            }
+        }
+        
+        // Preserve metadata from original image to processed image
+        EXIFMetadataManager.compareAndCopyMetadata(from: item.url, to: finalURL)
+        
+        completedHandler(finalURL)
     }
 
     static let semaphore = DispatchSemaphore(value: 1)
@@ -163,9 +316,11 @@ enum Upscayl {
                 var item = UpscaylDataItem(imageURL)
                 if let nsImage = NSImage(contentsOf: imageURL) {
                     item.size = nsImage.pixelSize
+                    let scale = HiPixelConfiguration.shared.imageScale
+                    let effectiveScale = HiPixelConfiguration.shared.doubleUpscayl ? scale * scale : scale
                     item.newSize = CGSize(
-                        width: item.size.width * HiPixelConfiguration.shared.imageScale,
-                        height: item.size.height * HiPixelConfiguration.shared.imageScale
+                        width: item.size.width * effectiveScale,
+                        height: item.size.height * effectiveScale
                     )
                     if let thumbnail = nsImage.thumbnail(with: 128).saveAtThumbnailDirectory(as: item.fileName) {
                         item.thumbnail = thumbnail
@@ -181,8 +336,9 @@ enum Upscayl {
 
                 Upscayl.process(
                     item,
-                    progressHandler: { progress in
+                    progressHandler: { progress, stage in
                         item.progress = progress
+                        item.processingStage = stage
                         DispatchQueue.main.async {
                             data.update(item)
                             if data.selectedItem?.url == item.url {
@@ -314,6 +470,11 @@ enum Upscayl {
     private static func makeArguments(for item: UpscaylDataItem) -> [String] {
         let formatString = determineFormatString(for: item)
         let outputURL = makeOutputURL(for: item, ext: formatString)
+        return makeArguments(for: item, outputURL: outputURL)
+    }
+    
+    private static func makeArguments(for item: UpscaylDataItem, outputURL: URL) -> [String] {
+        let formatString = outputURL.pathExtension == "jpeg" ? "jpeg" : outputURL.pathExtension
         var args = [
             "-i", item.url.path,
             "-o", outputURL.path,
@@ -361,8 +522,9 @@ enum Upscayl {
             url = baseDir.appendingPathComponent(url.lastPathComponent)
         }
 
-        let postfix =
-            "_hipixel_\(Int(HiPixelConfiguration.shared.imageScale))x_\(HiPixelConfiguration.shared.upscaleModel.id)"
+        let scale = Int(HiPixelConfiguration.shared.imageScale)
+        let effectiveScale = HiPixelConfiguration.shared.doubleUpscayl ? scale * scale : scale
+        let postfix = "_hipixel_\(effectiveScale)x_\(HiPixelConfiguration.shared.upscaleModel.id)"
         return url.appendingPostfix(postfix).changingPathExtension(to: ext)
     }
 

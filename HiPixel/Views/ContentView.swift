@@ -78,7 +78,9 @@ struct ContentView: View, DropDelegate {
                                     Text("\(item.progress, specifier: "%.0f")%")
                                         .font(.title)
                                         .fontDesign(.monospaced)
-                                    Text("Processing...")
+                                    Text(HiPixelConfiguration.shared.doubleUpscayl ? 
+                                         "Processing... (\(item.processingStage)/2)" : 
+                                         "Processing...")
                                         .font(.caption)
                                 }
                                 .padding(16)

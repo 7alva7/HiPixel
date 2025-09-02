@@ -27,6 +27,7 @@ struct UpscaylDataItem: Identifiable {
     var timeInterval: TimeInterval = 0
     var state: ProcessState
     var progress: Double = 0
+    var processingStage: Int = 1
     
     init(_ url: URL) {
         self.url = url
