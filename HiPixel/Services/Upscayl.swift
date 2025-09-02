@@ -72,6 +72,11 @@ enum Upscayl {
             }
         }
 
+        // Preserve metadata from original image to processed image if processing succeeded
+        if result.status == 0 {
+            EXIFMetadataManager.compareAndCopyMetadata(from: item.url, to: newURL)
+        }
+
         completedHandler(result.status == 0 ? newURL : nil)
     }
 
@@ -187,6 +192,9 @@ enum Upscayl {
                     },
                     completedHandler: { url in
                         if let url = url {
+                            // Preserve metadata from original image to processed image
+                            EXIFMetadataManager.compareAndCopyMetadata(from: imageURL, to: url)
+                            
                             item.newURL = url
                             item.newFileSize = url.fileSize
                             item.timeInterval = Date.now.timeIntervalSince(item.startAt)
