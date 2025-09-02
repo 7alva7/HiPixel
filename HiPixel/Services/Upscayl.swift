@@ -336,6 +336,10 @@ enum Upscayl {
             args.append(contentsOf: ["-t", "\(HiPixelConfiguration.shared.customTileSize)"])
         }
 
+        if HiPixelConfiguration.shared.enableTTA {
+            args.append("-x")
+        }
+
         return args
     }
 

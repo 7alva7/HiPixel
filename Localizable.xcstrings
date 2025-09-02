@@ -1041,6 +1041,38 @@
         }
       }
     },
+    "TTA (Test-Time Augmentation)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TTA (Test-Time Augmentation)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TTA（测试时增强）"
+          }
+        }
+      }
+    },
+    "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TTA（测试时增强）：对图像做多次翻转/旋转推理并融合，减少噪点和伪影、边缘更干净；但速度约慢 8×，画面可能略微变软。"
+          }
+        }
+      }
+    },
     "Thank you for your support! " : {
       "localizations" : {
         "zh-Hans" : {

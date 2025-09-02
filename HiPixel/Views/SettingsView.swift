@@ -354,6 +354,9 @@ struct UpscaleSettingsView: View {
     @AppStorage(HiPixelConfiguration.Keys.CustomModelsFolder)
     var customModelsFolder: String?
 
+    @AppStorage(HiPixelConfiguration.Keys.EnableTTA)
+    var enableTTA: Bool = false
+
     @State private var showZipicInstallAlert = false
 
     private var numberFormatter: NumberFormatter {
@@ -497,6 +500,17 @@ struct UpscaleSettingsView: View {
             } message: {
                 Text("Zipic is not installed. Would you like to install it now?")
             }
+            
+            SettingItem(
+                title: "TTA (Test-Time Augmentation)",
+                icon: "wand.and.rays",
+                description: "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer.",
+                trailingView: Group {
+                    Toggle("", isOn: $enableTTA)
+                        .toggleStyle(.switch)
+                        .controlSize(.small)
+                }
+            )
 
             SettingItem(
                 title: "OUTPUT FOLDER",

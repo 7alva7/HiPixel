@@ -81,7 +81,7 @@ struct SettingItem: View {
                                     .lineSpacing(4)
                             }
                             .font(.caption)
-                            .frame(width: 180)
+                            .frame(width: 240)
                             .padding(12)
                         })
                         .onHover { hovering in

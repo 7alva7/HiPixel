@@ -28,6 +28,7 @@ struct HiPixelConfiguration {
         static let UpscaylModel = "HIPixel-UpscaylModel"
         static let UpscaylModelVersion: String = "HIPixel-UpscaylModel-Version"
         static let DoubleUpscayl = "HIPixel-DoubleUpscayl"
+        static let EnableTTA = "HIPixel-EnableTTA"
         static let SelectedAppIcon = "HIPixel-AppIconSelected"
     }
     
@@ -205,6 +206,9 @@ struct HiPixelConfiguration {
     @AppStorage(Keys.DoubleUpscayl)
     var doubleUpscayl: Bool = false
     
+    @AppStorage(Keys.EnableTTA)
+    var enableTTA: Bool = false
+    
     @AppStorage(Keys.UpscaylModel)
     var upscaleModel: UpscaylModel = .Upscayl_Standard
     
@@ -223,6 +227,7 @@ struct HiPixelConfiguration {
         customTileSize = 0
         customModelsFolder = nil
         doubleUpscayl = false
+        enableTTA = false
         upscaleModel = .Upscayl_Standard
     }
 }
