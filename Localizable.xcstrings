@@ -87,6 +87,16 @@
         }
       }
     },
+    "%lld" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
     "%lld%%" : {
       "localizations" : {
         "zh-Hans" : {
@@ -153,6 +163,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关于"
+          }
+        }
+      }
+    },
+    "Add custom AI models by selecting a directory containing .bin and .param file pairs." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add custom AI models by selecting a directory containing .bin and .param file pairs. For more details: [CUSTOM MODELS REPOSITORY](https://github.com/upscayl/custom-models/blob/main/README.md)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择包含 .bin 与 .param 配对文件的文件夹以添加自定义 AI 模型，访问 [CUSTOM MODELS REPOSITORY](https://github.com/upscayl/custom-models/blob/main/README.md)了解更多。"
           }
         }
       }
@@ -273,6 +299,16 @@
         }
       }
     },
+    "Built-in Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内置模型"
+          }
+        }
+      }
+    },
     "Buy Me a Coffee" : {
       "localizations" : {
         "zh-Hans" : {
@@ -356,6 +392,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "继续"
+          }
+        }
+      }
+    },
+    "Custom Models" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义模型"
           }
         }
       }
@@ -550,6 +596,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "处理失败"
+          }
+        }
+      }
+    },
+    "Folder:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目录："
           }
         }
       }
@@ -768,6 +824,16 @@
         }
       }
     },
+    "Models found:" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发现模型："
+          }
+        }
+      }
+    },
     "Monitor" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -775,6 +841,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "监听"
+          }
+        }
+      }
+    },
+    "No custom models directory selected" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未选择自定义模型目录"
+          }
+        }
+      }
+    },
+    "No custom models found" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有发现自定义模型"
           }
         }
       }

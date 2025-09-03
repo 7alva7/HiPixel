@@ -27,6 +27,7 @@ struct HiPixelConfiguration {
         static let CustomModelsFolder = "HIPixel-CustomModelsFolder"
         static let UpscaylModel = "HIPixel-UpscaylModel"
         static let UpscaylModelVersion: String = "HIPixel-UpscaylModel-Version"
+        static let SelectedCustomModel = "HIPixel-SelectedCustomModel"
         static let DoubleUpscayl = "HIPixel-DoubleUpscayl"
         static let EnableTTA = "HIPixel-EnableTTA"
         static let SelectedAppIcon = "HIPixel-AppIconSelected"
@@ -215,6 +216,21 @@ struct HiPixelConfiguration {
     @AppStorage(Keys.UpscaylModelVersion)
     var upscaleModelVersion: String = "2.14.0"
     
+    @AppStorage(Keys.SelectedCustomModel)
+    var selectedCustomModel: String?
+    
+    // Computed property to get the current unified model
+    var currentUnifiedModel: UnifiedModel {
+        get {
+            return UnifiedModel.fromStoredValue(upscaleModel, customModelName: selectedCustomModel)
+        }
+        set {
+            let storageData = newValue.storageData
+            upscaleModel = storageData.builtInModel
+            selectedCustomModel = storageData.customModelName
+        }
+    }
+    
     func reset() {
         saveImageAs = .png
         imageScale = 4.0
@@ -229,5 +245,6 @@ struct HiPixelConfiguration {
         doubleUpscayl = false
         enableTTA = false
         upscaleModel = .Upscayl_Standard
+        selectedCustomModel = nil
     }
 }

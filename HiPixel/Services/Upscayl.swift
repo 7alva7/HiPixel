@@ -475,12 +475,27 @@ enum Upscayl {
     
     private static func makeArguments(for item: UpscaylDataItem, outputURL: URL) -> [String] {
         let formatString = outputURL.pathExtension == "jpeg" ? "jpeg" : outputURL.pathExtension
+        let currentModel = HiPixelConfiguration.shared.currentUnifiedModel
+        
+        // Determine model path and name based on model type
+        let modelPath: String
+        let modelName: String
+        
+        switch currentModel {
+        case .builtIn(let builtInModel):
+            modelPath = ResourceManager.modelsURL.path
+            modelName = builtInModel.id
+        case .custom(let customModel):
+            modelPath = customModel.path
+            modelName = customModel.name
+        }
+        
         var args = [
             "-i", item.url.path,
             "-o", outputURL.path,
             "-s", "\(Int(HiPixelConfiguration.shared.imageScale))",
-            "-m", ResourceManager.modelsURL.path,
-            "-n", HiPixelConfiguration.shared.upscaleModel.id,
+            "-m", modelPath,
+            "-n", modelName,
             "-f", formatString,
         ]
 
