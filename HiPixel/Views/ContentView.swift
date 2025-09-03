@@ -49,6 +49,7 @@ struct ContentView: View, DropDelegate {
                         .popover(isPresented: $isOptionsPresented) {
                             UpscaleSettingsView()
                                 .font(.caption)
+                                .frame(width: 320)
                         }
                 }
                 .buttonStyle(.plain)

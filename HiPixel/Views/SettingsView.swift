@@ -175,6 +175,10 @@ struct AdvancedSettingsView: View {
 
     @ObservedObject var monitorService = MonitorService.shared
     @StateObject private var downloadManager = ResourceDownloadManager.shared
+    @StateObject private var customModelManager = CustomModelManager.shared
+    
+    @AppStorage(HiPixelConfiguration.Keys.CustomModelsFolder)
+    private var customModelsFolder: String?
 
     var body: some View {
         VStack {
@@ -301,6 +305,81 @@ struct AdvancedSettingsView: View {
                     }
                 }
             )
+            
+            SettingItem(
+                title: "Custom Models",
+                icon: "cube.transparent",
+                description: "Add custom AI models by selecting a directory containing .bin and .param file pairs.",
+                trailingView: Group {
+                    Button(action: {
+                        let panel = NSOpenPanel()
+                        panel.canChooseFiles = false
+                        panel.canChooseDirectories = true
+                        panel.allowsMultipleSelection = false
+                        panel.allowedContentTypes = [.folder]
+                        panel.canCreateDirectories = false
+                        panel.message = "Select folder containing custom model files (.bin and .param pairs)"
+                        
+                        panel.begin { result in
+                            if result == NSApplication.ModalResponse.OK, let url = panel.url {
+                                customModelsFolder = url.path
+                                customModelManager.loadCustomModels()
+                            }
+                        }
+                    }, label: {
+                        Image(systemName: customModelsFolder == nil ? "plus" : "gearshape")
+                    })
+                    .buttonStyle(.plain)
+                },
+                bodyView: VStack(alignment: .leading, spacing: 4) {
+                    if let folderPath = customModelsFolder {
+                        HStack {
+                            Text("Folder:")
+                                .foregroundColor(.secondary)
+                                .font(.caption)
+                            Text(folderPath)
+                                .font(.caption)
+                                .fontWeight(.medium)
+                                .truncationMode(.middle)
+                            Spacer()
+                        }
+                        
+                        HStack {
+                            if customModelManager.customModels.isEmpty {
+                                Text("No custom models found")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                HStack {
+                                    Text("Models found:")
+                                        .foregroundColor(.secondary)
+                                        .font(.caption)
+                                    Text("\(customModelManager.customModels.count)")
+                                        .font(.caption)
+                                        .fontWeight(.bold)
+                                    Spacer()
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                customModelsFolder = nil
+                                customModelManager.loadCustomModels()
+                            }, label: {
+                                Image(systemName: "xmark")
+                                    .font(.caption)
+                                    .padding(4)
+                            })
+                            .buttonStyle(.plain)
+                        }
+                    } else {
+                        Text("No custom models directory selected")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            )
         }
         .padding(12)
         .onAppear {
@@ -308,6 +387,8 @@ struct AdvancedSettingsView: View {
             Task {
                 await downloadManager.downloadResourcesIfNeeded()
             }
+            // Scan for custom models if folder is set
+            customModelManager.loadCustomModels()
         }
     }
     
@@ -320,9 +401,14 @@ struct AdvancedSettingsView: View {
 }
 
 struct UpscaleSettingsView: View {
+    
+    @StateObject private var customModelManager = CustomModelManager.shared
 
     @AppStorage(HiPixelConfiguration.Keys.UpscaylModel)
     var upscaleModel: HiPixelConfiguration.UpscaylModel = .Upscayl_Standard
+    
+    @AppStorage(HiPixelConfiguration.Keys.SelectedCustomModel)
+    var selectedCustomModel: String?
 
     @AppStorage(HiPixelConfiguration.Keys.SaveImageAs)
     var saveImageAs: HiPixelConfiguration.ImageFormat = .png
@@ -361,6 +447,30 @@ struct UpscaleSettingsView: View {
     var doubleUpscayl: Bool = false
 
     @State private var showZipicInstallAlert = false
+    
+    // Computed property for unified model selection
+    private var currentUnifiedModel: UnifiedModel {
+        return UnifiedModel.fromStoredValue(upscaleModel, customModelName: selectedCustomModel)
+    }
+    
+    // Custom binding for unified model selection
+    private var unifiedModelBinding: Binding<UnifiedModel> {
+        Binding(
+            get: {
+                UnifiedModel.fromStoredValue(upscaleModel, customModelName: selectedCustomModel)
+            },
+            set: { newValue in
+                let storageData = newValue.storageData
+                upscaleModel = storageData.builtInModel
+                selectedCustomModel = storageData.customModelName
+            }
+        )
+    }
+    
+    // Get all available models (built-in + custom)
+    private var allAvailableModels: [UnifiedModel] {
+        return UnifiedModel.getAllModels()
+    }
 
     private var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -376,10 +486,23 @@ struct UpscaleSettingsView: View {
                 icon: "wand.and.stars",
                 description: HiPixelConfiguration.UpscaylModel.description,
                 trailingView: Group {
-                    Picker("", selection: $upscaleModel) {
-                        ForEach(HiPixelConfiguration.UpscaylModel.allCases, id: \.self) {
-                            Text($0.text)
-                                .tag($0)
+                    Picker("", selection: unifiedModelBinding) {
+                        // Built-in models section
+                        Section("Built-in Models") {
+                            ForEach(HiPixelConfiguration.UpscaylModel.allCases, id: \.self) { model in
+                                Text(model.text)
+                                    .tag(UnifiedModel.builtIn(model))
+                            }
+                        }
+                        
+                        // Custom models section (if any exist)
+                        if !customModelManager.customModels.isEmpty {
+                            Section("Custom Models") {
+                                ForEach(customModelManager.customModels) { customModel in
+                                    Text(customModel.displayName)
+                                        .tag(UnifiedModel.custom(customModel))
+                                }
+                            }
                         }
                     }
                     .pickerStyle(.menu)
@@ -636,6 +759,10 @@ struct UpscaleSettingsView: View {
             .buttonStyle(.gradient(configuration: .danger))
         }
         .padding(12)
+        .onAppear {
+            // Refresh custom models when view appears
+            customModelManager.loadCustomModels()
+        }
     }
 }
 
