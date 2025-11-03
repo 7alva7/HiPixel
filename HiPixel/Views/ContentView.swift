@@ -8,23 +8,24 @@
 import SwiftUI
 
 struct ContentView: View, DropDelegate {
-    
+
     @AppStorage(HiPixelConfiguration.Keys.ColorScheme)
     var colorScheme: HiPixelConfiguration.ColorScheme = .system
-    
+
     @State var isOptionsPresented: Bool = false
-    
+
     @State var isFilePanelPresented: Bool = false
-    
+
     @State private var dropOver = false
     @State private var hovering = false
-    
+    @State private var buttonHovering = false
+
     @State private var item: UpscaylDataItem? = nil
     @State private var showResourceDownloadSheet = false
-    
+
     @StateObject private var resourceDownloadManager = ResourceDownloadManager.shared
     @EnvironmentObject var upscaylData: UpscaylData
-    
+
     private var cornerRadius: CGFloat {
         if #available(macOS 26.0, *) {
             return 12
@@ -32,13 +33,13 @@ struct ContentView: View, DropDelegate {
             return 8
         }
     }
-    
+
     var body: some View {
         VStack(spacing: 0) {
-            
+
             HStack(spacing: 16) {
                 Spacer()
-                
+
                 Button {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isOptionsPresented.toggle()
@@ -57,7 +58,7 @@ struct ContentView: View, DropDelegate {
             .padding(.top, 16)
             .padding(.horizontal, 16)
             .padding(.bottom, 8)
-            
+
             VStack {
                 if let item = upscaylData.selectedItem, !dropOver {
                     switch item.state {
@@ -79,10 +80,11 @@ struct ContentView: View, DropDelegate {
                                     Text("\(item.progress, specifier: "%.0f")%")
                                         .font(.title)
                                         .fontDesign(.monospaced)
-                                    Text(HiPixelConfiguration.shared.doubleUpscayl ? 
-                                         "Processing... (\(item.processingStage)/2)" : 
-                                         "Processing...")
-                                        .font(.caption)
+                                    Text(
+                                        HiPixelConfiguration.shared.doubleUpscayl
+                                            ? "Processing... (\(item.processingStage)/2)" : "Processing..."
+                                    )
+                                    .font(.caption)
                                 }
                                 .padding(16)
                                 .background(cornerRadius: 16, fill: .background.opacity(0.8))
@@ -102,8 +104,11 @@ struct ContentView: View, DropDelegate {
                             }
                             .overlay(alignment: .center) {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Label("\(item.size.width, specifier: "%.0f")×\(item.size.height, specifier: "%.0f") px", systemImage: "viewfinder.rectangular")
-                                        .font(.caption)
+                                    Label(
+                                        "\(item.size.width, specifier: "%.0f")×\(item.size.height, specifier: "%.0f") px",
+                                        systemImage: "viewfinder.rectangular"
+                                    )
+                                    .font(.caption)
                                     Text("Failed to process")
                                         .font(.headline)
                                 }
@@ -120,30 +125,59 @@ struct ContentView: View, DropDelegate {
                                     VStack(alignment: .leading, spacing: 8) {
                                         Text("Original Image")
                                             .font(.headline)
-                                        Label("\(item.size.width, specifier: "%.0f")×\(item.size.height, specifier: "%.0f") px", systemImage: "viewfinder.rectangular")
-                                            .font(.caption)
+                                        Label(
+                                            "\(item.size.width, specifier: "%.0f")×\(item.size.height, specifier: "%.0f") px",
+                                            systemImage: "viewfinder.rectangular"
+                                        )
+                                        .font(.caption)
                                     }
                                     .padding(12)
-                                    .background(cornerRadius: 6, strokeColor: .primary.opacity(0.05), fill: .background.opacity(0.8))
+                                    .background(
+                                        cornerRadius: 6, strokeColor: .primary.opacity(0.05),
+                                        fill: .background.opacity(0.8))
                                     Spacer()
                                     VStack(alignment: .trailing, spacing: 8) {
                                         Text("HiPixeled Image")
                                             .font(.headline)
-                                        Label("\(item.newSize.width, specifier: "%.0f")×\(item.newSize.height, specifier: "%.0f") px", systemImage: "viewfinder.rectangular")
-                                            .font(.caption)
+                                        Label(
+                                            "\(item.newSize.width, specifier: "%.0f")×\(item.newSize.height, specifier: "%.0f") px",
+                                            systemImage: "viewfinder.rectangular"
+                                        )
+                                        .font(.caption)
                                     }
                                     .padding(12)
-                                    .background(cornerRadius: 6, strokeColor: .primary.opacity(0.05), fill: .background.opacity(0.8))
+                                    .background(
+                                        cornerRadius: 6, strokeColor: .primary.opacity(0.05),
+                                        fill: .background.opacity(0.8))
                                 }
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
                                 .padding(6)
                             }
+                            .overlay(alignment: .bottomTrailing) {
+                                Button {
+                                    Upscayl.process([item.url], by: upscaylData)
+                                } label: {
+                                    Image(systemName: "arrow.clockwise")
+                                        .padding(8)
+                                        .background(
+                                            cornerRadius: 8, fill: .background.opacity(buttonHovering ? 0.8 : 0.5)
+                                        )
+                                        .scaleEffect(buttonHovering ? 1.1 : 1.0)
+                                }
+                                .buttonStyle(.plain)
+                                .padding(12)
+                                .onHover { hovering in
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                        buttonHovering = hovering
+                                    }
+                                }
+                            }
                             .background {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: cornerRadius)
                                         .fill(.background.opacity(hovering ? 0.7 : 0.8))
-                                    
+
                                     GeometryReader { geometry in
                                         HStack(spacing: 40) {
                                             ForEach(0..<59) { _ in
@@ -185,7 +219,7 @@ struct ContentView: View, DropDelegate {
                                 )
                         }
                         .padding(.bottom, -24)
-                        
+
                         if dropOver {
                             Text("✨ Release to Process Images ✨")
                                 .padding(.top, 16)
@@ -197,9 +231,9 @@ struct ContentView: View, DropDelegate {
                                 .padding(.bottom, 8)
                                 .font(.system(size: 15, weight: .heavy))
                         }
-                        
+
                         Text("**PNG** • **JPEG** • **WebP**")
-                                .font(.system(size: 10))
+                            .font(.system(size: 10))
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .foregroundStyle(dropOver || hovering ? .primary : .secondary)
@@ -213,7 +247,7 @@ struct ContentView: View, DropDelegate {
                         ZStack {
                             RoundedRectangle(cornerRadius: cornerRadius)
                                 .fill(.background.opacity(hovering ? 0.7 : 0.8))
-                            
+
                             GeometryReader { geometry in
                                 HStack(spacing: 40) {
                                     ForEach(0..<59) { _ in
@@ -225,7 +259,7 @@ struct ContentView: View, DropDelegate {
                                 .frame(width: geometry.size.width)
                                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
                             }
-                            
+
                             RoundedRectangle(cornerRadius: cornerRadius)
                                 .stroke(style: StrokeStyle(lineWidth: 2, dash: [4, 4]))
                                 .foregroundStyle(.primary.opacity(hovering ? 0.24 : 0.12))
@@ -240,13 +274,14 @@ struct ContentView: View, DropDelegate {
                 strokeColor: .primary.opacity(upscaylData.selectedItem == nil ? 0 : 0.1),
                 fill: .background.opacity(upscaylData.selectedItem == nil ? 0 : 0.4)
             )
-            .padding(.init(
-                top: 8,
-                leading: 8,
-                bottom: upscaylData.items.isEmpty ? 8 : 0,
-                trailing: 8
-            ))
-            
+            .padding(
+                .init(
+                    top: 8,
+                    leading: 8,
+                    bottom: upscaylData.items.isEmpty ? 8 : 0,
+                    trailing: 8
+                ))
+
             if !(upscaylData.items.isEmpty) {
                 HStack(spacing: 8) {
                     ScrollView(.horizontal) {
@@ -260,7 +295,7 @@ struct ContentView: View, DropDelegate {
                                         }) {
                                             Label("Remove The Image", systemImage: "rectangle.badge.minus")
                                         }
-                                        
+
                                         Button(action: {
                                             upscaylData.selectedItem = nil
                                             upscaylData.removeAll()
@@ -302,12 +337,12 @@ struct ContentView: View, DropDelegate {
             let binPath = Common.directory.appendingPathComponent("bin")
             let modelsPath = Common.directory.appendingPathComponent("models")
             let fileManager = FileManager.default
-            
+
             let binExists = fileManager.fileExists(atPath: binPath.path)
             let modelsExists = fileManager.fileExists(atPath: modelsPath.path)
-            
+
             Common.logger.info("Resource check on startup - bin exists: \(binExists), models exists: \(modelsExists)")
-            
+
             if !binExists || !modelsExists {
                 Common.logger.info("Resources missing - showing download sheet")
                 showResourceDownloadSheet = true
@@ -329,44 +364,44 @@ struct ContentView: View, DropDelegate {
         }
         .focusable(false)
     }
-    
+
     func dropEntered(info: DropInfo) {
         withAnimation {
             dropOver = true
         }
-//        DispatchQueue.main.async {
-//            SoundManager.shared.playSound()
-//        }
+        //        DispatchQueue.main.async {
+        //            SoundManager.shared.playSound()
+        //        }
     }
-    
+
     func dropExited(info: DropInfo) {
         withAnimation {
             dropOver = false
         }
     }
-    
+
     func validateDrop(info: DropInfo) -> Bool {
         if info.hasItemsConforming(to: [.png, .jpeg, .webP]) {
             return true
         }
         return false
     }
-    
+
     func performDrop(info: DropInfo) -> Bool {
-        
+
         let queue = DispatchQueue(label: "parsing url ...", attributes: .concurrent)
         let group = DispatchGroup()
-        
+
         var urls = [URL]()
-        
+
         withAnimation {
             dropOver = false
         }
-        
+
         DispatchQueue.main.async {
             NSApplication.shared.activate(ignoringOtherApps: true)
         }
-        
+
         for provider in info.itemProviders(for: [.fileURL]) {
             if !provider.canLoadObject(ofClass: URL.self) {
                 continue
@@ -376,7 +411,9 @@ struct ContentView: View, DropDelegate {
                 defer {
                     group.leave()
                 }
-                guard let data = item as? Data, let url = NSURL(absoluteURLWithDataRepresentation: data, relativeTo: nil) as URL? else {
+                guard let data = item as? Data,
+                    let url = NSURL(absoluteURLWithDataRepresentation: data, relativeTo: nil) as URL?
+                else {
                     return
                 }
                 if !url.hasDirectoryPath && !url.isImageFile {
@@ -385,13 +422,13 @@ struct ContentView: View, DropDelegate {
                 urls.append(url)
             }
         }
-        
+
         group.notify(queue: queue) {
             DispatchQueue.main.async {
                 Upscayl.process(urls, by: upscaylData)
             }
         }
-        
+
         return true
     }
 }
