@@ -31,6 +31,7 @@ struct HiPixelConfiguration {
         static let DoubleUpscayl = "HIPixel-DoubleUpscayl"
         static let EnableTTA = "HIPixel-EnableTTA"
         static let SelectedAppIcon = "HIPixel-AppIconSelected"
+        static let ManualSaveControl = "HIPixel-ManualSaveControl"
     }
 
     enum ColorScheme: String, CaseIterable {
@@ -219,6 +220,9 @@ struct HiPixelConfiguration {
     @AppStorage(Keys.SelectedCustomModel)
     var selectedCustomModel: String?
 
+    @AppStorage(Keys.ManualSaveControl)
+    var manualSaveControl: Bool = false
+
     // Computed property to get the current unified model
     var currentUnifiedModel: UnifiedModel {
         get {
@@ -246,6 +250,7 @@ struct HiPixelConfiguration {
         enableTTA = false
         upscaleModel = .Upscayl_Standard
         selectedCustomModel = nil
+        manualSaveControl = false
     }
 }
 
@@ -267,6 +272,7 @@ struct UpscaylOptions {
     var selectedCustomModel: String?
     var doubleUpscayl: Bool?
     var enableTTA: Bool?
+    var manualSaveControl: Bool?
 
     /// Fill missing values from HiPixelConfiguration.shared
     mutating func fillDefaults(from config: HiPixelConfiguration = HiPixelConfiguration.shared) {
@@ -284,6 +290,7 @@ struct UpscaylOptions {
         if selectedCustomModel == nil { selectedCustomModel = config.selectedCustomModel }
         if doubleUpscayl == nil { doubleUpscayl = config.doubleUpscayl }
         if enableTTA == nil { enableTTA = config.enableTTA }
+        if manualSaveControl == nil { manualSaveControl = config.manualSaveControl }
     }
 
     /// Create options from URL query parameters
@@ -402,6 +409,7 @@ struct UpscaylOptions {
         if let selectedCustomModel = other.selectedCustomModel { merged.selectedCustomModel = selectedCustomModel }
         if let doubleUpscayl = other.doubleUpscayl { merged.doubleUpscayl = doubleUpscayl }
         if let enableTTA = other.enableTTA { merged.enableTTA = enableTTA }
+        if let manualSaveControl = other.manualSaveControl { merged.manualSaveControl = manualSaveControl }
         return merged
     }
 }
@@ -468,6 +476,10 @@ extension UpscaylOptions {
 
     var resolvedEnableTTA: Bool {
         enableTTA ?? config.enableTTA
+    }
+
+    var resolvedManualSaveControl: Bool {
+        manualSaveControl ?? config.manualSaveControl
     }
 
     /// Get unified model from resolved options

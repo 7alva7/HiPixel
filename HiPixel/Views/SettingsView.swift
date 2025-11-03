@@ -176,9 +176,12 @@ struct AdvancedSettingsView: View {
     @ObservedObject var monitorService = MonitorService.shared
     @StateObject private var downloadManager = ResourceDownloadManager.shared
     @StateObject private var customModelManager = CustomModelManager.shared
-    
+
     @AppStorage(HiPixelConfiguration.Keys.CustomModelsFolder)
     private var customModelsFolder: String?
+
+    @AppStorage(HiPixelConfiguration.Keys.ManualSaveControl)
+    private var manualSaveControl: Bool = false
 
     var body: some View {
         VStack {
@@ -209,30 +212,33 @@ struct AdvancedSettingsView: View {
                     }
                 }
             )
-            
+
             SettingItem(
                 title: "Dependencies",
                 icon: "cube.box",
                 description: "AI models and processing tools version.",
                 trailingView: Group {
-                    Button(action: {
-                        Task {
-                            await downloadManager.checkForUpdates()
+                    Button(
+                        action: {
+                            Task {
+                                await downloadManager.checkForUpdates()
+                            }
+                        },
+                        label: {
+                            Image(systemName: "arrow.trianglehead.2.counterclockwise")
+
                         }
-                    }, label: {
-                        Image(systemName: "arrow.trianglehead.2.counterclockwise")
-                            
-                    })
+                    )
                     .buttonStyle(.plain)
-                    .disabled(downloadManager.downloadState == .checking ||
-                              downloadManager.downloadState == .installing ||
-                              isDownloading(downloadManager.downloadState))
+                    .disabled(
+                        downloadManager.downloadState == .checking || downloadManager.downloadState == .installing
+                            || isDownloading(downloadManager.downloadState))
                 },
                 bodyView: VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 4) {
                         Text("Version:")
                             .foregroundColor(.secondary)
-                        
+
                         Text(downloadManager.currentVersion.isEmpty ? "Unknown" : downloadManager.currentVersion)
                             .fontWeight(.medium)
                             .foregroundColor(downloadManager.currentVersion == "Not installed" ? .secondary : .primary)
@@ -260,32 +266,36 @@ struct AdvancedSettingsView: View {
                             }
                         case .completed:
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundStyle(LinearGradient(
-                                    colors: [
-                                        Color(hex: "#55AAEF") ?? Color.blue.opacity(0.8),
-                                        .blue
-                                    ],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                ))
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [
+                                            Color(hex: "#55AAEF") ?? Color.blue.opacity(0.8),
+                                            .blue,
+                                        ],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
                                 .font(.caption)
                         case .error(_):
                             Image(systemName: "exclamationmark.triangle.fill")
-                                .foregroundStyle(LinearGradient(
-                                    colors: [
-                                        .pink.opacity(0.8),
-                                        .pink
-                                    ],
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                ))
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [
+                                            .pink.opacity(0.8),
+                                            .pink,
+                                        ],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
                                 .font(.caption)
                         default:
                             EmptyView()
                         }
                     }
                     .font(.caption)
-                    
+
                     // Progress bar only during download
                     if case .downloading(_) = downloadManager.downloadState {
                         VStack(alignment: .leading, spacing: 2) {
@@ -305,30 +315,33 @@ struct AdvancedSettingsView: View {
                     }
                 }
             )
-            
+
             SettingItem(
                 title: "Custom Models",
                 icon: "cube.transparent",
                 description: "Add custom AI models by selecting a directory containing .bin and .param file pairs.",
                 trailingView: Group {
-                    Button(action: {
-                        let panel = NSOpenPanel()
-                        panel.canChooseFiles = false
-                        panel.canChooseDirectories = true
-                        panel.allowsMultipleSelection = false
-                        panel.allowedContentTypes = [.folder]
-                        panel.canCreateDirectories = false
-                        panel.message = "Select folder containing custom model files (.bin and .param pairs)"
-                        
-                        panel.begin { result in
-                            if result == NSApplication.ModalResponse.OK, let url = panel.url {
-                                customModelsFolder = url.path
-                                customModelManager.loadCustomModels()
+                    Button(
+                        action: {
+                            let panel = NSOpenPanel()
+                            panel.canChooseFiles = false
+                            panel.canChooseDirectories = true
+                            panel.allowsMultipleSelection = false
+                            panel.allowedContentTypes = [.folder]
+                            panel.canCreateDirectories = false
+                            panel.message = "Select folder containing custom model files (.bin and .param pairs)"
+
+                            panel.begin { result in
+                                if result == NSApplication.ModalResponse.OK, let url = panel.url {
+                                    customModelsFolder = url.path
+                                    customModelManager.loadCustomModels()
+                                }
                             }
+                        },
+                        label: {
+                            Image(systemName: customModelsFolder == nil ? "plus" : "gearshape")
                         }
-                    }, label: {
-                        Image(systemName: customModelsFolder == nil ? "plus" : "gearshape")
-                    })
+                    )
                     .buttonStyle(.plain)
                 },
                 bodyView: VStack(alignment: .leading, spacing: 4) {
@@ -343,7 +356,7 @@ struct AdvancedSettingsView: View {
                                 .truncationMode(.middle)
                             Spacer()
                         }
-                        
+
                         HStack {
                             if customModelManager.customModels.isEmpty {
                                 Text("No custom models found")
@@ -360,17 +373,20 @@ struct AdvancedSettingsView: View {
                                     Spacer()
                                 }
                             }
-                            
+
                             Spacer()
-                            
-                            Button(action: {
-                                customModelsFolder = nil
-                                customModelManager.loadCustomModels()
-                            }, label: {
-                                Image(systemName: "xmark")
-                                    .font(.caption)
-                                    .padding(4)
-                            })
+
+                            Button(
+                                action: {
+                                    customModelsFolder = nil
+                                    customModelManager.loadCustomModels()
+                                },
+                                label: {
+                                    Image(systemName: "xmark")
+                                        .font(.caption)
+                                        .padding(4)
+                                }
+                            )
                             .buttonStyle(.plain)
                         }
                     } else {
@@ -378,6 +394,18 @@ struct AdvancedSettingsView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                }
+            )
+
+            SettingItem(
+                title: "Manual Save Control",
+                icon: "square.and.arrow.down",
+                description:
+                    "When enabled, processed images will be saved to a temporary directory and require manual save action.",
+                trailingView: Group {
+                    Toggle("", isOn: $manualSaveControl)
+                        .toggleStyle(.switch)
+                        .controlSize(.small)
                 }
             )
         }
@@ -391,7 +419,7 @@ struct AdvancedSettingsView: View {
             customModelManager.loadCustomModels()
         }
     }
-    
+
     private func isDownloading(_ state: ResourceDownloadManager.DownloadState) -> Bool {
         if case .downloading(_) = state {
             return true
@@ -401,12 +429,12 @@ struct AdvancedSettingsView: View {
 }
 
 struct UpscaleSettingsView: View {
-    
+
     @StateObject private var customModelManager = CustomModelManager.shared
 
     @AppStorage(HiPixelConfiguration.Keys.UpscaylModel)
     var upscaleModel: HiPixelConfiguration.UpscaylModel = .Upscayl_Standard
-    
+
     @AppStorage(HiPixelConfiguration.Keys.SelectedCustomModel)
     var selectedCustomModel: String?
 
@@ -442,17 +470,17 @@ struct UpscaleSettingsView: View {
 
     @AppStorage(HiPixelConfiguration.Keys.EnableTTA)
     var enableTTA: Bool = false
-    
+
     @AppStorage(HiPixelConfiguration.Keys.DoubleUpscayl)
     var doubleUpscayl: Bool = false
 
     @State private var showZipicInstallAlert = false
-    
+
     // Computed property for unified model selection
     private var currentUnifiedModel: UnifiedModel {
         return UnifiedModel.fromStoredValue(upscaleModel, customModelName: selectedCustomModel)
     }
-    
+
     // Custom binding for unified model selection
     private var unifiedModelBinding: Binding<UnifiedModel> {
         Binding(
@@ -466,7 +494,7 @@ struct UpscaleSettingsView: View {
             }
         )
     }
-    
+
     // Get all available models (built-in + custom)
     private var allAvailableModels: [UnifiedModel] {
         return UnifiedModel.getAllModels()
@@ -494,7 +522,7 @@ struct UpscaleSettingsView: View {
                                     .tag(UnifiedModel.builtIn(model))
                             }
                         }
-                        
+
                         // Custom models section (if any exist)
                         if !customModelManager.customModels.isEmpty {
                             Section("Custom Models") {
@@ -626,22 +654,24 @@ struct UpscaleSettingsView: View {
             } message: {
                 Text("Zipic is not installed. Would you like to install it now?")
             }
-            
+
             SettingItem(
                 title: "TTA (Test-Time Augmentation)",
                 icon: "wand.and.rays",
-                description: "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer.",
+                description:
+                    "TTA (Test-Time Augmentation): Runs multiple flipped/rotated passes and merges them to reduce noise/artifacts and clean edges; ~8× slower and may look slightly softer.",
                 trailingView: Group {
                     Toggle("", isOn: $enableTTA)
                         .toggleStyle(.switch)
                         .controlSize(.small)
                 }
             )
-            
+
             SettingItem(
                 title: "DOUBLE PROCESSING",
                 icon: "repeat.circle",
-                description: "DOUBLE PROCESSING: Runs the upscaler twice (effective scale ≈ chosen scale squared, e.g., 2×→4×, 4×→16×); can add detail/smoothness but greatly increases time/memory and may cause softness/artifacts at very high scales (>4×)",
+                description:
+                    "DOUBLE PROCESSING: Runs the upscaler twice (effective scale ≈ chosen scale squared, e.g., 2×→4×, 4×→16×); can add detail/smoothness but greatly increases time/memory and may cause softness/artifacts at very high scales (>4×)",
                 trailingView: Group {
                     Toggle("", isOn: $doubleUpscayl)
                         .toggleStyle(.switch)

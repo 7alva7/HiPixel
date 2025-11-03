@@ -19,6 +19,12 @@ struct CommandResult: CustomStringConvertible {
 enum Upscayl {
     // MARK: - Types
 
+    /// Processing source to determine if manual save control should be applied
+    enum ProcessingSource {
+        case userDirect  // User drag & drop, file picker, reprocess button
+        case automated  // URL Scheme, AppIntents, folder monitoring
+    }
+
     struct CommandResult: CustomStringConvertible {
         let output: String
         let error: Process.TerminationReason
@@ -53,7 +59,8 @@ enum Upscayl {
         _ item: UpscaylDataItem,
         progressHandler: @escaping (_ progress: Double) -> Void,
         completedHandler: @escaping (_ url: URL?) -> Void,
-        options: UpscaylOptions? = nil
+        options: UpscaylOptions? = nil,
+        source: ProcessingSource = .userDirect
     ) {
         let effectiveOptions = Self.effectiveConfig(options)
         if effectiveOptions.resolvedDoubleUpscayl {
@@ -61,13 +68,13 @@ enum Upscayl {
                 item,
                 stageProgressHandler: { progress, _ in
                     progressHandler(progress)
-                }, completedHandler: completedHandler, options: effectiveOptions)
+                }, completedHandler: completedHandler, options: effectiveOptions, source: source)
         } else {
             processSingle(
                 item,
                 stageProgressHandler: { progress, _ in
                     progressHandler(progress)
-                }, completedHandler: completedHandler, options: effectiveOptions)
+                }, completedHandler: completedHandler, options: effectiveOptions, source: source)
         }
     }
 
@@ -75,17 +82,18 @@ enum Upscayl {
         _ item: UpscaylDataItem,
         progressHandler: @escaping (_ progress: Double, _ stage: Int) -> Void,
         completedHandler: @escaping (_ url: URL?) -> Void,
-        options: UpscaylOptions? = nil
+        options: UpscaylOptions? = nil,
+        source: ProcessingSource = .userDirect
     ) {
         let effectiveOptions = Self.effectiveConfig(options)
         if effectiveOptions.resolvedDoubleUpscayl {
             processDouble(
                 item, stageProgressHandler: progressHandler, completedHandler: completedHandler,
-                options: effectiveOptions)
+                options: effectiveOptions, source: source)
         } else {
             processSingle(
                 item, stageProgressHandler: progressHandler, completedHandler: completedHandler,
-                options: effectiveOptions)
+                options: effectiveOptions, source: source)
         }
     }
 
@@ -93,11 +101,12 @@ enum Upscayl {
         _ item: UpscaylDataItem,
         progressHandler: @escaping (_ progress: Double) -> Void,
         completedHandler: @escaping (_ url: URL?) -> Void,
-        options: UpscaylOptions
+        options: UpscaylOptions,
+        source: ProcessingSource
     ) {
-        let arguments = makeArguments(for: item, options: options)
+        let arguments = makeArguments(for: item, options: options, source: source)
         let formatStr = determineFormatString(for: item, options: options)
-        let newURL = makeOutputURL(for: item, ext: formatStr, options: options)
+        let newURL = makeOutputURL(for: item, ext: formatStr, options: options, source: source)
         Common.logger.debug("\(arguments)")
         if FileManager.default.fileExists(atPath: newURL.path)
             && !options.resolvedOverwritePreviousUpscale
@@ -137,11 +146,12 @@ enum Upscayl {
         _ item: UpscaylDataItem,
         stageProgressHandler: @escaping (_ progress: Double, _ stage: Int) -> Void,
         completedHandler: @escaping (_ url: URL?) -> Void,
-        options: UpscaylOptions
+        options: UpscaylOptions,
+        source: ProcessingSource
     ) {
-        let arguments = makeArguments(for: item, options: options)
+        let arguments = makeArguments(for: item, options: options, source: source)
         let formatStr = determineFormatString(for: item, options: options)
-        let newURL = makeOutputURL(for: item, ext: formatStr, options: options)
+        let newURL = makeOutputURL(for: item, ext: formatStr, options: options, source: source)
         Common.logger.debug("\(arguments)")
         if FileManager.default.fileExists(atPath: newURL.path)
             && !options.resolvedOverwritePreviousUpscale
@@ -183,10 +193,11 @@ enum Upscayl {
         _ item: UpscaylDataItem,
         stageProgressHandler: @escaping (_ progress: Double, _ stage: Int) -> Void,
         completedHandler: @escaping (_ url: URL?) -> Void,
-        options: UpscaylOptions
+        options: UpscaylOptions,
+        source: ProcessingSource
     ) {
         let formatStr = determineFormatString(for: item, options: options)
-        let finalURL = makeOutputURL(for: item, ext: formatStr, options: options)
+        let finalURL = makeOutputURL(for: item, ext: formatStr, options: options, source: source)
 
         // Check if final result already exists
         if FileManager.default.fileExists(atPath: finalURL.path)
@@ -265,7 +276,8 @@ enum Upscayl {
     static func process(
         _ urls: [URL],
         by data: UpscaylData,
-        options: UpscaylOptions? = nil
+        options: UpscaylOptions? = nil,
+        source: ProcessingSource = .userDirect
     ) {
         if urls.isEmpty { return }
         let effectiveOptions = Self.effectiveConfig(options)
@@ -393,7 +405,8 @@ enum Upscayl {
                             data.selectedItem = item
                         }
                     },
-                    options: effectiveOptions
+                    options: effectiveOptions,
+                    source: source
                 )
             }
 
@@ -499,10 +512,10 @@ enum Upscayl {
     }
 
     private static func makeArguments(
-        for item: UpscaylDataItem, options: UpscaylOptions
+        for item: UpscaylDataItem, options: UpscaylOptions, source: ProcessingSource = .userDirect
     ) -> [String] {
         let formatString = determineFormatString(for: item, options: options)
-        let outputURL = makeOutputURL(for: item, ext: formatString, options: options)
+        let outputURL = makeOutputURL(for: item, ext: formatString, options: options, source: source)
         return makeArguments(for: item, outputURL: outputURL, options: options)
     }
 
@@ -568,8 +581,27 @@ enum Upscayl {
     }
 
     private static func makeOutputURL(
-        for item: UpscaylDataItem, ext: String, options: UpscaylOptions
+        for item: UpscaylDataItem, ext: String, options: UpscaylOptions, source: ProcessingSource = .userDirect
     ) -> URL {
+        // If manual save control is enabled AND source is user direct operation, save to temporary directory
+        if options.resolvedManualSaveControl && source == .userDirect {
+            let tempDir = FileManager.default.temporaryDirectory
+                .appendingPathComponent("hipixel")
+                .appendingPathComponent("manual-save")
+
+            // Create directory if it doesn't exist
+            try? FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+            let scale = Int(options.resolvedImageScale)
+            let effectiveScale = options.resolvedDoubleUpscayl ? scale * scale : scale
+            let unifiedModel = getUnifiedModel(from: options)
+            let modelID = unifiedModel.modelName
+            let postfix = "_hipixel_\(effectiveScale)x_\(modelID)"
+            let fileName = item.url.deletingPathExtension().lastPathComponent + postfix
+            return tempDir.appendingPathComponent(fileName).appendingPathExtension(ext)
+        }
+
+        // Normal save logic
         var url = item.url
         if options.resolvedEnableSaveOutputFolder,
             let saveFolder = options.resolvedSaveOutputFolder,

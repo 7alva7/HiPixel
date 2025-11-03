@@ -40,7 +40,7 @@ class URLSchemeHandler {
         guard !urls.isEmpty else { return }
 
         DispatchQueue.main.async {
-            Upscayl.process(urls, by: UpscaylData.shared, options: effectiveOptions)
+            Upscayl.process(urls, by: UpscaylData.shared, options: effectiveOptions, source: .automated)
         }
     }
 }

@@ -1014,6 +1014,9 @@
         }
       }
     },
+    "Manual Save Control" : {
+
+    },
     "Models found:" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1649,6 +1652,9 @@
           }
         }
       }
+    },
+    "When enabled, processed images will be saved to a temporary directory and require manual save action." : {
+
     },
     "X%.0f" : {
       "localizations" : {

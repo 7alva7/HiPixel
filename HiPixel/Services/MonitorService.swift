@@ -127,7 +127,7 @@ class MonitorService: ObservableObject {
         self.whiteList[item.url]?.formUnion(Set(compressedImages))
         
         // Trigger upscaling
-        Upscayl.process(targetImages, by: UpscaylData.shared)
+        Upscayl.process(targetImages, by: UpscaylData.shared, source: .automated)
     }
 
     private static func makeOutputURL(for url: URL) -> URL {

@@ -5,12 +5,16 @@
 //  Created by 十里 on 2024/6/16.
 //
 
+import AppKit
 import SwiftUI
 
 struct ContentView: View, DropDelegate {
 
     @AppStorage(HiPixelConfiguration.Keys.ColorScheme)
     var colorScheme: HiPixelConfiguration.ColorScheme = .system
+
+    @AppStorage(HiPixelConfiguration.Keys.ManualSaveControl)
+    var manualSaveControl: Bool = false
 
     @State var isOptionsPresented: Bool = false
 
@@ -19,6 +23,7 @@ struct ContentView: View, DropDelegate {
     @State private var dropOver = false
     @State private var hovering = false
     @State private var buttonHovering = false
+    @State private var saveButtonHovering = false
 
     @State private var item: UpscaylDataItem? = nil
     @State private var showResourceDownloadSheet = false
@@ -159,25 +164,50 @@ struct ContentView: View, DropDelegate {
                                 .padding(6)
                             }
                             .overlay(alignment: .bottomTrailing) {
-                                Button {
-                                    Upscayl.process([item.url], by: upscaylData)
-                                } label: {
-                                    Image(systemName: "arrow.clockwise")
-                                        .padding(8)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .fill(.background.opacity(0.8))
-                                                .shadow(color: .black.opacity(0.15), radius: 1, x: 0, y: 0.4)
-                                        )
-                                        .scaleEffect(buttonHovering ? 1.1 : 1.0)
-                                }
-                                .buttonStyle(.plain)
-                                .padding(12)
-                                .onHover { hovering in
-                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                                        buttonHovering = hovering
+                                HStack(spacing: 8) {
+                                    // Save button (only show when manual save control is enabled and processing is successful)
+                                    if manualSaveControl && item.state == .success {
+                                        Button {
+                                            saveImage(from: item)
+                                        } label: {
+                                            Image(systemName: "square.and.arrow.down")
+                                                .padding(8)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .fill(.background.opacity(0.8))
+                                                        .shadow(color: .black.opacity(0.15), radius: 1, x: 0, y: 0.4)
+                                                )
+                                                .scaleEffect(saveButtonHovering ? 1.1 : 1.0)
+                                        }
+                                        .buttonStyle(.plain)
+                                        .onHover { hovering in
+                                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                                saveButtonHovering = hovering
+                                            }
+                                        }
+                                    }
+
+                                    // Reprocess button
+                                    Button {
+                                        Upscayl.process([item.url], by: upscaylData, source: .userDirect)
+                                    } label: {
+                                        Image(systemName: "arrow.clockwise")
+                                            .padding(8)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .fill(.background.opacity(0.8))
+                                                    .shadow(color: .black.opacity(0.15), radius: 1, x: 0, y: 0.4)
+                                            )
+                                            .scaleEffect(buttonHovering ? 1.1 : 1.0)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .onHover { hovering in
+                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                            buttonHovering = hovering
+                                        }
                                     }
                                 }
+                                .padding(12)
                             }
                             .background {
                                 ZStack {
@@ -327,7 +357,7 @@ struct ContentView: View, DropDelegate {
         ) { result in
             switch result {
             case .success(let urls):
-                Upscayl.process(urls, by: upscaylData)
+                Upscayl.process(urls, by: upscaylData, source: .userDirect)
             case .failure(let error):
                 Common.logger.error("Failed to import files: \(error)")
             }
@@ -431,11 +461,73 @@ struct ContentView: View, DropDelegate {
 
         group.notify(queue: queue) {
             DispatchQueue.main.async {
-                Upscayl.process(urls, by: upscaylData)
+                Upscayl.process(urls, by: upscaylData, source: .userDirect)
             }
         }
 
         return true
+    }
+
+    private func saveImage(from item: UpscaylDataItem) {
+        // Only allow saving if processing is successful
+        guard item.state == .success else { return }
+
+        let sourceURL = item.newURL
+
+        // Generate default filename based on configuration
+        let config = HiPixelConfiguration.shared
+        let scale = Int(config.imageScale)
+        let effectiveScale = config.doubleUpscayl ? scale * scale : scale
+        let unifiedModel = config.currentUnifiedModel
+        let modelID = unifiedModel.modelName
+
+        let originalName = item.url.deletingPathExtension().lastPathComponent
+        let postfix = "_hipixel_\(effectiveScale)x_\(modelID)"
+
+        // Determine file extension based on save format
+        let fileExtension: String
+        switch config.saveImageAs {
+        case .png:
+            fileExtension = "png"
+        case .jpg:
+            fileExtension = "jpg"
+        case .webp:
+            fileExtension = "webp"
+        case .original:
+            fileExtension = item.url.pathExtension.isEmpty ? "png" : item.url.pathExtension
+        }
+
+        let defaultFileName = originalName + postfix + "." + fileExtension
+
+        let savePanel = NSSavePanel()
+        // Set allowed content types based on file extension
+        switch fileExtension.lowercased() {
+        case "png":
+            savePanel.allowedContentTypes = [.png]
+        case "jpg", "jpeg":
+            savePanel.allowedContentTypes = [.jpeg]
+        case "webp":
+            savePanel.allowedContentTypes = [.webP]
+        default:
+            savePanel.allowedContentTypes = [.png, .jpeg, .webP]
+        }
+        savePanel.nameFieldStringValue = defaultFileName
+        savePanel.canCreateDirectories = true
+        savePanel.isExtensionHidden = false
+
+        // Set default directory to original image's directory
+        savePanel.directoryURL = item.url.deletingLastPathComponent()
+
+        savePanel.begin { result in
+            if result == .OK, let destinationURL = savePanel.url {
+                do {
+                    // Copy file from temporary location to user-selected location
+                    try FileManager.default.copyItem(at: sourceURL, to: destinationURL)
+                } catch {
+                    Common.logger.error("Failed to save image: \(error)")
+                }
+            }
+        }
     }
 }
 

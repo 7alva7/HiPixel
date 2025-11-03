@@ -150,7 +150,8 @@ struct UpscaleImagesIntent: AppIntent {
                     completedHandler: { outputURL in
                         continuation.resume(returning: outputURL)
                     },
-                    options: options
+                    options: options,
+                    source: .automated
                 )
             }
 
