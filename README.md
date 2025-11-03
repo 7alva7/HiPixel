@@ -47,7 +47,7 @@ HiPixel is a native macOS application for AI-powered image super-resolution, bui
   <img src="screenshot.jpeg" width="600" alt="HiPixel Screenshot" style="border-radius: 16px;">
 </p>
 
-### ✨ Features
+## ✨ Features
 
 - 🖥️ Native macOS application with SwiftUI interface
 - 🎨 High-quality image upscaling using AI models
@@ -75,34 +75,100 @@ HiPixel aims to complement Upscayl by offering an alternative approach focused o
 
 ### 🔗 URL Scheme Support
 
-HiPixel supports URL Scheme for processing images via external applications or scripts. The URL format is:
+HiPixel supports URL Scheme for processing images via external applications or scripts. You can specify image processing options via URL query parameters, which will override the default settings in the app.
 
-```
+#### Basic URL Format
+
+```text
 hipixel://?path=/path/to/image1&path=/path/to/image2
 ```
 
-Example usage in Terminal:
+#### URL Parameters
+
+| Parameter | Type | Description | Example Values |
+|-----------|------|-------------|----------------|
+| `path` | String | **Required.** Path to image file(s) or folder(s). Multiple paths can be specified by repeating this parameter. | `/Users/username/Pictures/image.jpg` |
+| `saveImageAs` | String | Output image format. | `PNG`, `JPG`, `WEBP`, `Original` |
+| `imageScale` | Number | Upscaling factor (multiplier). | `2.0`, `4.0`, `8.0` |
+| `imageCompression` | Number | Compression level (0-99). Only applies when not using Zipic compression. | `0`, `50`, `90` |
+| `enableZipicCompression` | Boolean | Enable Zipic compression (requires Zipic app installed). | `true`, `false`, `1`, `0` |
+| `enableSaveOutputFolder` | Boolean | Save output to a custom folder instead of the same directory as source. | `true`, `false`, `1`, `0` |
+| `saveOutputFolder` | String | Custom output folder path (URL encoded). Requires `enableSaveOutputFolder=true`. | `/Users/username/Output` |
+| `overwritePreviousUpscale` | Boolean | Overwrite existing upscaled images if they already exist. | `true`, `false`, `1`, `0` |
+| `gpuID` | String | GPU ID to use for processing. Empty string uses default GPU. | `0`, `1`, `2` |
+| `customTileSize` | Number | Custom tile size for processing. `0` uses default. | `0`, `128`, `256`, `512` |
+| `customModelsFolder` | String | Custom folder path for AI models (URL encoded). | `/Users/username/Models` |
+| `upscaylModel` | String | Built-in AI model to use. | `upscayl-standard-4x`, `upscayl-lite-4x`, `high-fidelity-4x`, `digital-art-4x` |
+| `selectedCustomModel` | String | Custom model name to use. Conflicts with `upscaylModel` (custom model takes precedence). | `my-custom-model` |
+| `doubleUpscayl` | Boolean | Enable double upscaling (upscale twice for higher resolution). | `true`, `false`, `1`, `0` |
+| `enableTTA` | Boolean | Enable Test Time Augmentation for better quality (slower processing). | `true`, `false`, `1`, `0` |
+
+#### Example Usage
+
+**Terminal:**
 
 ```bash
-# Process a single image
+# Process a single image with default settings
 open "hipixel://?path=/Users/username/Pictures/image.jpg"
 
 # Process multiple images
 open "hipixel://?path=/Users/username/Pictures/image1.jpg&path=/Users/username/Pictures/image2.jpg"
+
+# Process with custom options: 4x scale, PNG format, double upscaling enabled
+open "hipixel://?path=/Users/username/Pictures/image.jpg&imageScale=4.0&saveImageAs=PNG&doubleUpscayl=true"
+
+# Process with custom output folder and Zipic compression
+open "hipixel://?path=/Users/username/Pictures/image.jpg&enableSaveOutputFolder=true&saveOutputFolder=/Users/username/Output&enableZipicCompression=true"
+
+# Process with specific AI model and TTA enabled
+open "hipixel://?path=/Users/username/Pictures/image.jpg&upscaylModel=high-fidelity-4x&enableTTA=true"
 ```
 
-Example usage in AppleScript:
+**AppleScript:**
 
 ```applescript
 tell application "Finder"
     set selectedFiles to selection as alias list
     set urlString to "hipixel://"
+    set firstFile to true
     repeat with theFile in selectedFiles
-        set urlString to urlString & "?path=" & POSIX path of theFile
+        if firstFile then
+            set urlString to urlString & "?path=" & POSIX path of theFile
+            set firstFile to false
+        else
+            set urlString to urlString & "&path=" & POSIX path of theFile
+        end if
     end repeat
+    -- Add processing options
+    set urlString to urlString & "&imageScale=4.0&saveImageAs=PNG"
     open location urlString
 end tell
 ```
+
+**Shell Script:**
+
+```bash
+#!/bin/bash
+# Process all images in a folder with custom settings
+
+IMAGE_PATH="/Users/username/Pictures"
+OUTPUT_FOLDER="/Users/username/Upscaled"
+
+for image in "$IMAGE_PATH"/*.{jpg,jpeg,png}; do
+    if [ -f "$image" ]; then
+        open "hipixel://?path=$image&imageScale=4.0&enableSaveOutputFolder=true&saveOutputFolder=$OUTPUT_FOLDER&doubleUpscayl=true"
+    fi
+done
+```
+
+#### Notes
+
+- All parameters except `path` are optional. If not specified, the app will use the default settings configured in the app preferences.
+- Multiple `path` parameters can be specified to process multiple images or folders in a single call.
+- Boolean values accept: `true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off` (case-insensitive).
+- File paths and folder paths containing special characters should be URL encoded.
+- When both `upscaylModel` and `selectedCustomModel` are specified, `selectedCustomModel` takes precedence.
+- If `enableSaveOutputFolder=true` but `saveOutputFolder` is not provided, the output will be saved in the same directory as the source image.
 
 ### 🚀 Installation
 
@@ -120,7 +186,7 @@ end tell
 
 ### 🛠️ Building from Source
 
-1. Clone the repository
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/okooo5km/hipixel
@@ -216,7 +282,7 @@ HiPixel 是一款原生 macOS 应用程序，用于 AI 图像超分辨率处理�
   <img src="screenshot.jpeg" width="600" alt="HiPixel 截图" style="border-radius: 16px;">
 </p>
 
-### ✨ 功能特点
+## ✨ 功能特点
 
 - 🖥️ 原生 macOS 应用程序，使用 SwiftUI 界面
 - 🎨 使用 AI 模型进行高质量图像放大
@@ -244,34 +310,100 @@ HiPixel 旨在通过提供一种专注于工作流效率和原生 macOS 集成�
 
 ### 🔗 URL Scheme 使用说明
 
-HiPixel 支持 URL Scheme，用于通过外部应用程序或脚本处理图像。URL 格式如下：
+HiPixel 支持 URL Scheme，可通过外部应用程序或脚本处理图像。您可以通过 URL 查询参数指定图像处理选项，这些选项会覆盖应用程序中的默认设置。
 
-```
+#### 基本 URL 格式
+
+```text
 hipixel://?path=/path/to/image1&path=/path/to/image2
 ```
 
-在终端中的示例用法：
+#### URL 参数说明
+
+| 参数 | 类型 | 说明 | 示例值 |
+|------|------|------|--------|
+| `path` | String | **必需。** 图像文件或文件夹的路径。可以通过重复此参数指定多个路径。 | `/Users/username/Pictures/image.jpg` |
+| `saveImageAs` | String | 输出图像格式。 | `PNG`, `JPG`, `WEBP`, `Original` |
+| `imageScale` | Number | 放大倍数（乘数）。 | `2.0`, `4.0`, `8.0` |
+| `imageCompression` | Number | 压缩级别（0-99）。仅在未使用 Zipic 压缩时生效。 | `0`, `50`, `90` |
+| `enableZipicCompression` | Boolean | 启用 Zipic 压缩（需要安装 Zipic 应用）。 | `true`, `false`, `1`, `0` |
+| `enableSaveOutputFolder` | Boolean | 将输出保存到自定义文件夹，而不是源文件所在目录。 | `true`, `false`, `1`, `0` |
+| `saveOutputFolder` | String | 自定义输出文件夹路径（URL 编码）。需要 `enableSaveOutputFolder=true`。 | `/Users/username/Output` |
+| `overwritePreviousUpscale` | Boolean | 如果已存在放大后的图像，是否覆盖。 | `true`, `false`, `1`, `0` |
+| `gpuID` | String | 用于处理的 GPU ID。空字符串使用默认 GPU。 | `0`, `1`, `2` |
+| `customTileSize` | Number | 处理的自定义图块大小。`0` 表示使用默认值。 | `0`, `128`, `256`, `512` |
+| `customModelsFolder` | String | AI 模型的自定义文件夹路径（URL 编码）。 | `/Users/username/Models` |
+| `upscaylModel` | String | 要使用的内置 AI 模型。 | `upscayl-standard-4x`, `upscayl-lite-4x`, `high-fidelity-4x`, `digital-art-4x` |
+| `selectedCustomModel` | String | 要使用的自定义模型名称。与 `upscaylModel` 冲突（自定义模型优先）。 | `my-custom-model` |
+| `doubleUpscayl` | Boolean | 启用双重放大（放大两次以获得更高分辨率）。 | `true`, `false`, `1`, `0` |
+| `enableTTA` | Boolean | 启用测试时间增强以获得更好的质量（处理速度较慢）。 | `true`, `false`, `1`, `0` |
+
+#### 使用示例
+
+**终端：**
 
 ```bash
-# 处理单张图像
+# 使用默认设置处理单张图像
 open "hipixel://?path=/Users/username/Pictures/image.jpg"
 
 # 处理多张图像
 open "hipixel://?path=/Users/username/Pictures/image1.jpg&path=/Users/username/Pictures/image2.jpg"
+
+# 使用自定义选项：4倍放大、PNG 格式、启用双重放大
+open "hipixel://?path=/Users/username/Pictures/image.jpg&imageScale=4.0&saveImageAs=PNG&doubleUpscayl=true"
+
+# 使用自定义输出文件夹和 Zipic 压缩
+open "hipixel://?path=/Users/username/Pictures/image.jpg&enableSaveOutputFolder=true&saveOutputFolder=/Users/username/Output&enableZipicCompression=true"
+
+# 使用特定 AI 模型并启用 TTA
+open "hipixel://?path=/Users/username/Pictures/image.jpg&upscaylModel=high-fidelity-4x&enableTTA=true"
 ```
 
-在 AppleScript 中的示例用法：
+**AppleScript：**
 
 ```applescript
 tell application "Finder"
     set selectedFiles to selection as alias list
     set urlString to "hipixel://"
+    set firstFile to true
     repeat with theFile in selectedFiles
-        set urlString to urlString & "?path=" & POSIX path of theFile
+        if firstFile then
+            set urlString to urlString & "?path=" & POSIX path of theFile
+            set firstFile to false
+        else
+            set urlString to urlString & "&path=" & POSIX path of theFile
+        end if
     end repeat
+    -- 添加处理选项
+    set urlString to urlString & "&imageScale=4.0&saveImageAs=PNG"
     open location urlString
 end tell
 ```
+
+**Shell 脚本：**
+
+```bash
+#!/bin/bash
+# 使用自定义设置处理文件夹中的所有图像
+
+IMAGE_PATH="/Users/username/Pictures"
+OUTPUT_FOLDER="/Users/username/Upscaled"
+
+for image in "$IMAGE_PATH"/*.{jpg,jpeg,png}; do
+    if [ -f "$image" ]; then
+        open "hipixel://?path=$image&imageScale=4.0&enableSaveOutputFolder=true&saveOutputFolder=$OUTPUT_FOLDER&doubleUpscayl=true"
+    fi
+done
+```
+
+#### 注意事项
+
+- 除 `path` 外的所有参数都是可选的。如果未指定，应用程序将使用在应用偏好设置中配置的默认设置。
+- 可以指定多个 `path` 参数，以在单次调用中处理多张图像或文件夹。
+- 布尔值接受：`true`, `false`, `1`, `0`, `yes`, `no`, `on`, `off`（不区分大小写）。
+- 包含特殊字符的文件路径和文件夹路径应进行 URL 编码。
+- 当同时指定 `upscaylModel` 和 `selectedCustomModel` 时，`selectedCustomModel` 优先。
+- 如果 `enableSaveOutputFolder=true` 但未提供 `saveOutputFolder`，输出将保存在源图像所在的目录中。
 
 ### 🚀 安装方法
 
@@ -289,7 +421,7 @@ end tell
 
 ### 🛠️ 从源代码构建
 
-1. 克隆仓库
+1. 克隆仓库：
 
 ```bash
 git clone https://github.com/okooo5km/hipixel
