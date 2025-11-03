@@ -226,7 +226,8 @@ struct ImageComparationViewer: View {
                 resetZoom()
             }
         }
-        .clipped()
+        .clipShape(RoundedRectangle(cornerRadius: 6))
+        .contentShape(RoundedRectangle(cornerRadius: 6))
     }
 
     private func resetZoom() {
