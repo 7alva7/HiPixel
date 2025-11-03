@@ -299,6 +299,16 @@
         }
       }
     },
+    "Built-in AI model to use" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要使用的内置 AI 模型"
+          }
+        }
+      }
+    },
     "Built-in Models" : {
       "localizations" : {
         "zh-Hans" : {
@@ -386,12 +396,52 @@
         }
       }
     },
+    "Compression Level" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "压缩级别"
+          }
+        }
+      }
+    },
+    "Compression level (0-99)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "压缩级别（0-99）"
+          }
+        }
+      }
+    },
     "Continue" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "继续"
+          }
+        }
+      }
+    },
+    "Custom folder path for output images" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出图像的自定义文件夹路径"
+          }
+        }
+      }
+    },
+    "Custom model name to use" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要使用的自定义模型名称"
           }
         }
       }
@@ -406,12 +456,42 @@
         }
       }
     },
+    "Custom Output Folder" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义输出文件夹"
+          }
+        }
+      }
+    },
+    "Custom Tile Size" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义图块大小"
+          }
+        }
+      }
+    },
     "CUSTOM TILE SIZE" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "分块大小"
+          }
+        }
+      }
+    },
+    "Custom tile size for processing (0 uses default)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "处理的自定义图块大小（0 表示使用默认值）"
           }
         }
       }
@@ -550,6 +630,16 @@
         }
       }
     },
+    "Double Upscayl" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "双重放大"
+          }
+        }
+      }
+    },
     "Download Complete!" : {
       "localizations" : {
         "zh-Hans" : {
@@ -590,12 +680,72 @@
         }
       }
     },
+    "Enable double upscaling (upscale twice)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用双重放大（放大两次）"
+          }
+        }
+      }
+    },
+    "Enable Test Time Augmentation for better quality" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用测试时间增强以获得更好的质量"
+          }
+        }
+      }
+    },
+    "Enable TTA" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用 TTA"
+          }
+        }
+      }
+    },
+    "Enable Zipic Compression" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用 Zipic 压缩"
+          }
+        }
+      }
+    },
+    "Enable Zipic compression (requires Zipic app)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用 Zipic 压缩（需要 Zipic 应用）"
+          }
+        }
+      }
+    },
     "Failed to process" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "处理失败"
+          }
+        }
+      }
+    },
+    "Files" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件"
           }
         }
       }
@@ -642,6 +792,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPU 编号"
+          }
+        }
+      }
+    },
+    "GPU ID to use for processing" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于处理的 GPU 编号"
           }
         }
       }
@@ -739,6 +899,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "图像压缩"
+          }
+        }
+      }
+    },
+    "Image files or folders to upscale" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要放大的图像文件或文件夹"
+          }
+        }
+      }
+    },
+    "Image Format" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图像格式"
+          }
+        }
+      }
+    },
+    "Image Scale" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图像缩放倍数"
           }
         }
       }
@@ -865,6 +1055,26 @@
         }
       }
     },
+    "No valid image files or folders found." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到有效的图像文件或文件夹。"
+          }
+        }
+      }
+    },
+    "No valid image files provided." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未提供有效的图像文件。"
+          }
+        }
+      }
+    },
     "Notch Notification" : {
       "localizations" : {
         "en" : {
@@ -931,6 +1141,16 @@
         }
       }
     },
+    "Output image format" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出图像格式"
+          }
+        }
+      }
+    },
     "OVERWRITE PREVIOUS UPSCALE" : {
       "localizations" : {
         "zh-Hans" : {
@@ -978,6 +1198,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PNG 压缩是无损的，因此可能不会显著减少文件大小，较高的压缩值可能会影响性能。JPG 和 WebP 压缩是有损的。"
+          }
+        }
+      }
+    },
+    "Processed %lld file(s), %lld succeeded, %lld failed." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "处理了 %lld 个文件，%lld 个成功，%lld 个失败。"
           }
         }
       }
@@ -1042,6 +1272,16 @@
         }
       }
     },
+    "Save Format" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存格式"
+          }
+        }
+      }
+    },
     "SAVE IMAGE AS" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1068,6 +1308,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "选择模型"
+          }
+        }
+      }
+    },
+    "Selected Custom Model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选定的自定义模型"
           }
         }
       }
@@ -1119,6 +1369,27 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "标准版"
+          }
+        }
+      }
+    },
+    "Started processing %lld file(s)." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已开始处理 %lld 个文件。"
+          }
+        }
+      }
+    },
+    "Successfully processed %lld file(s)." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功处理了 %lld 个文件。"
           }
         }
       }
@@ -1247,12 +1518,52 @@
         }
       }
     },
+    "Upscale Images" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放大图像"
+          }
+        }
+      }
+    },
+    "Upscale images using AI with HiPixel." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 HiPixel 的 AI 技术放大图像。"
+          }
+        }
+      }
+    },
+    "Upscaling factor (multiplier)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "放大倍数（乘数）"
+          }
+        }
+      }
+    },
     "Upscayl" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Upscayl"
+          }
+        }
+      }
+    },
+    "Upscayl Model" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upscayl 模型"
           }
         }
       }
