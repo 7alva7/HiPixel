@@ -33,6 +33,13 @@ struct ImageComparationViewer: View {
     @State
     private var isDraggingSlider = false  // 跟踪是否正在拖动 slider
 
+    @State
+    private var hoveredZoomButton: ZoomButtonType? = nil  // 跟踪悬浮的按钮
+
+    private let minMagnification: CGFloat = 1.0
+    private let maxMagnification: CGFloat = 5.0
+    private let zoomStep: CGFloat = 0.25  // 每次缩放步长
+
     var body: some View {
         GeometryReader { geometry in
             let imageSize = NSImage(contentsOf: leftImage)?.size ?? geometry.size
@@ -155,6 +162,19 @@ struct ImageComparationViewer: View {
                 }
             }
             .cornerRadius(6)
+            .overlay(alignment: .bottomLeading) {
+                ZoomControlsView(
+                    magnification: $magnification,
+                    lastMagnification: $lastMagnification,
+                    offset: $offset,
+                    lastOffset: $lastOffset,
+                    hoveredButton: $hoveredZoomButton,
+                    minMagnification: minMagnification,
+                    maxMagnification: maxMagnification,
+                    zoomStep: zoomStep
+                )
+                .padding(8)
+            }
             .gesture(
                 MagnificationGesture()
                     .onChanged { value in
@@ -203,14 +223,174 @@ struct ImageComparationViewer: View {
             )
             .onTapGesture(count: 2) {
                 // 双击重置缩放和位置
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                    magnification = 1.0
-                    offset = .zero
-                    lastMagnification = 1.0
-                    lastOffset = .zero
-                }
+                resetZoom()
             }
         }
         .clipped()
+    }
+
+    private func resetZoom() {
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+            magnification = 1.0
+            offset = .zero
+            lastMagnification = 1.0
+            lastOffset = .zero
+        }
+    }
+}
+
+// MARK: - Zoom Controls
+
+enum ZoomButtonType {
+    case zoomIn
+    case zoomOut
+}
+
+struct ZoomControlsView: View {
+    @Binding var magnification: CGFloat
+    @Binding var lastMagnification: CGFloat
+    @Binding var offset: CGSize
+    @Binding var lastOffset: CGSize
+    @Binding var hoveredButton: ZoomButtonType?
+
+    let minMagnification: CGFloat
+    let maxMagnification: CGFloat
+    let zoomStep: CGFloat
+
+    private let zoomLevels: [CGFloat] = [1.0, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0]
+
+    var body: some View {
+        HStack(spacing: 8) {
+            // 缩小按钮
+            ZoomButton(
+                icon: "minus.magnifyingglass",
+                isEnabled: magnification > minMagnification,
+                isHovered: hoveredButton == .zoomOut
+            ) {
+                hoveredButton = .zoomOut
+            } onExit: {
+                hoveredButton = nil
+            } action: {
+                let newMagnification = max(magnification - zoomStep, minMagnification)
+                withAnimation(.spring(response: 0.2, dampingFraction: 0.7)) {
+                    magnification = newMagnification
+                    lastMagnification = newMagnification
+                    if newMagnification == 1.0 {
+                        offset = .zero
+                        lastOffset = .zero
+                    }
+                }
+            }
+
+            // 百分比显示和选择器
+            Menu {
+                ForEach(zoomLevels, id: \.self) { level in
+                    Button {
+                        withAnimation(.spring(response: 0.2, dampingFraction: 0.7)) {
+                            magnification = level
+                            lastMagnification = level
+                            if level == 1.0 {
+                                offset = .zero
+                                lastOffset = .zero
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text("\(Int(level * 100))%")
+                            if magnification == level {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                }
+            } label: {
+                Text("\(Int(magnification * 100))%")
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .fontDesign(.monospaced)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 6)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .fill(.background.opacity(0.7))
+                    )
+                    .foregroundStyle(.primary)
+            }
+            .menuStyle(.borderlessButton)
+            .buttonStyle(.plain)
+
+            // 放大按钮
+            ZoomButton(
+                icon: "plus.magnifyingglass",
+                isEnabled: magnification < maxMagnification,
+                isHovered: hoveredButton == .zoomIn
+            ) {
+                hoveredButton = .zoomIn
+            } onExit: {
+                hoveredButton = nil
+            } action: {
+                let newMagnification = min(magnification + zoomStep, maxMagnification)
+                withAnimation(.spring(response: 0.2, dampingFraction: 0.7)) {
+                    magnification = newMagnification
+                    lastMagnification = newMagnification
+                }
+            }
+        }
+        .padding(6)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(.background.opacity(0.8))
+                .shadow(color: .black.opacity(0.15), radius: 1, x: 0, y: 0.4)
+        )
+    }
+}
+
+struct ZoomButton: View {
+    let icon: String
+    let isEnabled: Bool
+    let isHovered: Bool
+    let onHover: () -> Void
+    let onExit: () -> Void
+    let action: () -> Void
+
+    init(
+        icon: String,
+        isEnabled: Bool,
+        isHovered: Bool,
+        onHover: @escaping () -> Void,
+        onExit: @escaping () -> Void,
+        action: @escaping () -> Void
+    ) {
+        self.icon = icon
+        self.isEnabled = isEnabled
+        self.isHovered = isHovered
+        self.onHover = onHover
+        self.onExit = onExit
+        self.action = action
+    }
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: icon)
+                .frame(width: 20, height: 20)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(.background.opacity(isHovered ? 0.9 : 0.6))
+                )
+                .scaleEffect(isHovered ? 1.1 : 1.0)
+                .foregroundStyle(isEnabled ? .primary : Color.secondary.opacity(0.5))
+        }
+        .buttonStyle(.plain)
+        .disabled(!isEnabled)
+        .onHover { hovering in
+            if hovering {
+                onHover()
+            } else {
+                onExit()
+            }
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                // Animation handled by isHovered binding
+            }
+        }
     }
 }

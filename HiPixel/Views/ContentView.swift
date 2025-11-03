@@ -133,8 +133,10 @@ struct ContentView: View, DropDelegate {
                                     }
                                     .padding(12)
                                     .background(
-                                        cornerRadius: 6, strokeColor: .primary.opacity(0.05),
-                                        fill: .background.opacity(0.8))
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.background.opacity(0.8))
+                                            .shadow(color: .black.opacity(0.15), radius: 1, x: 0, y: 0.4)
+                                    )
                                     Spacer()
                                     VStack(alignment: .trailing, spacing: 8) {
                                         Text("HiPixeled Image")
@@ -147,8 +149,10 @@ struct ContentView: View, DropDelegate {
                                     }
                                     .padding(12)
                                     .background(
-                                        cornerRadius: 6, strokeColor: .primary.opacity(0.05),
-                                        fill: .background.opacity(0.8))
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.background.opacity(0.8))
+                                            .shadow(color: .black.opacity(0.15), radius: 1, x: 0, y: 0.4)
+                                    )
                                 }
                                 .foregroundStyle(.secondary)
                                 .fontWeight(.bold)
@@ -161,7 +165,9 @@ struct ContentView: View, DropDelegate {
                                     Image(systemName: "arrow.clockwise")
                                         .padding(8)
                                         .background(
-                                            cornerRadius: 8, fill: .background.opacity(buttonHovering ? 0.8 : 0.5)
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .fill(.background.opacity(0.8))
+                                                .shadow(color: .black.opacity(0.15), radius: 1, x: 0, y: 0.4)
                                         )
                                         .scaleEffect(buttonHovering ? 1.1 : 1.0)
                                 }
