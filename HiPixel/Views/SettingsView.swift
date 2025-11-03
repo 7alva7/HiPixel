@@ -401,7 +401,7 @@ struct AdvancedSettingsView: View {
                 title: "Manual Save Control",
                 icon: "square.and.arrow.down",
                 description:
-                    "When enabled, processed images will be saved to a temporary directory and require manual save action.",
+                    "When enabled, images processed via main window require manual save. Automated operations (monitored folders, URL Scheme, Shortcuts) ignore this setting.",
                 trailingView: Group {
                     Toggle("", isOn: $manualSaveControl)
                         .toggleStyle(.switch)

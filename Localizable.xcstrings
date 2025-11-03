@@ -1015,7 +1015,14 @@
       }
     },
     "Manual Save Control" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手动保存控制"
+          }
+        }
+      }
     },
     "Models found:" : {
       "localizations" : {
@@ -1653,8 +1660,15 @@
         }
       }
     },
-    "When enabled, processed images will be saved to a temporary directory and require manual save action." : {
-
+    "When enabled, images processed via main window require manual save. Automated operations (monitored folders, URL Scheme, Shortcuts) ignore this setting." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用后，主窗口手动处理的图像需要手动保存。自动化操作（监控目录、URL Scheme、快捷指令）会忽略此设置。"
+          }
+        }
+      }
     },
     "X%.0f" : {
       "localizations" : {
