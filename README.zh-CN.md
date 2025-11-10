@@ -173,12 +173,12 @@ done
 ### 🚀 安装方法
 
 <p align="center">
-  <a href="https://github.com/okooo5km/HiPixel/releases">
-    <img src="https://img.shields.io/github/v/release/okooo5km/HiPixel?style=for-the-badge&logo=github&logoColor=white&labelColor=2C3E50&color=3498DB" alt="下载 HiPixel" style="border-radius: 8px;">
+  <a href="https://hipixel.5km.tech">
+    <img src="https://img.shields.io/badge/下载-HiPixel-3498DB?style=for-the-badge&logo=apple&logoColor=white&labelColor=2C3E50" alt="下载 HiPixel" style="border-radius: 8px;">
   </a>
 </p>
 
-1. 从 [GitHub Releases](https://github.com/okooo5km/HiPixel/releases) 下载最新版本
+1. 访问 [hipixel.5km.tech](https://hipixel.5km.tech) 下载最新版本
 2. 将 HiPixel.app 移动到应用程序文件夹
 3. 启动 HiPixel
 

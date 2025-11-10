@@ -173,12 +173,12 @@ done
 ### 🚀 Installation
 
 <p align="center">
-  <a href="https://github.com/okooo5km/HiPixel/releases">
-    <img src="https://img.shields.io/github/v/release/okooo5km/HiPixel?style=for-the-badge&logo=github&logoColor=white&labelColor=2C3E50&color=3498DB" alt="Download HiPixel" style="border-radius: 8px;">
+  <a href="https://hipixel.5km.tech">
+    <img src="https://img.shields.io/badge/Download-HiPixel-3498DB?style=for-the-badge&logo=apple&logoColor=white&labelColor=2C3E50" alt="Download HiPixel" style="border-radius: 8px;">
   </a>
 </p>
 
-1. Download the latest release from [GitHub Releases](https://github.com/okooo5km/HiPixel/releases)
+1. Visit [hipixel.5km.tech](https://hipixel.5km.tech) to download the latest version
 2. Move HiPixel.app to your Applications folder
 3. Launch HiPixel
 
