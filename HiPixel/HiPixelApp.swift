@@ -5,9 +5,9 @@
 //  Created by 十里 on 2024/6/16.
 //
 
+import SettingsAccess
 import Sparkle
 import SwiftUI
-import SettingsAccess
 
 @main
 struct HiPixelApp: App {
@@ -55,8 +55,10 @@ struct HiPixelApp: App {
         .defaultPosition(.center)
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("About") {
+                Button {
                     AboutWindowController.shared.showWindow(nil)
+                } label: {
+                    Label("About", systemImage: "info.circle")
                 }
             }
 
@@ -65,11 +67,13 @@ struct HiPixelApp: App {
             }
 
             CommandGroup(after: .toolbar) {
-                Picker("Appearance", selection: $colorScheme) {
-                    ForEach(HiPixelConfiguration.ColorScheme.allCases, id: \.self) {
-                        Text($0.localized)
-                            .tag($0)
+                Picker(selection: $colorScheme) {
+                    ForEach(HiPixelConfiguration.ColorScheme.allCases, id: \.self) { scheme in
+                        Label(scheme.localized, systemImage: scheme.icon)
+                            .tag(scheme)
                     }
+                } label: {
+                    Label("Appearance", systemImage: "sun.lefthalf.filled")
                 }
             }
         }
@@ -94,7 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         MonitorService.shared.load()
         // Apply dock icon setting on launch
         _ = DockIconService.shared.setDockIconHidden(HiPixelConfiguration.shared.hideDockIcon)
-        
+
         // Handle silent launch - hide main window if enabled
         if HiPixelConfiguration.shared.launchSilently {
             // Hide all windows on silent launch
@@ -118,45 +122,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 struct MenuBarExtraView: View {
     @Environment(\.openWindow) private var openWindow
     @ObservedObject private var checkForUpdatesViewModel: CheckForUpdatesViewModel
-    
+
     private let updater: SPUUpdater
-    
+
     init(updater: SPUUpdater) {
         self.updater = updater
         self.checkForUpdatesViewModel = CheckForUpdatesViewModel(updater: updater)
     }
-    
+
     var body: some View {
-        Button("Main Window") {
+        Button {
             showMainWindow()
+        } label: {
+            Label("Main Window", systemImage: "macwindow")
         }
-        
+
         if #available(macOS 14.0, *) {
             SettingsLink {
-                Text("Settings...")
+                Label("Settings...", systemImage: "gearshape")
             }
         } else {
-            Button("Settings...") {
+            Button {
                 showSettingsWindow()
+            } label: {
+                Label("Settings...", systemImage: "gearshape")
             }
         }
-        
-        Button("Check for Updates…") {
+
+        Button {
             updater.checkForUpdates()
+        } label: {
+            Label("Check for Updates…", systemImage: "arrow.trianglehead.2.counterclockwise")
         }
         .disabled(!checkForUpdatesViewModel.canCheckForUpdates)
-        
+
         Divider()
-        
-        Button("Quit HiPixel") {
+
+        Button {
             NSApplication.shared.terminate(nil)
+        } label: {
+            Label("Quit HiPixel", systemImage: "power")
         }
     }
-    
+
     private func showMainWindow() {
         // Activate the app first
         NSApp.activate(ignoringOtherApps: true)
-        
+
         // Find the main window by title
         if let window = NSApplication.shared.windows.first(where: { $0.title == "HiPixel" }) {
             window.makeKeyAndOrderFront(nil)
@@ -165,7 +177,7 @@ struct MenuBarExtraView: View {
             openWindow(id: "HiPixel")
         }
     }
-    
+
     private func showSettingsWindow() {
         // Open settings window using standard macOS action
         NSApp.activate(ignoringOtherApps: true)
