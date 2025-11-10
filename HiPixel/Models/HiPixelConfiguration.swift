@@ -32,6 +32,9 @@ struct HiPixelConfiguration {
         static let EnableTTA = "HIPixel-EnableTTA"
         static let SelectedAppIcon = "HIPixel-AppIconSelected"
         static let ManualSaveControl = "HIPixel-ManualSaveControl"
+        static let HideDockIcon = "HIPixel-HideDockIcon"
+        static let ShowMenuBarExtra = "HIPixel-ShowMenuBarExtra"
+        static let LaunchSilently = "HIPixel-LaunchSilently"
     }
 
     enum ColorScheme: String, CaseIterable {
@@ -223,6 +226,15 @@ struct HiPixelConfiguration {
     @AppStorage(Keys.ManualSaveControl)
     var manualSaveControl: Bool = false
 
+    @AppStorage(Keys.HideDockIcon)
+    var hideDockIcon: Bool = false
+
+    @AppStorage(Keys.ShowMenuBarExtra)
+    var showMenuBarExtra: Bool = false
+
+    @AppStorage(Keys.LaunchSilently)
+    var launchSilently: Bool = false
+
     // Computed property to get the current unified model
     var currentUnifiedModel: UnifiedModel {
         get {
@@ -251,6 +263,9 @@ struct HiPixelConfiguration {
         upscaleModel = .Upscayl_Standard
         selectedCustomModel = nil
         manualSaveControl = false
+        hideDockIcon = false
+        showMenuBarExtra = false
+        launchSilently = false
     }
 }
 

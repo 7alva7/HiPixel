@@ -680,12 +680,32 @@
         }
       }
     },
+    "Enable" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用"
+          }
+        }
+      }
+    },
     "Enable double upscaling (upscale twice)" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "启用双重放大（放大两次）"
+          }
+        }
+      }
+    },
+    "Enable Menu Bar Button?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用菜单栏按钮？"
           }
         }
       }
@@ -802,6 +822,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用于处理的 GPU 编号"
+          }
+        }
+      }
+    },
+    "Hide Dock Icon" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏 Dock 图标"
+          }
+        }
+      }
+    },
+    "Hide the app icon from the Dock. The app will still be accessible from the menu bar or by opening windows." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从 Dock 中隐藏应用图标。应用仍可通过菜单栏或打开窗口访问。"
+          }
+        }
+      }
+    },
+    "Hiding the Dock icon without a menu bar button will make it difficult to access the app. Would you like to enable the menu bar button?" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏 Dock 图标而不启用菜单栏按钮将使应用难以访问。是否要启用菜单栏按钮？"
           }
         }
       }
@@ -1010,6 +1060,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "轻量版"
+          }
+        }
+      }
+    },
+    "Launch Silently" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "静默启动"
+          }
+        }
+      }
+    },
+    "Main Window" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主窗口"
           }
         }
       }
@@ -1242,6 +1312,16 @@
         }
       }
     },
+    "Quit HiPixel" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 HiPixel"
+          }
+        }
+      }
+    },
     "Remove History List" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1348,6 +1428,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置"
+          }
+        }
+      }
+    },
+    "Show a menu bar button for quick access to the app when the Dock icon is hidden." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当 Dock 图标隐藏时，显示菜单栏按钮以便快速访问应用。"
+          }
+        }
+      }
+    },
+    "Show Menu Bar Button" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示菜单栏按钮"
           }
         }
       }
@@ -1666,6 +1766,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启用后，主窗口手动处理的图像需要手动保存。自动化操作（监控目录、URL Scheme、快捷指令）会忽略此设置。"
+          }
+        }
+      }
+    },
+    "When enabled, the app will not open the main window on launch. The window can still be opened manually from the menu bar or Dock." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用后，应用启动时不会打开主窗口。仍可通过菜单栏或 Dock 手动打开窗口。"
           }
         }
       }

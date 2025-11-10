@@ -1,5 +1,5 @@
 {
-  "originHash" : "c8c247283f2fde3f963d3c9424775d20bacaae1721bd75bfd932830f5c224105",
+  "originHash" : "8846323b42514a32e0f64cd0b422be1c224a2cbda4d866d4079903389fa95716",
   "pins" : [
     {
       "identity" : "fswatcher",
@@ -26,6 +26,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "05d81d6d82ce27da458af338fe0c6368a834143f"
+      }
+    },
+    {
+      "identity" : "settingsaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/SettingsAccess",
+      "state" : {
+        "revision" : "08e80c35501f273afa2f5d6f737429bbe395ff81",
+        "version" : "2.1.0"
       }
     },
     {

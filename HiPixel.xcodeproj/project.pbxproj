@@ -10,6 +10,7 @@
 		6B3439372D516974007636B5 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 6B3439362D516974007636B5 /* Sparkle */; };
 		6B70EECB2CC67FC9001AF842 /* GeneralNotification in Frameworks */ = {isa = PBXBuildFile; productRef = 6B70EECA2CC67FC9001AF842 /* GeneralNotification */; };
 		6B70EECE2CC67FE3001AF842 /* NotchNotification in Frameworks */ = {isa = PBXBuildFile; productRef = 6B70EECD2CC67FE3001AF842 /* NotchNotification */; };
+		6B8E39752EC17F1800BADC6D /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 6B8E39742EC17F1800BADC6D /* SettingsAccess */; };
 		6B97B8392CC7D3710084F2F4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6B97B8382CC7D3710084F2F4 /* Localizable.xcstrings */; };
 		6BCCC2F02E4CCE52008CA4E6 /* FSWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = 6BCCC2EF2E4CCE52008CA4E6 /* FSWatcher */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 				6B3439372D516974007636B5 /* Sparkle in Frameworks */,
 				6B70EECE2CC67FE3001AF842 /* NotchNotification in Frameworks */,
 				6B70EECB2CC67FC9001AF842 /* GeneralNotification in Frameworks */,
+				6B8E39752EC17F1800BADC6D /* SettingsAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 				6B70EECC2CC67FE3001AF842 /* XCRemoteSwiftPackageReference "NotchNotification" */,
 				6B3439352D516974007636B5 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				6BCCC2EE2E4CCE52008CA4E6 /* XCRemoteSwiftPackageReference "FSWatcher" */,
+				6B8E39732EC17F1800BADC6D /* XCRemoteSwiftPackageReference "SettingsAccess" */,
 			);
 			productRefGroup = 6BE1BEE82C1F14A6004C9187 /* Products */;
 			projectDirPath = "";
@@ -410,6 +413,14 @@
 				kind = branch;
 			};
 		};
+		6B8E39732EC17F1800BADC6D /* XCRemoteSwiftPackageReference "SettingsAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/SettingsAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
 		6BCCC2EE2E4CCE52008CA4E6 /* XCRemoteSwiftPackageReference "FSWatcher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/okooo5km/FSWatcher.git";
@@ -435,6 +446,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B70EECC2CC67FE3001AF842 /* XCRemoteSwiftPackageReference "NotchNotification" */;
 			productName = NotchNotification;
+		};
+		6B8E39742EC17F1800BADC6D /* SettingsAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6B8E39732EC17F1800BADC6D /* XCRemoteSwiftPackageReference "SettingsAccess" */;
+			productName = SettingsAccess;
 		};
 		6BCCC2EF2E4CCE52008CA4E6 /* FSWatcher */ = {
 			isa = XCSwiftPackageProductDependency;

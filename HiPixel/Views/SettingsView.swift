@@ -59,6 +59,17 @@ struct GeneralSettingsView: View {
     @AppStorage(HiPixelConfiguration.Keys.SelectedAppIcon)
     private var selectedAppIcon: HiPixelConfiguration.AppIcon = .primary
 
+    @AppStorage(HiPixelConfiguration.Keys.HideDockIcon)
+    private var hideDockIcon: Bool = false
+
+    @AppStorage(HiPixelConfiguration.Keys.ShowMenuBarExtra)
+    private var showMenuBarExtra: Bool = false
+
+    @AppStorage(HiPixelConfiguration.Keys.LaunchSilently)
+    private var launchSilently: Bool = false
+
+    @State private var showMenuBarWarningAlert = false
+
     var body: some View {
         VStack {
             SettingItem(
@@ -166,8 +177,75 @@ struct GeneralSettingsView: View {
                     .font(.caption)
                 }
             )
+
+            SettingItem(
+                title: "Hide Dock Icon",
+                icon: "dock.rectangle",
+                description:
+                    "Hide the app icon from the Dock. The app will still be accessible from the menu bar or by opening windows.",
+                trailingView: Group {
+                    Toggle(
+                        "",
+                        isOn: Binding(
+                            get: { hideDockIcon },
+                            set: { newValue in
+                                hideDockIcon = newValue
+                                let shouldWarn = DockIconService.shared.setDockIconHidden(newValue)
+                                if shouldWarn {
+                                    showMenuBarWarningAlert = true
+                                }
+                            }
+                        )
+                    )
+                    .toggleStyle(.switch)
+                    .controlSize(.small)
+                }
+            )
+
+            SettingItem(
+                title: "Show Menu Bar Button",
+                icon: "menubar.rectangle",
+                description: "Show a menu bar button for quick access to the app when the Dock icon is hidden.",
+                trailingView: Group {
+                    Toggle("", isOn: $showMenuBarExtra)
+                        .toggleStyle(.switch)
+                        .controlSize(.small)
+                }
+            )
+
+            SettingItem(
+                title: "Launch Silently",
+                icon: "eye.slash",
+                description:
+                    "When enabled, the app will not open the main window on launch. The window can still be opened manually from the menu bar or Dock.",
+                trailingView: Group {
+                    Toggle("", isOn: $launchSilently)
+                        .toggleStyle(.switch)
+                        .controlSize(.small)
+                }
+            )
         }
         .padding(12)
+        .onAppear {
+            // Apply dock icon setting when view appears
+            _ = DockIconService.shared.setDockIconHidden(hideDockIcon)
+        }
+        .onChange(of: hideDockIcon) { newValue in
+            let shouldWarn = DockIconService.shared.setDockIconHidden(newValue)
+            if shouldWarn {
+                showMenuBarWarningAlert = true
+            }
+        }
+        .alert("Enable Menu Bar Button?", isPresented: $showMenuBarWarningAlert) {
+            Button("Enable") {
+                showMenuBarExtra = true
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text(
+                "Hiding the Dock icon without a menu bar button will make it difficult to access the app. Would you like to enable the menu bar button?"
+            )
+        }
     }
 }
 
