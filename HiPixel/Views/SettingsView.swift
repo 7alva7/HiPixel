@@ -711,7 +711,7 @@ struct UpscaleSettingsView: View {
                         step: 10
                     )
                     .onChange(of: imageCompression) { newValue in
-                        // 确保值在 0-90 范围内
+                        // Ensure value is within 0-90 range
                         imageCompression = min(90, max(0, newValue))
                     }
 

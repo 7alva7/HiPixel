@@ -2,7 +2,7 @@
 //  EXIFMetadataManager.swift
 //  HiPixel
 //
-//  Created by okooo5km(十里) on 2025/09/02.
+//  Created by 十里 on 2025/09/02.
 //
 
 import Foundation

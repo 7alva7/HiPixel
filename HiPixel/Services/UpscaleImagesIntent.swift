@@ -2,7 +2,7 @@
 //  UpscaleImagesIntent.swift
 //  HiPixel
 //
-//  Created for AppIntents support
+//  Created by 十里 on 2025/11/10.
 //
 
 import AppIntents

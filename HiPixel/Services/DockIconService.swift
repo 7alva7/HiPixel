@@ -2,7 +2,7 @@
 //  DockIconService.swift
 //  HiPixel
 //
-//  Created by 十里 on 2025/01/XX.
+//  Created by 十里 on 2025/11/10.
 //
 
 import AppKit

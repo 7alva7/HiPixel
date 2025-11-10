@@ -2,7 +2,7 @@
 //  CustomModelManager.swift
 //  HiPixel
 //
-//  Created by okooo5km(十里) on 2025/01/03.
+//  Created by 十里 on 2025/01/03.
 //
 
 import Foundation

@@ -13,16 +13,16 @@ struct ImageComparationViewer: View {
     var rightImage: URL
 
     @State
-    private var sliderPosition: CGFloat = 0.5  // 拖动条的初始位置
+    private var sliderPosition: CGFloat = 0.5  // Initial slider position
 
     @State
     private var hoveringOnSlider = false
 
     @State
-    private var magnification: CGFloat = 1.0  // 缩放比例
+    private var magnification: CGFloat = 1.0  // Zoom scale
 
     @State
-    private var offset: CGSize = .zero  // 拖动偏移
+    private var offset: CGSize = .zero  // Drag offset
 
     @State
     private var lastMagnification: CGFloat = 1.0
@@ -31,32 +31,32 @@ struct ImageComparationViewer: View {
     private var lastOffset: CGSize = .zero
 
     @State
-    private var isDraggingSlider = false  // 跟踪是否正在拖动 slider
+    private var isDraggingSlider = false  // Track if slider is being dragged
 
     @State
-    private var hoveredZoomButton: ZoomButtonType? = nil  // 跟踪悬浮的按钮
+    private var hoveredZoomButton: ZoomButtonType? = nil  // Track hovered button
 
     private let minMagnification: CGFloat = 1.0
     private let maxMagnification: CGFloat = 5.0
-    private let zoomStep: CGFloat = 0.25  // 每次缩放步长
+    private let zoomStep: CGFloat = 0.25  // Zoom step size
 
     var body: some View {
         GeometryReader { geometry in
             let imageSize = NSImage(contentsOf: leftImage)?.size ?? geometry.size
             let imageWidth = imageSize.width * geometry.size.height / imageSize.height
 
-            // 计算缩放后的图像尺寸和拖动限制
+            // Calculate scaled image size and drag limits
             let scaledWidth = geometry.size.width * magnification
             let scaledHeight = geometry.size.height * magnification
             let maxOffsetX = max(0, (scaledWidth - geometry.size.width) / 2)
             let maxOffsetY = max(0, (scaledHeight - geometry.size.height) / 2)
 
-            // 计算 slider 的拖动范围（考虑缩放）
+            // Calculate slider drag range considering zoom
             let scaledImageWidth = imageWidth * magnification
             let scaledImageHalfWidth = scaledImageWidth / 2
 
-            // 如果缩放后的图像宽度大于等于 view 宽度，slider 可以拖动到边缘
-            // 否则根据缩放后的图像尺寸计算范围
+            // If scaled image width >= view width, slider can drag to edges
+            // Otherwise calculate range based on scaled image size
             let minPosition =
                 scaledImageWidth >= geometry.size.width
                 ? 0.001
@@ -179,7 +179,7 @@ struct ImageComparationViewer: View {
                 MagnificationGesture()
                     .onChanged { value in
                         let newMagnification = lastMagnification * value
-                        magnification = min(max(1.0, newMagnification), 5.0)  // 限制缩放范围 1x-5x
+                        magnification = min(max(1.0, newMagnification), 5.0)  // Limit zoom range 1x-5x
                     }
                     .onEnded { value in
                         lastMagnification = magnification
@@ -188,13 +188,13 @@ struct ImageComparationViewer: View {
             .simultaneousGesture(
                 DragGesture(minimumDistance: 5)
                     .onChanged { value in
-                        // 如果正在拖动 slider，忽略图像拖动
+                        // Ignore image drag if slider is being dragged
                         guard !isDraggingSlider else { return }
 
-                        // 只在放大状态下允许拖动
+                        // Only allow drag when zoomed in
                         guard magnification > 1.0 else { return }
 
-                        // 检查是否在 slider 区域（避免与 slider 拖动冲突）
+                        // Check if in slider area to avoid conflict with slider drag
                         let sliderX = sliderPosition * geometry.size.width
                         let sliderRect = CGRect(
                             x: sliderX - 30,
@@ -209,7 +209,7 @@ struct ImageComparationViewer: View {
                         let newOffsetX = lastOffset.width + value.translation.width
                         let newOffsetY = lastOffset.height + value.translation.height
 
-                        // 限制拖动范围
+                        // Limit drag range
                         offset = CGSize(
                             width: min(max(-maxOffsetX, newOffsetX), maxOffsetX),
                             height: min(max(-maxOffsetY, newOffsetY), maxOffsetY)
@@ -222,7 +222,7 @@ struct ImageComparationViewer: View {
                     }
             )
             .onTapGesture(count: 2) {
-                // 双击重置缩放和位置
+                // Double tap to reset zoom and position
                 resetZoom()
             }
         }
@@ -262,7 +262,7 @@ struct ZoomControlsView: View {
 
     var body: some View {
         HStack(spacing: 8) {
-            // 缩小按钮
+            // Zoom out button
             ZoomButton(
                 icon: "minus.magnifyingglass",
                 isEnabled: magnification > minMagnification,
@@ -283,7 +283,7 @@ struct ZoomControlsView: View {
                 }
             }
 
-            // 百分比显示和选择器
+            // Percentage display and selector
             Menu {
                 ForEach(zoomLevels, id: \.self) { level in
                     Button {
@@ -320,7 +320,7 @@ struct ZoomControlsView: View {
             .menuStyle(.borderlessButton)
             .buttonStyle(.plain)
 
-            // 放大按钮
+            // Zoom in button
             ZoomButton(
                 icon: "plus.magnifyingglass",
                 isEnabled: magnification < maxMagnification,
