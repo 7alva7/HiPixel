@@ -7,6 +7,7 @@
 
 import Sparkle
 import SwiftUI
+import SettingsAccess
 
 @main
 struct HiPixelApp: App {
@@ -46,6 +47,7 @@ struct HiPixelApp: App {
                 }
                 .environmentObject(upscaylData)
                 .ignoresSafeArea(.all)
+                .openSettingsAccess()
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
@@ -76,8 +78,8 @@ struct HiPixelApp: App {
             SettingsView()
         }
 
-        MenuBarExtra("HiPixel", systemImage: "photo.stack", isInserted: $showMenuBarExtra) {
-            MenuBarExtraView()
+        MenuBarExtra("HiPixel", image: "MenuBarIcon", isInserted: $showMenuBarExtra) {
+            MenuBarExtraView(updater: updaterController.updater)
         }
     }
 }
@@ -115,11 +117,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 struct MenuBarExtraView: View {
     @Environment(\.openWindow) private var openWindow
+    @ObservedObject private var checkForUpdatesViewModel: CheckForUpdatesViewModel
+    
+    private let updater: SPUUpdater
+    
+    init(updater: SPUUpdater) {
+        self.updater = updater
+        self.checkForUpdatesViewModel = CheckForUpdatesViewModel(updater: updater)
+    }
     
     var body: some View {
         Button("Main Window") {
             showMainWindow()
         }
+        
+        if #available(macOS 14.0, *) {
+            SettingsLink {
+                Text("Settings...")
+            }
+        } else {
+            Button("Settings...") {
+                showSettingsWindow()
+            }
+        }
+        
+        Button("Check for Updates…") {
+            updater.checkForUpdates()
+        }
+        .disabled(!checkForUpdatesViewModel.canCheckForUpdates)
         
         Divider()
         
@@ -138,6 +163,21 @@ struct MenuBarExtraView: View {
         } else {
             // If no window exists, use openWindow to create a new one
             openWindow(id: "HiPixel")
+        }
+    }
+    
+    private func showSettingsWindow() {
+        // Open settings window using standard macOS action
+        NSApp.activate(ignoringOtherApps: true)
+        // Use performSelector to avoid Selector warning
+        let selector: Selector
+        if #available(macOS 13.0, *) {
+            selector = NSSelectorFromString("showSettingsWindow:")
+        } else {
+            selector = NSSelectorFromString("showPreferencesWindow:")
+        }
+        if NSApp.responds(to: selector) {
+            NSApp.perform(selector, with: nil)
         }
     }
 }

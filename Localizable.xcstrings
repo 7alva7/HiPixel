@@ -1033,6 +1033,16 @@
         }
       }
     },
+    "Launch Silently" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "静默启动"
+          }
+        }
+      }
+    },
     "Licensed under AGPLv3" : {
       "localizations" : {
         "zh-Hans" : {
@@ -1060,16 +1070,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "轻量版"
-          }
-        }
-      }
-    },
-    "Launch Silently" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "静默启动"
           }
         }
       }
@@ -1428,6 +1428,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置"
+          }
+        }
+      }
+    },
+    "Settings..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
           }
         }
       }
